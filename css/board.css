@@ -52,6 +52,22 @@
 .board .sq.from { background: var(--highlight-from, rgba(255,255,128,0.45)); }
 .board .sq.to { background: var(--highlight-to, rgba(255,255,128,0.45)); }
 .board .sq.check { box-shadow: inset 0 0 30px var(--highlight-check, rgba(255,80,80,0.55)); }
+/* Transient flash feedback for "Correct!" / "Try again" */
+.board .sq.flash-good {
+  background: rgba(111, 207, 115, 0.7) !important;
+  box-shadow: inset 0 0 0 3px rgba(111, 207, 115, 0.9);
+  animation: sq-flash 0.5s ease-out;
+}
+.board .sq.flash-bad {
+  background: rgba(224, 99, 99, 0.7) !important;
+  box-shadow: inset 0 0 0 3px rgba(224, 99, 99, 0.9);
+  animation: sq-flash 0.5s ease-out;
+}
+@keyframes sq-flash {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
 
 .board .sq .piece {
   font-size: inherit;

@@ -379,6 +379,262 @@ h4 { font-size: 15px; margin: 12px 0 4px; }
   margin-left: auto;
 }
 
+/* ============================================================
+   Board-first lesson page (mobile-first)
+   ============================================================ */
+.lesson-page {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Persistent board panel — sticky top on mobile */
+.lesson-board-panel {
+  position: sticky;
+  top: calc(var(--appbar-h) + var(--safe-top));
+  z-index: 6;
+  background: var(--bg);
+  padding: 8px 0 12px;
+  border-bottom: 1px solid var(--border);
+  margin: 0 -12px;     /* breakout to viewport edges on mobile */
+  padding-left: 12px;
+  padding-right: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.lesson-board-status {
+  font-size: 13px;
+  text-align: center;
+  min-height: 18px;
+  width: 100%;
+  word-break: break-word;
+}
+.lesson-board-status .cp-correct { color: var(--good); font-weight: 600; }
+.lesson-board-status .cp-wrong { color: var(--bad); font-weight: 600; }
+
+/* Transport */
+.lesson-transport {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+.lesson-transport button {
+  padding: 8px 12px;
+  font-size: 16px;
+  min-width: 44px;
+  min-height: 38px;
+}
+.lesson-transport .t-info { font-size: 12px; margin-left: 4px; }
+
+/* Lesson toolbar row */
+.lesson-toolbar-row {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+.lesson-toolbar-row button {
+  padding: 6px 10px;
+  font-size: 13px;
+  min-height: 38px;
+  min-width: auto;
+}
+.lesson-toolbar-row .tool-engine.on {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+.lesson-engine-line {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+}
+.lesson-engine-line .eval { font-size: 18px; font-weight: 700; color: var(--accent); }
+
+/* Lesson body */
+.lesson-body { padding-top: 12px; }
+.lesson-h1 { font-size: 22px; margin: 0 0 4px; }
+.lesson-meta { font-size: 13px; margin: 0 0 16px; }
+
+.lesson-text p { line-height: 1.65; }
+.lesson-text blockquote {
+  margin: 0;
+  padding: 10px 14px;
+  border-left: 3px solid var(--accent);
+  background: var(--bg-elev-2);
+  border-radius: 0 6px 6px 0;
+  color: var(--text-dim);
+}
+.lesson-text code {
+  background: var(--bg-elev-2);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-family: ui-monospace, monospace;
+  font-size: 14px;
+}
+
+/* Lesson cards (set-position, play-pgn, your-move, freeplay, puzzle) */
+.lesson-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  margin: 14px 0;
+}
+.lesson-card .card-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.lesson-card .card-btn {
+  flex: 1;
+  min-width: 180px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border);
+  font-weight: 600;
+}
+.lesson-card .card-caption {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-top: 8px;
+  line-height: 1.55;
+}
+.lesson-card .pgn-moves {
+  font-family: ui-monospace, monospace;
+  font-size: 12.5px;
+  background: var(--bg-elev-2);
+  padding: 8px 10px;
+  border-radius: 6px;
+  margin-top: 8px;
+  word-break: break-word;
+}
+
+.lesson-checkpoint-card {
+  border-left: 3px solid var(--warn);
+}
+.lesson-checkpoint-card.solved { border-left-color: var(--good); background: rgba(111, 207, 115, 0.05); }
+.lesson-puzzle-card { border-left: 3px solid var(--accent); }
+.lesson-puzzle-card.solved { border-left-color: var(--good); background: rgba(111, 207, 115, 0.05); }
+.lesson-position-card { border-left: 3px solid var(--accent); }
+.lesson-pgn-card { border-left: 3px solid var(--accent-2); }
+.lesson-freeplay-card { border-left: 3px solid var(--text-dim); }
+
+.cp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  gap: 8px;
+}
+.cp-badge {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  background: var(--bg-elev-2);
+  padding: 3px 8px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+.cp-status {
+  font-size: 13px;
+  text-align: right;
+  flex: 1;
+}
+.cp-prompt { font-weight: 600; margin-bottom: 8px; }
+.cp-explain {
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: var(--bg-elev-2);
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.cp-correct { color: var(--good); font-weight: 600; }
+.cp-wrong { color: var(--bad); font-weight: 600; }
+.cp-active { color: var(--accent); font-weight: 600; }
+
+/* End-of-lesson puzzles section */
+.lesson-puzzles {
+  margin-top: 22px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+/* Completion section */
+.lesson-completion {
+  margin-top: 22px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.completion-criteria {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 10px 0 14px;
+}
+.criterion {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-dim);
+}
+.criterion .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--bg-elev-2);
+  border: 2px solid var(--border);
+}
+.criterion.met .dot { background: var(--good); border-color: var(--good); }
+.criterion.met { color: var(--text); }
+.mark-complete-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  background: var(--accent);
+  color: white;
+  border: none;
+  margin-bottom: 8px;
+}
+.mark-complete-btn:disabled {
+  background: var(--bg-elev-2);
+  color: var(--text-dim);
+  font-weight: normal;
+}
+.next-lesson-btn { width: 100%; }
+
+/* Tablet+ layout: board left, content right */
+@media (min-width: 768px) {
+  .lesson-page {
+    display: grid;
+    grid-template-columns: minmax(0, 460px) 1fr;
+    gap: 22px;
+    align-items: start;
+  }
+  .lesson-board-panel {
+    position: sticky;
+    top: calc(var(--appbar-h) + 12px);
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+  }
+  .lesson-body { padding-top: 0; }
+}
+
 .lesson-content, .opening-content, .endgame-main, .games-main {
   background: var(--bg-elev);
   border: 1px solid var(--border);

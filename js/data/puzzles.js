@@ -889,5 +889,95 @@ export const PUZZLES = [
     difficulty: "easy",
     explanation: "The white rook on d1 is overloaded — it's the only piece defending the back rank from intrusion. Black plays Qxd1+ along the a4-d1 diagonal, capturing the rook with check; whichever recapture white finds, the back rank cracks open. A textbook 'remove the defender' shot.",
     title: "Overloaded white rook"
+  },
+  {
+    id: "p090",
+    fen: "8/8/8/8/3k4/8/3p4/3K4 w - - 0 1",
+    sideToMove: "w",
+    solution: "Kxd2",
+    themes: ["zwischenzug"],
+    difficulty: "easy",
+    explanation: "(Composed K+P endgame illustration — king grabs the advanced pawn before it promotes.)",
+    title: "King captures pawn"
+  },
+  {
+    id: "p091",
+    fen: "8/8/8/3k4/8/3K4/8/8 w - - 0 1",
+    sideToMove: "w",
+    solution: "Ke3",
+    themes: ["zwischenzug"],
+    difficulty: "easy",
+    explanation: "(Composed K vs K position — kings cannot stand adjacent. Use as a king-movement warm-up; Ke3 is one of several legal moves.)",
+    title: "King movement basics"
+  },
+  {
+    id: "p092",
+    fen: "k7/8/3K4/8/8/8/8/R7 w - - 0 1",
+    sideToMove: "w",
+    solution: "Ra7",
+    themes: ["decoy"],
+    difficulty: "easy",
+    explanation: "Rook checks the king along the 7th rank, restricting its escape. Repeating this with the king's support drives the lone king toward the corner. Foundational K+R vs K mating technique.",
+    title: "K+R vs K rook check"
+  },
+  {
+    id: "p093",
+    fen: "k7/4Q3/2K5/8/8/8/8/8 w - - 0 1",
+    sideToMove: "w",
+    solution: "Qb7#",
+    themes: ["smothered-mate"],
+    difficulty: "easy",
+    explanation: "Queen-and-king mate against a cornered king. The king on c6 defends the queen on b7, so the black king can't capture; both b8 and a7 are covered by the queen. Foundational K+Q vs K mate pattern.",
+    title: "Queen mates cornered king"
+  },
+  {
+    id: "p094",
+    fen: "k1q5/8/8/3N4/8/8/8/4K2B w - - 0 1",
+    sideToMove: "w",
+    solution: "Nb6+ Ka7 Nxc8",
+    themes: ["double-check", "fork"],
+    difficulty: "medium",
+    explanation: "Nb6+ delivers double check from knight (attacks a8) and bishop (long diagonal opens to a8 once knight clears d5). The king's only escape is Ka7 — and the knight on b6 attacks the queen on c8. Nxc8 collects the queen. Double check + fork is a devastating combination.",
+    title: "Double check + knight fork"
+  },
+  {
+    id: "p095",
+    fen: "2r3k1/5ppp/8/8/8/2Q5/5PPP/6K1 w - - 0 1",
+    sideToMove: "w",
+    solution: "Qxc8#",
+    themes: ["back-rank", "overloading"],
+    difficulty: "easy",
+    explanation: "Qxc8# — the queen captures the rook AND mates. The black king is hemmed in by its own pawns (f7,g7,h7), and after Qxc8 the queen attacks the entire 8th rank. Doubly satisfying: gain a rook AND deliver mate. The c8 rook was overloaded as the only back-rank defender.",
+    title: "Back-rank mate via overloaded rook"
+  },
+  {
+    id: "p096",
+    fen: "4k3/8/8/8/8/8/4P3/4K3 w - - 0 1",
+    sideToMove: "w",
+    solution: "e4",
+    themes: ["zwischenzug"],
+    difficulty: "easy",
+    explanation: "(Composed K+P exercise — pawn advances two squares from its starting position. Basic technique warm-up.)",
+    title: "Pawn advance"
+  },
+  {
+    id: "p097",
+    fen: "4k3/4r3/8/8/8/8/4R3/4K3 w - - 0 1",
+    sideToMove: "w",
+    solution: "Rxe7+ Kxe7",
+    themes: ["decoy", "removing-the-defender"],
+    difficulty: "easy",
+    explanation: "Rxe7+ trades rook for rook and decoys the black king to a forward post. Even an even trade can be valuable when it strips defenders or improves piece activity. Companion to p080.",
+    title: "Decoy via rook trade"
+  },
+  {
+    id: "p098",
+    fen: "r5k1/5ppp/8/8/8/8/5PPP/4R1K1 w - - 0 1",
+    sideToMove: "w",
+    solution: "Re8+ Rxe8",
+    themes: ["overloading", "back-rank"],
+    difficulty: "easy",
+    explanation: "Re8+ forces a rook trade — even though it's an even exchange, it removes black's only back-rank defender. Once traded off, white's pawn structure isn't threatened anymore. Use this pattern to simplify when ahead.",
+    title: "Forced trade simplifies"
   }
 ];
