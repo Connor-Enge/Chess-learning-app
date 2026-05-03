@@ -27,6 +27,7 @@ import { Board } from '../board.js';
 import { newChess, legalMovesFrom, isInCheck, kingSquare, fensForSanList, tryMove, gameOverReason } from '../chess-utils.js';
 import { engine } from '../engine.js';
 import { PUZZLES } from '../data/puzzles.js';
+import { LessonPlayer } from '../lesson-player.js';
 
 // Lesson → puzzle theme mapping. Each lesson gets up to 5 themed puzzles auto-
 // selected from the global puzzle pool. Themes mirror the lesson's content; if
@@ -199,7 +200,14 @@ export async function renderLessons(view, params, opts = {}) {
     }
     indexEl.querySelectorAll('li').forEach(li => li.classList.toggle('active', li.dataset.id === id));
     contentEl.innerHTML = '';
-    renderBoardFirstLesson(contentEl, lesson);
+    // Lessons with a `script` array use the new chessground-based synchronized
+    // player. Lessons with the legacy `content` array fall through to the
+    // button-driven board-first renderer.
+    if (Array.isArray(lesson.script) && lesson.script.length > 0) {
+      new LessonPlayer({ host: contentEl, lesson });
+    } else {
+      renderBoardFirstLesson(contentEl, lesson);
+    }
     if (window.matchMedia('(max-width: 767px)').matches) {
       listOpen = false;
       applyListVisibility();
@@ -288,7 +296,7 @@ function renderBoardFirstLesson(container, lesson) {
   `;
 
   // Lesson player state
-  const player = new LessonPlayer({
+  const player = new LegacyLessonPlayer({
     boardEl,
     statusEl,
     transport,
@@ -342,7 +350,7 @@ function renderBoardFirstLesson(container, lesson) {
 // ────────────────────────────────────────────────────────────────────────────
 // LessonPlayer — owns the board state, transport, completion tracking
 // ────────────────────────────────────────────────────────────────────────────
-class LessonPlayer {
+class LegacyLessonPlayer {
   constructor({ boardEl, statusEl, transport, toolbar, engineLine, lesson, body }) {
     this.boardEl = boardEl;
     this.statusEl = statusEl;

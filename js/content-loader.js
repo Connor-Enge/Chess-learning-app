@@ -38,6 +38,7 @@ export async function loadAllLessons() {
     endgame,
     exchanges,
     calculation,
+    refKnightFork, refOutposts, refLucena,
   ] = await Promise.all([
     loadOptional('./data/lessons-tactics-deep-a.js', 'LESSONS_TACTICS_DEEP_A'),
     loadOptional('./data/lessons-tactics-deep-b.js', 'LESSONS_TACTICS_DEEP_B'),
@@ -51,12 +52,22 @@ export async function loadAllLessons() {
     loadOptional('./data/lessons-endgame.js', 'LESSONS_ENDGAME'),
     loadOptional('./data/lessons-exchanges.js', 'LESSONS_EXCHANGES'),
     loadOptional('./data/lessons-calculation.js', 'LESSONS_CALCULATION'),
+    // ── Chessground-based reference lessons (script format) ────────────────
+    loadOptional('./data/lessons-ref-knight-fork.js', 'LESSONS_REF_KNIGHT_FORK'),
+    loadOptional('./data/lessons-ref-outposts.js', 'LESSONS_REF_OUTPOSTS'),
+    loadOptional('./data/lessons-ref-lucena.js', 'LESSONS_REF_LUCENA'),
   ]);
 
   const merged = [
     ...(Array.isArray(CORE_LESSONS) ? CORE_LESSONS : []),
     ...calculation,
     ...openings,
+    // Reference lessons (chessground player) appear FIRST in their respective tracks
+    // by virtue of order=99 (vs order=100+ for the original deep lessons), so the
+    // reference experience is the first thing users see on the Lessons screen.
+    ...refKnightFork,
+    ...refOutposts,
+    ...refLucena,
     ...tacticsDeepA,
     ...tacticsDeepB,
     ...tacticsDeepC,

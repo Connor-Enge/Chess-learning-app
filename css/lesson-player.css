@@ -1,0 +1,303 @@
+/* ============================================================
+   Chessground-based lesson player styling.
+   Mobile-first: board sticky at top, text scrolls beneath.
+   Tablet+ (≥768px): board left, text right.
+   ============================================================ */
+
+.lp-root {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Board panel (sticky top on mobile) ──────────────────────── */
+.lp-board-panel {
+  position: sticky;
+  top: calc(var(--appbar-h) + var(--safe-top));
+  z-index: 6;
+  background: var(--bg);
+  margin: 0 -12px;          /* breakout to viewport edges */
+  padding: 8px 12px 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+/* The chessground container itself */
+.lp-board.cg-wrap {
+  width: min(95vw, 95vmin, 480px);
+  height: min(95vw, 95vmin, 480px);
+  position: relative;
+  border: 2px solid var(--bg-elev-3);
+  border-radius: 6px;
+  overflow: hidden;
+  touch-action: manipulation;
+}
+
+/* Move-explain tooltip (above/below the board) */
+.lp-move-tip {
+  width: 100%;
+  max-width: min(95vw, 95vmin, 480px);
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  font-size: 14px;
+  line-height: 1.45;
+  text-align: left;
+  min-height: 22px;
+}
+.lp-move-tip.lp-good { border-color: var(--good); background: rgba(111,207,115,0.1); }
+.lp-move-tip.lp-bad { border-color: var(--bad); background: rgba(224,99,99,0.1); }
+.lp-move-tip.lp-prompt { border-color: var(--accent); background: rgba(93,156,245,0.1); font-weight: 600; }
+.lp-move-tip.lp-info { border-color: var(--border); }
+
+/* ── Callout overlay (anchored to chessground square coords) ── */
+.lp-callout-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;          /* board still receives input */
+  z-index: 10;
+}
+.lp-callout {
+  position: fixed;
+  pointer-events: auto;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 13px;
+  line-height: 1.4;
+  max-width: 220px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  transform: translateX(-50%);
+  z-index: 12;
+  animation: lp-callout-in 0.18s ease-out;
+}
+@keyframes lp-callout-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(4px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+.lp-callout-arrow {
+  position: absolute;
+  width: 0; height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  left: 50%;
+  margin-left: -7px;
+}
+.lp-callout-above { transform: translateX(-50%) translateY(-100%); }
+.lp-callout-above .lp-callout-arrow { bottom: -7px; border-top: 7px solid var(--bg-elev); }
+.lp-callout-below { transform: translateX(-50%) translateY(0); }
+.lp-callout-below .lp-callout-arrow { top: -7px; border-bottom: 7px solid var(--bg-elev); }
+.lp-callout-yellow { border-color: var(--warn); }
+.lp-callout-yellow .lp-callout-arrow { border-top-color: var(--warn); border-bottom-color: var(--warn); }
+.lp-callout-green  { border-color: var(--good); }
+.lp-callout-green .lp-callout-arrow  { border-top-color: var(--good);  border-bottom-color: var(--good); }
+.lp-callout-red    { border-color: var(--bad); }
+.lp-callout-red .lp-callout-arrow    { border-top-color: var(--bad);   border-bottom-color: var(--bad); }
+.lp-callout-blue   { border-color: var(--accent); }
+.lp-callout-blue .lp-callout-arrow   { border-top-color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── Progress bar ───────────────────────────────────────────── */
+.lp-progress {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+.lp-progress-bar {
+  flex: 1;
+  height: 4px;
+  background: var(--bg-elev-2);
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+.lp-progress-bar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform-origin: left;
+  transition: width 0.18s ease-out;
+}
+.lp-progress > .lp-progress-bar::before { width: var(--lp-progress, 0%); }
+
+/* Inline width control via direct style.width on the bar element */
+.lp-progress .lp-progress-bar { background: var(--bg-elev-2); }
+.lp-progress .lp-progress-bar > div { /* not used — kept for safety */ }
+
+.lp-progress-label { font-family: ui-monospace, monospace; min-width: 60px; text-align: right; }
+
+/* ── Transport bar (big tap targets) ────────────────────────── */
+.lp-transport {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.lp-transport button {
+  min-width: 52px;
+  min-height: 44px;
+  padding: 6px 10px;
+  font-size: 18px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+}
+.lp-transport .lp-play {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+  min-width: 64px;
+}
+.lp-transport button:active { transform: scale(0.97); }
+
+/* ── Lesson text panel ──────────────────────────────────────── */
+.lp-text {
+  padding-top: 14px;
+}
+.lp-title { font-size: 22px; margin: 0 0 4px; }
+.lp-meta { font-size: 13px; color: var(--text-dim); margin: 0 0 12px; }
+.lp-meta em { font-style: normal; color: var(--text-dim); }
+.lp-hint { font-size: 14px; }
+
+/* Text card stream */
+.lp-stream { display: flex; flex-direction: column; gap: 10px; }
+.lp-card { background: var(--bg-elev); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+.lp-text-card {
+  opacity: 0.45;
+  filter: grayscale(0.3);
+  transition: opacity 0.25s ease, filter 0.25s ease, border-color 0.25s ease;
+}
+.lp-text-card.lp-revealed {
+  opacity: 1;
+  filter: none;
+  border-color: var(--accent);
+}
+.lp-text-card p { margin: 0 0 8px; line-height: 1.6; }
+.lp-text-card p:last-child { margin-bottom: 0; }
+.lp-text-card h3 { font-size: 16px; margin: 4px 0 6px; }
+
+/* Puzzle cards */
+.lp-puzzles {
+  margin-top: 22px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.lp-puzzle-card { border-left: 3px solid var(--accent); }
+.lp-puzzle-card.solved { border-left-color: var(--good); background: rgba(111,207,115,0.06); }
+.lp-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  gap: 8px;
+}
+.lp-badge {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--bg-elev-2);
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+.lp-puzzle-status { font-size: 12px; }
+.lp-puzzle-status.lp-good, .lp-good { color: var(--good); font-weight: 600; }
+.lp-puzzle-status.lp-bad, .lp-bad { color: var(--bad); font-weight: 600; }
+.lp-puzzle-status.lp-active, .lp-active { color: var(--accent); font-weight: 600; }
+.lp-card-body { font-size: 14px; line-height: 1.55; margin-bottom: 8px; }
+.lp-card-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.lp-btn {
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  min-height: 38px;
+  color: var(--text);
+}
+.lp-pz-load { flex: 1; min-width: 140px; font-weight: 600; }
+.lp-card-explain {
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: var(--bg-elev-2);
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* ── Completion section ─────────────────────────────────────── */
+.lp-completion {
+  margin-top: 22px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.lp-criteria { display: flex; flex-direction: column; gap: 6px; margin: 10px 0 14px; }
+.lp-criterion {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-dim);
+}
+.lp-criterion .dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--bg-elev-2); border: 2px solid var(--border);
+}
+.lp-criterion.met .dot { background: var(--good); border-color: var(--good); }
+.lp-criterion.met { color: var(--text); }
+.lp-mark-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+.lp-mark-btn:disabled {
+  background: var(--bg-elev-2);
+  color: var(--text-dim);
+  font-weight: normal;
+}
+.lp-next-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+/* ── Tablet+: side-by-side layout ──────────────────────────── */
+@media (min-width: 768px) {
+  .lp-root {
+    display: grid;
+    grid-template-columns: minmax(0, 480px) 1fr;
+    gap: 22px;
+    align-items: start;
+  }
+  .lp-board-panel {
+    position: sticky;
+    top: calc(var(--appbar-h) + 12px);
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+  }
+  .lp-text { padding-top: 0; }
+}
+
+/* ── Chessground theme polish for our dark UI ───────────────── */
+/* The brown theme already looks fine in dark mode; tweak the surrounding edge.
+ * If we add a dark-board theme later, we can override the cg-wrap colors here. */
+.cg-wrap { background: #2a2e37; }

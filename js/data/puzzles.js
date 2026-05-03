@@ -62,12 +62,12 @@ export const PUZZLES = [
   },
   {
     id: "p007",
-    fen: "4k3/8/8/3N4/8/8/8/4K2q w - - 0 1",
+    fen: "4k3/8/8/3N4/8/8/4K3/7q w - - 0 1",
     sideToMove: "w",
     solution: "Nf6+",
     themes: ["fork"],
     difficulty: "easy",
-    explanation: "The knight on d5 leaps to f6 with check, and from f6 it also attacks the queen on h1. The king must move; white captures the queen. Memorize the knight-fork radius — from any square, a knight attacks 8 squares in a starburst pattern.",
+    explanation: "The knight on d5 leaps to f6 with check, and from f6 it threatens to capture the queen on h1. The king must move; white then plays Nxh1. Memorize the knight-fork radius — from any square, a knight attacks 8 squares in a starburst pattern.",
     title: "Royal fork"
   },
   {

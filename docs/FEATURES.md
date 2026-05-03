@@ -149,6 +149,73 @@ Dark by default (chess-board friendly). Light mode toggle in the top bar; prefer
 
 Stacks columns on screens narrower than 900px. The board stays usable on phones.
 
+## Practice Mode — Coached Play vs Bot (PLANNED — not yet shipped)
+
+A separate top-level view, distinct from Lessons / Trainer / Play. The user plays a full game vs a Stockfish-powered bot with a chosen *personality*; after **every** user move, a coach panel evaluates that move, explains *why* it was good/bad, and suggests what would have been better in this bot's style.
+
+### Bot personalities (each biases Stockfish's move selection)
+
+- **Aggressor** — sacrifices for attack, plays gambits, prioritizes king-side pawn storms; gives up material for initiative. Re-scores candidates by adding +20cp for moves attacking the king and +30cp for sound sacrifices that maintain initiative.
+- **Positional Squeezer** — slow strategic chess: improves worst piece, restricts opponent, accumulates small advantages, prefers exchanges into superior endings. Re-scores moves that improve activity / pawn structure higher; deprioritizes tactical mess.
+- **Tactician** — looks for combinations and sacrifices, plays sharp lines, will spike eval if there's a tactic available even if positionally questionable.
+- **Defender / Counterpuncher** — solid setups (Hedgehog, Berlin), waits for opponent overextension, then strikes back.
+- **Beginner Buddy** — simple developing moves, occasional blunders, doesn't punish all inaccuracies. Good for early ramp-up.
+- **Equal Match** — adaptive Elo targeting Connor's solve-rate so games feel close.
+
+**Implementation pattern:** run Stockfish at depth N to get the top-K candidate moves with their evals; re-score each with a personality-specific weighting; pick the highest-rescored move with some randomness; at weaker strengths, occasionally pick the 2nd/3rd best. **Strength slider 800–2200 Elo**, mapped to depth + intentional blunder rate.
+
+### The coach panel — runs after every user move
+
+- Compare the user's move to Stockfish's best move, compute eval delta.
+- Categorize: `!!` brilliant · `!` best · `=` good/best of equals · `?!` inaccuracy (-30 to -90cp) · `?` mistake (-90 to -200cp) · `??` blunder (>-200cp).
+- Render a 2–4 sentence natural-language explanation:
+  - **Good move:** *what* it accomplishes (tactic / plan / piece improvement) + *why it works*. e.g. "Nxd4! — exchanges your worst-placed knight for an active opponent piece and opens the c-file for your rook. Exactly the multi-purpose move the Squeezer respects."
+  - **Inaccuracy/mistake/blunder:** what went wrong + the better move + why the better move is better. e.g. "After 12.h3, your kingside structure is loosened and you've spent a tempo. The Squeezer would have played 12.Rfc1 instead — preparing the minority attack with b4 next, putting pressure on c6 without weakening anything. Pattern: don't make defensive pawn moves on the side you want to attack."
+- The coaching voice **mirrors the bot's personality** (Aggressor coach is fiery and praises sharp moves; Squeezer coach is calm and patient; Tactician coach hunts combinations; Defender coach preaches patience).
+
+### Board annotations after each move
+
+- **Red arrow** on the user's move if it was a mistake.
+- **Green arrow** showing the better move ("You should have played…").
+- **Yellow arrow** for any tactical motif the user missed.
+- **Square highlights** for relevant features the coach references (outpost, weak king-side, pinned piece).
+
+### Interactive coach features
+
+- **"Show me" button** on each tip: tap → board temporarily plays out the suggested move + the bot's likely response with callouts; "Restore my game" puts it back to the actual position.
+- **Pre-move hints** (toggle): a "Hint" button lights up if the user asks. Hint reveals only the *plan* or *piece to consider*, not the move itself. ("Look for piece activity on the queenside" — not the move.)
+- **Threat indicator** (toggle): a small red dot on any square attacked by an enemy piece that isn't sufficiently defended (one-move tactical alert). Off by default for harder modes.
+
+### Post-game review screen
+
+- Result, accuracy %, count of `!! ! = ?! ? ??` moves, "biggest blunder" highlight, one or two "lessons from this game" linking back to relevant curriculum lessons (e.g. lots of pawn-structure mistakes → link to the Positional / Pawn Structure track).
+
+### Mobile-first UX
+
+- Board on top (as everywhere).
+- Coach panel as a bottom sheet that slides up after each move; user dismisses with a swipe down or "Got it" button.
+- Bot's move plays after the coach panel is dismissed, OR user can choose "Auto-continue" (1.5s after the panel appears).
+- Bot personality + strength selector at top of the view as pills.
+- "End game" / "Resign" button always reachable.
+
+### Implementation phasing
+
+1. **Phase 1** — basic loop: user plays → Stockfish evals best move → eval delta computed → generic message shown → bot responds. No personalities yet, no coaching style differentiation.
+2. **Phase 2** — add personalities (move re-scoring + coaching voice templates).
+3. **Phase 3** — "Show me" button, pre-move hints, threat indicator, post-game review.
+
+### Engineering notes
+
+- **Two Stockfish analyses per user move**: (a) best move from the pre-move position (used as the comparator), (b) eval of position after user's move. At depth 18–20 on mobile this is 1–2s; show a spinner during analysis.
+- **Cache analyses keyed by FEN** to avoid recomputing on takebacks.
+- **Explanation library is offline + deterministic** — a few hundred handwritten templates keyed on `(eval-category, board-feature, personality)`. Board features detected via simple heuristics: piece-square-table deltas (which piece improved/worsened?), king safety (pawn shield, attackers near king), structure (created weak square? doubled pawn? outpost?), tactical (Stockfish PV reveals a fork/pin/skewer pattern). **Don't try to LLM-generate at runtime** — keep it in-package.
+
+### Nav placement
+
+A new bottom-tab "Practice" alongside Lessons / Openings / Tactics / Endgames / More. Or replace one of the existing trainers — TBD when we build it.
+
+---
+
 ## What is NOT included (deliberately)
 
 - Account system, cloud sync, multiplayer
