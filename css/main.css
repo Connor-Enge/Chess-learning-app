@@ -381,8 +381,23 @@ ol#lessonIndex li.done::before {
 .tactics-status .feedback { margin: 0; font-size: var(--text-callout); min-height: 22px; font-weight: var(--weight-medium); }
 .tactics-status .feedback.correct { color: var(--success); }
 .tactics-status .feedback.wrong   { color: var(--error); }
-.tactics-controls { display: flex; gap: var(--space-2); width: 100%; flex-wrap: wrap; }
-.tactics-controls button { flex: 1; min-width: 100px; }
+.tactics-controls {
+  display: flex;
+  gap: var(--space-2);
+  width: 100%;
+  flex-wrap: wrap;
+}
+.tactics-controls button {
+  flex: 1 1 0;
+  min-width: 0;             /* allow shrinking below content size */
+  padding: 0 var(--space-2);
+  font-size: var(--text-subhead);
+}
+/* On the smallest phones the 3 controls go to 2 rows: hint+solution, then next */
+@media (max-width: 360px) {
+  .tactics-controls { flex-wrap: wrap; }
+  .tactics-controls #tacticsNext { flex: 1 0 100%; }
+}
 
 /* Endgames legacy: board wrap + explainer */
 .endgame-board-wrap {
@@ -505,7 +520,7 @@ ol#lessonIndex li.done::before {
   flex-wrap: wrap;
   width: 100%;
 }
-.play-controls button { flex: 1; min-width: 90px; }
+.play-controls button { flex: 1 1 0; min-width: 0; padding: 0 var(--space-3); }
 .play-moves {
   background: var(--surface);
   padding: var(--space-3);
