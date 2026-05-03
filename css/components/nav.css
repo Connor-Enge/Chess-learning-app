@@ -47,7 +47,7 @@
 .appbar__back:active,
 .appbar__action:active { background: var(--surface-elevated); }
 .appbar__back .icon,
-.appbar__action .icon { width: 22px; height: 22px; }
+.appbar__action .icon { font-size: 22px; }
 
 .appbar__title {
   flex: 1;
@@ -105,8 +105,7 @@
   transition: color var(--motion-fast) var(--ease-out);
 }
 .bottom-nav__tab .icon {
-  width: 24px;
-  height: 24px;
+  font-size: 24px;
   transition:
     transform var(--motion-base) var(--ease-ios),
     color var(--motion-fast) var(--ease-out);
@@ -134,7 +133,7 @@
 /* On very small phones, hide labels under 360 */
 @media (max-width: 360px) {
   .bottom-nav__tab .tab-label { display: none; }
-  .bottom-nav__tab .icon { width: 26px; height: 26px; }
+  .bottom-nav__tab .icon { font-size: 26px; }
 }
 
 /* Tablet+: hide bottom nav, show side rail (optional future expansion) */

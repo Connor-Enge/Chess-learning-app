@@ -113,7 +113,7 @@
   align-items: center;
   justify-content: center;
 }
-.game-card__thumb .icon { width: 28px; height: 28px; color: var(--text-muted); }
+.game-card__thumb .icon { font-size: 28px; color: var(--text-muted); }
 .game-card__main {
   flex: 1;
   min-width: 0;

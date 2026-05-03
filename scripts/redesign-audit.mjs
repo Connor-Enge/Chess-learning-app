@@ -46,8 +46,10 @@ for (const vp of VIEWPORTS) {
   page.on('response', r => { if (r.status() >= 400) errors.push({ kind: 'http', status: r.status(), url: r.url() }); });
   page.on('console', m => { if (m.type() === 'error') errors.push({ kind: 'console-error', text: m.text() }); });
 
+  // Cache-bust query string so we always get fresh assets after a deploy
+  const bust = `?cache=${Date.now()}`;
   for (const route of ROUTES) {
-    const url = URL_BASE + route.hash;
+    const url = URL_BASE + bust + route.hash;
     try {
       await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 25000 });
       // give templates + chessground time to mount

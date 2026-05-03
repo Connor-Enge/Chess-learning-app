@@ -122,10 +122,7 @@
 .btn--icon.btn--lg { width: 56px; border-radius: var(--radius-lg); }
 .btn--icon.btn--round { border-radius: var(--radius-pill); }
 
-/* Icon inside btn */
-.btn .icon { width: 20px; height: 20px; flex: 0 0 auto; display: inline-flex; }
-.btn--sm .icon { width: 16px; height: 16px; }
-.btn--lg .icon { width: 24px; height: 24px; }
+/* Icon inside btn — sizing is handled in design-system.css */
 
 /* Loading state */
 .btn[data-loading="true"] {

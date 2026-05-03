@@ -39,7 +39,7 @@
   cursor: not-allowed;
   pointer-events: none;
 }
-.transport__btn .icon { width: 20px; height: 20px; }
+.transport__btn .icon { font-size: 20px; }
 
 .transport__btn--primary {
   background: var(--primary);

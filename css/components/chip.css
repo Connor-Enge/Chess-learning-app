@@ -37,7 +37,7 @@
   color: var(--on-primary);
   border-color: var(--primary);
 }
-.chip .icon { width: 14px; height: 14px; }
+.chip .icon { font-size: 14px; }
 
 .chip-group {
   display: flex;

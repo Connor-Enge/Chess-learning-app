@@ -456,6 +456,46 @@ h4 { font-size: var(--text-headline); font-family: var(--font-sans); }
 }
 
 /* ============================================================
+   Icons — Phosphor font-icon helper (font-size drives glyph size)
+   .ph already has font-family: Phosphor; we just normalize the
+   default size via .icon. Components override per-context.
+   ============================================================ */
+.icon {
+  font-size: 20px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+/* Within buttons, scale by button size */
+.btn .icon { font-size: 18px; }
+.btn--sm .icon { font-size: 16px; }
+.btn--lg .icon { font-size: 22px; }
+
+/* Within app bar / nav / sheet links / lists */
+.appbar__back .icon, .appbar__action .icon,
+.appbar-back .icon, .appbar-action .icon { font-size: 22px; }
+.bottom-nav__tab .icon, .bottom-nav .tab .icon { font-size: 24px; }
+.tab-icon.icon, .bottom-nav__tab .tab-icon { font-size: 24px; }
+.sheet-link .icon { font-size: 22px; }
+.sheet-link__chevron.icon { font-size: 14px; }
+.list-row .icon { font-size: 18px; }
+.list-row__chevron.icon { font-size: 14px; }
+.transport__btn .icon { font-size: 18px; }
+.track-card__icon .icon { font-size: 22px; }
+.track-card__chevron.icon { font-size: 16px; }
+.dock-sheet__handle .icon { font-size: 18px; }
+.callout__icon .icon, .empty__art .icon { font-size: 22px; }
+.empty__art .icon { font-size: 40px; }
+.toast .icon, .banner__icon .icon { font-size: 18px; }
+.search-field .icon { font-size: 18px; }
+
+/* When the icon is the only child of an icon-only wrapper, ensure it doesn't take up width */
+.btn--icon { padding: 0; }
+
+/* ============================================================
    Visually hidden (a11y)
    ============================================================ */
 .sr-only {
