@@ -315,44 +315,120 @@ export const LESSONS_EXCHANGES = [
     objective: "Identify good vs bad pieces in your position and steer trades to swap your worst for the opponent's best.",
     tags: ["good-piece", "bad-piece", "capablanca", "french-defence"],
     next: "exch-008-attack-and-trades",
-    content: [
-      { type: "text", value: "If you do nothing else from this entire track, learn this principle. It's possibly the single most reliable strategic improvement in chess: **trade your bad piece for the opponent's good piece.**\n\nThe attribution is murky — Capablanca, Tarrasch, and Lasker all expressed something close to it. The technique is universal." },
 
-      { type: "heading", value: "What 'bad' and 'good' actually mean" },
-      { type: "text", value: "A **bad piece** is one that:\n- Has very few squares it can move to.\n- Is blocked by its own pawns (especially common with bishops behind their own pawn chain).\n- Defends a weakness and can't leave its post.\n- Has no constructive plan in the position.\n\nA **good piece** is one that:\n- Controls many squares from a strong post.\n- Sits on an outpost, untouchable.\n- Coordinates with the player's overall plan.\n- Constantly threatens something." },
+    startFen: "rnbqkbnr/ppp2ppp/4p3/3pP3/3P4/8/PPP2PPP/RNBQKBNR b KQkq - 0 3",
 
-      { type: "subheading", value: "The classic case: the French Defence bad bishop" },
-      { type: "text", value: "In the French Defence, Black's c8-bishop is famously bad. After moves like 1.e4 e6 2.d4 d5 3.e5, Black's pawns end up on e6, d5, sometimes c6 — and the light-squared bishop on c8 has nowhere to go. It's known throughout chess literature as **'the French bishop'** (with deep sympathy)." },
+    script: [
+      // ─── Concept ───────────────────────────────────────────────────────────
+      { kind: 'text', md: "## The single most reliable strategic gain\n\nIf you keep one principle from this entire track, keep this one: **trade your bad piece for the opponent's good piece.**\n\nCapablanca, Tarrasch, Lasker — all of them taught a version of it. It's the closest thing in chess to free improvement. Every position has at least one piece that's underperforming; every opponent has at least one piece that's doing real work. Swap them and you've materially improved the balance, even though the point count didn't move." },
 
-      { type: "board", fen: "rnbqkbnr/ppp2ppp/4p3/3pP3/3P4/8/PPP2PPP/RNBQKBNR b KQkq - 0 3", caption: "Classic French Defence structure. Black's bishop on c8 is buried — it can only develop via b7 (after b6) or d7-e8 with great difficulty. This is the textbook 'bad piece.'" },
+      { kind: 'text', md: "## What 'bad' and 'good' actually mean\n\nA **bad piece** is one that:\n- Has very few squares it can move to.\n- Is blocked by its own pawns (the classic case: bishops stuck behind a fixed pawn chain).\n- Is tied to defending a weakness and can't leave.\n- Has no role in any plan you have.\n\nA **good piece** is one that:\n- Controls a lot of squares.\n- Sits on an outpost where pawns can't challenge it.\n- Coordinates with your overall plan.\n- Threatens something concrete most of the time.\n\nGood and bad are about *function*, not piece type. A queen on h1 with no targets is 'bad'; a knight on d6 holding the position together is 'good'." },
 
-      { type: "text", value: "Black's entire opening plan often revolves around one goal: **trade off the bad bishop**. Common methods:\n\n- ...b6 followed by ...Ba6 to swap off via the a6-f1 diagonal.\n- ...Bd7-e8-h5 to redeploy if White's bishop is still on f1.\n- Sometimes ...Bd7-e8 simply to defend and wait.\n\nIf Black succeeds in trading the c8 bishop for any of White's bishops, the French Defence becomes much easier. **Bad piece traded for good piece** = strategic victory." },
+      // ─── The French Defence bad bishop — show the structure ────────────────
+      { kind: 'text', md: "## The textbook 'bad piece': Black's French bishop\n\nAfter `1.e4 e6 2.d4 d5 3.e5`, Black has the classic French Defence pawn chain: e6, d5, and often c6 later. The c8 bishop is buried behind its own pawns. It's nicknamed **'the French bishop'** in the literature, with sympathy. Look at it." },
 
-      { type: "heading", value: "Carlsbad structure: bishop trades" },
-      { type: "text", value: "In the Carlsbad pawn structure (pawns on c6/d5/e6 vs c3/d4/e3), both sides typically have a 'good' bishop and a 'bad' bishop. White's c1-bishop and Black's c8-bishop are blocked by pawns; their other bishops are good. The classical plan is to trade your bad bishop for their good bishop — exactly the principle in action." },
+      { kind: 'set-position', fen: 'rnbqkbnr/ppp2ppp/4p3/3pP3/3P4/8/PPP2PPP/RNBQKBNR b KQkq - 0 3', orientation: 'black' },
+      { kind: 'highlight', squares: ['c8'], color: 'red' },
+      { kind: 'callout', square: 'c8', text: "The c8 bishop is the worst piece on the board. It can only develop via b7 (after ...b6) or via the long ...Bd7-e8-h5 trek. Black's whole opening plan revolves around getting it off the board.", color: 'red', durationMs: 6000 },
+      { kind: 'arrow', from: 'c8', to: 'a6', color: 'green' },
+      { kind: 'callout', square: 'a6', text: "The dream: ...b6 followed by ...Ba6. The bad bishop reaches a6 and offers itself for a trade with White's f1 bishop — Black's worst for White's developed minor piece. Pure profit.", color: 'green', durationMs: 5500 },
+      { kind: 'pause', ms: 1500 },
+      { kind: 'clear-shapes' },
 
-      { type: "interactive", fen: "r1bqkb1r/pp3ppp/2n1pn2/2pp4/3P4/2N1PN2/PPP1BPPP/R1BQK2R b KQkq - 0 6", prompt: "A Queen's-Gambit-style structure. Black to move. Black's queen-bishop on c8 is bad; White's bishop on e2 is fine. Find Black's best plan — find a move that prepares to develop or trade off the bad bishop.", solution: "b6", explanation: "**b6** prepares ...Ba6, aiming to trade the bad c8 bishop for White's e2 bishop. This is the textbook 'minority attack' or 'bad bishop trade' theme. The principle: when you have an obviously bad piece, prioritize getting it off the board — even at the cost of a tempo or two." },
+      // ─── Model game fragment: Botvinnik-style French plan ──────────────────
+      { kind: 'text', md: "## Model fragment: a Black French plan\n\nWatch Black execute the bad-for-good trade. Each move serves the same goal — get the c8 bishop to a square where it can swap off." },
 
-      { type: "heading", value: "Ruy Lopez: the trade of the Spanish bishop" },
-      { type: "text", value: "In the Ruy Lopez, White's light-squared bishop on b3 (after Bb5-a4-b3 maneuvers) is a classic 'good piece' — pointing at f7 forever. Black's main long-term plan in many lines is to **trade it off** with ...Na5 to attack and force ...Nxb3 or to trigger Bxa4 trades.\n\nReverse view: Black's bishop on c5 (or e7) often becomes Black's good piece, and White wants to trade it." },
+      { kind: 'set-position', fen: 'rnbqkbnr/ppp2ppp/4p3/3pP3/3P4/8/PPP2PPP/RNBQKBNR b KQkq - 0 3', orientation: 'black' },
+      { kind: 'play-move', san: 'c5', explain: "First Black challenges the d4 pawn — standard French theory. The c-pawn moves out of the way and might land on c4 later, but more importantly the bishop now has the c8-h3 diagonal once a pawn move opens it." },
+      { kind: 'play-move', san: 'c3', explain: "White props up d4 quietly." },
+      { kind: 'play-move', san: 'Nc6', explain: "Developing and putting more pressure on d4." },
+      { kind: 'play-move', san: 'Nf3', explain: "White finishes minor-piece development." },
+      { kind: 'play-move', san: 'Qb6', explain: "The queen joins the attack on d4 — but Black is also setting up the bishop trade. Watch what happens next." },
+      { kind: 'play-move', san: 'Be2', explain: "White develops; the f1 bishop is now on e2, exactly the trade target Black wants." },
+      { kind: 'arrow', from: 'c8', to: 'd7', color: 'green' },
+      { kind: 'play-move', san: 'Bd7', explain: "Step one of the bishop maneuver. The bishop's not great on d7, but it's better than c8 — and it's heading further." },
+      { kind: 'pause', ms: 1500 },
+      { kind: 'clear-shapes' },
+      { kind: 'arrow', from: 'd7', to: 'b5', color: 'green' },
+      { kind: 'callout', square: 'b5', text: "Eventually ...Bb5 trades the bad bishop for White's developed bishop on e2. By then Black's worst piece is off the board AND White's piece comes off too. Net: Black is better.", color: 'green', durationMs: 6000 },
+      { kind: 'pause', ms: 2000 },
+      { kind: 'clear-shapes' },
 
-      { type: "interactive", fen: "r1bq1rk1/2p1bppp/p1np1n2/1p2p3/3PP3/1BP2N2/PP3PPP/RNBQ1RK1 b kq - 0 8", prompt: "Closed Ruy Lopez. White's bishop on b3 is the famous Spanish bishop, eyeing f7. Black to move. Find the move that begins to challenge or eliminate this strong piece.", solution: "Na5", explanation: "**Na5** attacks the b3 bishop. White typically retreats with **Bc2**, but now the maneuver continues with Black playing ...c5, ...Nc6, etc. The key idea: Black recognized White's good piece, attacked it, and forced concessions. Whether the trade actually happens or the bishop just gets driven to a worse square, Black has scored points." },
+      // ─── Your move: identify the bad-bishop plan ──────────────────────────
+      { kind: 'text', md: "## Your move: spot the bad-bishop plan\n\nBack to a slightly different starting structure. Black's c8 bishop is still bad. White's bishop is on e2. Find Black's structural plan." },
 
-      { type: "heading", value: "How to find these trades in YOUR games" },
-      { type: "text", value: "Step-by-step process:\n\n1. **Identify your worst piece.** Look at each piece — which has the fewest moves, the most limited future, the saddest job?\n2. **Identify the opponent's best piece.** Which of their pieces is most active or most central to their plans?\n3. **Find a move sequence that puts these two on the same square.** Sometimes it's one move; sometimes a 4-move maneuver.\n4. **Make the trade.** Even if it costs a tempo, a worse piece for a better piece is a net gain.\n\nThis process should run in the background of every middlegame decision. It pays dividends in literally every game." },
+      { kind: 'set-position', fen: 'r1bqkb1r/pp3ppp/2n1pn2/2pp4/3P4/2N1PN2/PPP1BPPP/R1BQK2R b KQkq - 0 6', orientation: 'black' },
+      { kind: 'highlight', squares: ['c8'], color: 'red' },
+      { kind: 'highlight', squares: ['e2'], color: 'green' },
+      { kind: 'pause', ms: 1500 },
+      { kind: 'clear-shapes' },
 
-      { type: "quote", value: "\"When you don't know what to do, look for your worst piece and improve it.\" — variously attributed to Makogonov, Petrosian, and many others. The trade version is just the radical extension: if you can't improve it, get rid of it." }
+      { kind: 'your-move',
+        san: 'b6',
+        hint: "Black's c8 bishop is bad. White's e2 bishop is fine. Find the pawn move that prepares the bad-for-good trade.",
+        wrongHint: "Think ...b6 then ...Ba6. The bishop reaches a6 and offers itself for the e2 bishop. Black trades the worst piece on the board for one of White's working pieces.",
+        rightExplain: "**b6!** prepares ...Ba6. The bishop rolls down the a6 diagonal and offers itself for trade — Black's worst piece for one of White's developed minor pieces. Even though it costs a tempo, the structural improvement is worth it. This is the bad-for-good trade in pure form." },
+
+      { kind: 'pause', ms: 1500 },
+
+      // ─── Spanish bishop: White's good piece ────────────────────────────────
+      { kind: 'text', md: "## Mirror image: the Spanish bishop\n\nNow flip the perspective. In the Ruy Lopez, White's light-squared bishop ends up on b3 after Bb5-a4-b3 — staring at f7 forever. It's the most famous **good piece** in opening theory. Black's whole long-term plan in many Ruy Lopez lines is to trade it off." },
+
+      { kind: 'set-position', fen: 'r1bq1rk1/2p1bppp/p1np1n2/1p2p3/3PP3/1BP2N2/PP3PPP/RNBQ1RK1 b kq - 0 8', orientation: 'black' },
+      { kind: 'highlight', squares: ['b3'], color: 'green' },
+      { kind: 'callout', square: 'b3', text: "The Spanish bishop on b3 is White's best piece. It pressures f7 forever and supports any d4-d5 break. Black's strategic priority: get rid of it.", color: 'green', durationMs: 5500 },
+      { kind: 'arrow', from: 'c6', to: 'a5', color: 'red' },
+      { kind: 'callout', square: 'a5', text: "...Na5 attacks the bishop. White usually retreats with Bc2, conceding control of the a8-h1 diagonal — or trades and Black recaptures with the c-pawn opening lines.", color: 'red', durationMs: 5500 },
+      { kind: 'pause', ms: 2000 },
+      { kind: 'clear-shapes' },
+
+      { kind: 'your-move',
+        san: 'Na5',
+        hint: "Black to move. White's b3 bishop is the famous Spanish bishop. Find the knight move that attacks it and forces a concession.",
+        wrongHint: "...Na5 hits the bishop on b3. White either retreats (Bc2) or trades — either way, Black's knight has done its job by removing or relocating White's best piece.",
+        rightExplain: "**Na5!** attacks the Spanish bishop. After Bc2, the bishop is much less active on c2 than it was on b3. After Bxa5 or any other trade, the b3 piece is gone entirely. Black has converted a 'bad' knight on the rim into the elimination of White's best piece." },
+
+      { kind: 'pause', ms: 1500 },
+
+      // ─── The scanning routine ──────────────────────────────────────────────
+      { kind: 'text', md: "## Your scanning routine\n\nIn every middlegame, run this loop every few moves:\n\n1. **Walk through your pieces. Which one has the fewest moves and the saddest job?** That's your worst piece.\n2. **Walk through their pieces. Which one is doing the most work for them?** That's their best piece.\n3. **Can I find a sequence that lands my worst on a square that meets their best?** Sometimes one move; sometimes a 4-move plan (Bd7-e8-h5).\n4. **Make the trade — even at a tempo's cost.**\n\nIf you do this consistently, you'll improve faster than from any tactics drill. Bad-for-good trades compound." },
+
+      { kind: 'text', md: "## Wrap-up\n\nTrading your bad piece for their good piece is the closest thing chess has to a free upgrade. Recognize the pattern, plan the maneuver, take the tempo hit. The puzzles below drill identifying the bad piece and the path to the trade." },
+
+      // ─── End-of-lesson puzzles ─────────────────────────────────────────────
+      {
+        kind: 'puzzle',
+        fen: 'r1bqkb1r/pp3ppp/2n1pn2/2pp4/3P4/2N1PN2/PPP1BPPP/R1BQK2R b KQkq - 0 6',
+        solution: ['b6'],
+        themes: ['good-piece-bad-piece', 'french-bishop'],
+        prompt: "**Puzzle 1.** Black to move. The c8 bishop is buried behind its own pawns. Find the pawn move that prepares to trade it off via a6.",
+        explain: "...b6 prepares ...Ba6, swinging Black's worst piece into a trade with White's e2 bishop. The bad-for-good principle in its most direct form."
+      },
+      {
+        kind: 'puzzle',
+        fen: 'r1bq1rk1/2p1bppp/p1np1n2/1p2p3/3PP3/1BP2N2/PP3PPP/RNBQ1RK1 b kq - 0 8',
+        solution: ['Na5'],
+        themes: ['good-piece-bad-piece', 'spanish-bishop'],
+        prompt: "**Puzzle 2.** Black to move. White's b3 bishop (the Spanish bishop) is the most dangerous piece on the board. Find the move that hunts it.",
+        explain: "...Na5! attacks the bishop. White retreats with Bc2 (passive square) or allows ...Nxb3, and either way Black has removed or weakened White's best piece."
+      },
+      {
+        kind: 'puzzle',
+        fen: 'rnbqkbnr/ppp2ppp/4p3/3pP3/3P4/8/PPP2PPP/RNBQKBNR b KQkq - 0 3',
+        solution: ['c5'],
+        themes: ['good-piece-bad-piece', 'french-defence'],
+        prompt: "**Puzzle 3.** Classic French structure. Black to move. Play the move that opens the diagonal for the future bishop trade AND attacks White's center.",
+        explain: "...c5! is the principled French move. Attacks d4 and (more subtly) prepares to open the c8-h3 diagonal for the eventual ...Bd7-Bb5 trade. Multiple Black plans, all of them based on getting the bad bishop into play."
+      },
+      {
+        kind: 'puzzle',
+        fen: 'r2q1rk1/pp2bppp/2n1pn2/2bp4/3P4/2N1PN2/PP1BBPPP/R2Q1RK1 b - - 0 10',
+        solution: ['Bxd4'],
+        themes: ['good-piece-bad-piece', 'trade'],
+        prompt: "**Puzzle 5.** Black to move. White's d4 pawn is supported, but Black's c5 bishop attacks it. Take the central pawn and improve the structure.",
+        explain: "...Bxd4! Black's bishop captures the central pawn. After Nxd4 Nxd4, Black has traded the active c5 bishop for the d-pawn AND eliminated White's f3 knight in the recapture sequence. Whether or not it's strictly best, the lesson is the principle of evaluating trades by what each piece does."
+      }
     ],
-    quiz: [
-      { question: "A 'bad' piece is best characterized as one that:", options: ["Was captured on the wrong square", "Has limited mobility, no good role, and often blocked by its own pawns", "Is worth fewer points than the standard scale says", "Has been moved more than three times"], answer: 1, explanation: "Bad pieces are limited in scope and role. The textbook example is the French Defence c8-bishop, buried behind its own pawns." },
-      { question: "Trading your bad piece for the opponent's good piece is approximately:", options: ["A tactical motif, not a strategic one", "One of the most reliable strategic gains in chess", "Only useful in the endgame", "Generally a mistake — keep your pieces and challenge their good ones with pawns"], answer: 1, explanation: "It's one of the most reliable, universally applicable strategic improvements available. Every level of chess uses it." },
-      { question: "In the French Defence, what's Black's classic plan regarding bishops?", options: ["Trade off both bishops as fast as possible", "Trade off the c8 bishop ('the French bishop') because it's badly placed", "Keep both bishops at all costs", "Only trade if behind in material"], answer: 1, explanation: "The c8 bishop is buried by Black's own pawns on e6/d5/c6. Trading it is a primary strategic theme of the French." }
-    ],
-    further: [
-      "Watson, *Mastering the Chess Openings* vol 2 — extensive treatment of the French bishop.",
-      "Soltis, *Pawn Structure Chess* — chapters on Carlsbad and Ruy Lopez bishop trades.",
-      "Petrosian's collected games — full of brilliant 'bad-for-good' trades."
-    ]
   },
 
   // ───────────────────────────────────────────────────────────────────────────

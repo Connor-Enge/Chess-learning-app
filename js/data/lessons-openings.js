@@ -1,8 +1,7 @@
 // LESSONS_OPENINGS — META lessons about openings (the "Openings" lesson track).
-// These teach HOW to think about openings; encyclopedic theory lives in the
-// Opening Explorer (js/data/openings.js). To wire these into the lesson view,
-// import LESSONS_OPENINGS in js/content-loader.js the same way the other
-// addendum modules are imported.
+// Migrated to the chessground-script schema (see lessons-ref-knight-fork.js).
+// Each lesson teaches HOW to think about openings; encyclopedic theory lives in
+// the Opening Explorer (js/data/openings.js).
 
 export const LESSONS_OPENINGS = [
   // ────────────────────────────────────────────────────────────────────────
@@ -15,79 +14,118 @@ export const LESSONS_OPENINGS = [
     objective: "Apply control-the-centre, develop, king-safety — and know when each rule deserves to be broken.",
     tags: ["opening", "fundamentals"],
     next: "op-002-repertoire",
-    content: [
+
+    startFen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+
+    script: [
+      // ─── Concept ────────────────────────────────────────────────────────
+      { kind: 'text', md: "## The three rules\n\nAlmost all opening theory is a footnote on three ideas. Ignore them and you get a bad position before move ten. Obey them mechanically and you miss every gambit. The point of this lesson is to *internalise* them so you can break them on purpose.\n\n1. **Control the centre** — pawns or pieces that influence d4, e4, d5, e5.\n2. **Develop your pieces** — knights before bishops, generally.\n3. **Castle early** — king safety first." },
+
+      // Highlight the four central squares on the starting position.
+      { kind: 'highlight', squares: ['d4','e4','d5','e5'], color: 'green' },
+      { kind: 'callout', square: 'e4', text: "These four squares are the centre. Whoever influences them controls where the pieces go for the next 20 moves.", color: 'green', durationMs: 4500 },
+      { kind: 'pause', ms: 1500 },
+      { kind: 'clear-shapes' },
+
+      // ─── Walk through the Italian Pianissimo move-by-move ───────────────
+      { kind: 'text', md: "## Watch the Italian Pianissimo\n\nThe Italian is a textbook execution of all three principles. Both sides claim a central pawn, develop minor pieces in a sensible order, and castle by move four. We'll play through it; pay attention to *why* each move is principled." },
+
+      { kind: 'play-move', san: 'e4', explain: "1.e4 — White plants a pawn in the centre and frees the queen and the f1-bishop in one move. Maximum opening efficiency." },
+      { kind: 'pause', ms: 800 },
+      { kind: 'play-move', san: 'e5', explain: "1...e5 — Black mirrors. Symmetric central claim; both sides know the rules." },
+      { kind: 'highlight', squares: ['e4','e5'], color: 'green' },
+      { kind: 'callout', square: 'e4', text: "Both central pawns staring at each other. Whoever supports their pawn better gets the better game.", color: 'green', durationMs: 3500 },
+      { kind: 'pause', ms: 1500 },
+      { kind: 'clear-shapes' },
+
+      { kind: 'play-move', san: 'Nf3', explain: "2.Nf3 — develops a piece, attacks Black's e5 pawn, and prepares to castle. *Knights before bishops* in action." },
+      { kind: 'arrow', from: 'f3', to: 'e5', color: 'red' },
+      { kind: 'callout', square: 'e5', text: "The knight attacks e5. Black has to defend it — and the natural defender is also a developing move.", color: 'yellow', durationMs: 4000 },
+      { kind: 'pause', ms: 1500 },
+      { kind: 'clear-shapes' },
+
+      // First your-move checkpoint — Nc6
+      { kind: 'your-move',
+        san: 'Nc6',
+        hint: "Black to move. White's knight attacks e5. Defend the pawn with a developing move that follows the principles (knights before bishops).",
+        wrongHint: "There's a move that defends e5 AND develops a piece toward the centre AND prepares ...d5. It's the *knight* — knights before bishops.",
+        rightExplain: "Nc6! Three principled jobs at once: defends e5, develops a piece, and supports a future ...d5 break. The bishop will come out next, *after* the knight." },
+
+      { kind: 'play-move', san: 'Bc4', explain: "3.Bc4 — White's bishop comes to the most active square it has, eyeing the f7 pawn (the weakest square in Black's camp) and preparing to castle." },
+      { kind: 'arrow', from: 'c4', to: 'f7', color: 'red' },
+      { kind: 'callout', square: 'f7', text: "Always notice when a bishop targets f7 (or f2 vs White). It's the most fragile square because only the king defends it.", color: 'yellow', durationMs: 4500 },
+      { kind: 'pause', ms: 1500 },
+      { kind: 'clear-shapes' },
+
+      { kind: 'play-move', san: 'Bc5', explain: "3...Bc5 — Black mirrors with the same idea, eyeing f2." },
+      { kind: 'play-move', san: 'O-O', explain: "4.O-O — White castles on move four. Exemplary king safety. The king is now tucked into the corner; the rook joins the action on f1." },
+      { kind: 'highlight', squares: ['g1','f1'], color: 'green' },
+      { kind: 'callout', square: 'g1', text: "King safe in the corner, rook activated. This is what 'castle early' looks like.", color: 'green', durationMs: 3500 },
+      { kind: 'pause', ms: 1500 },
+      { kind: 'clear-shapes' },
+
+      { kind: 'play-move', san: 'Nf6', explain: "4...Nf6 — Black develops the second knight, attacking e4." },
+      { kind: 'play-move', san: 'd3', explain: "5.d3 — Quiet support for the e4 pawn, opens the c1-bishop's diagonal. The 'piano' (quiet) approach." },
+      { kind: 'play-move', san: 'd6', explain: "5...d6 — Symmetric and solid." },
+      { kind: 'play-move', san: 'c3', explain: "6.c3 — A useful little move: prepares a future d3-d4 push and gives the bishop on c4 a retreat square at b3." },
+
+      // Second your-move checkpoint — castle Black's king
+      { kind: 'your-move',
+        san: 'O-O',
+        hint: "Black to move. Both knights are out, both bishops are developed, the centre is settled. There's exactly ONE more principled move to complete the opening.",
+        wrongHint: "The king is still on e8. The third opening principle says...",
+        rightExplain: "O-O! Both sides have completed the opening by move six. King is safe, all four minor pieces are out, the rook joins the game. From here it's a real middlegame — and neither side has lost a tempo." },
+
+      { kind: 'callout', square: 'g8', text: "Both kings castled, both armies developed. This position is theoretically equal — but you got here by *understanding*, not memorising.", color: 'green', durationMs: 4500 },
+      { kind: 'pause', ms: 2000 },
+      { kind: 'clear-shapes' },
+
+      // ─── When to break the rules ────────────────────────────────────────
+      { kind: 'text', md: "## When to break the rules\n\n- **You CAN delay castling** when the centre is closed and the king is safer in the middle than committed to a side. A common King's Indian theme.\n- **You CAN move a piece twice** when it's attacked, or when a forcing tactic exists.\n- **You CAN ignore development for a tempo** when sacrificing for initiative — that's what gambits do.\n- **You CANNOT** chase a single pawn with the queen on move four while the minors stand at home. That's the *Scholar's Mate* family of self-destruction. The rule of thumb: bring the queen out late, *after* the minor pieces." },
+
+      { kind: 'text', md: "## Wrap-up\n\nCentre, develop, castle. Three rules, two dozen famous openings, every game you'll ever play. Internalise the principles and you'll out-play opponents who memorised theory but never understood why.\n\nThe puzzles below test the principles in action. Solve at least 3 to mark this lesson complete." },
+
+      // ─── End-of-lesson puzzles ──────────────────────────────────────────
       {
-        type: "text",
-        value:
-          "Most opening theory is a footnote on three ideas. If you ignore them you get a bad position before move ten. If you obey them mechanically you miss every gambit. The point of this lesson is to *internalise* them so you can break them on purpose."
+        kind: 'puzzle',
+        fen: 'rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2',
+        solution: ['Nc6'],
+        themes: ['opening','development'],
+        prompt: "**Puzzle 1.** Black to move. White's knight attacks e5. Find the principled defence.",
+        explain: "Nc6 — defends e5 AND develops AND supports a future ...d5. Knights before bishops, every time."
       },
       {
-        type: "heading",
-        value: "The three rules"
+        kind: 'puzzle',
+        fen: 'r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4',
+        solution: ['O-O'],
+        themes: ['opening','king-safety'],
+        prompt: "**Puzzle 2.** White to move. Three minors developed, the centre is fluid. Apply the third principle.",
+        explain: "O-O — castle early. Both rooks unblocked next, king safe in the corner, ready for the middlegame. This is the textbook Italian move-order."
       },
       {
-        type: "text",
-        value:
-          "**1. Control the centre.** Pawns or pieces that influence d4, e4, d5, e5. Central pawns shut down the opponent's pieces and open lanes for your own.\n\n**2. Develop your pieces** (knights before bishops, *generally*). A piece on its starting square does nothing. Move each minor piece exactly once in the opening unless there is a tactical reason to move it again.\n\n**3. Castle early — king safety first.** Most miniatures are punishments for an uncastled king sitting in the centre with files about to open."
+        kind: 'puzzle',
+        fen: 'r1bqkbnr/pppp1ppp/2n5/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 2 3',
+        solution: ['Bc4'],
+        themes: ['opening','development'],
+        prompt: "**Puzzle 3.** White to move. Knight is out, Black has defended e5 with Nc6. Develop the bishop.",
+        explain: "Bc4 — the Italian Game. Bishop takes its most active diagonal, targets f7, prepares to castle. Bb5 (Spanish) is also excellent — both are principled. The point: develop the bishop *after* the knight, to its best square."
       },
       {
-        type: "pgn",
-        pgn: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. O-O Nf6 5. d3 d6 6. c3 O-O",
-        annotations: {
-          1: "**Centre.** Both sides claim a central pawn.",
-          3: "**Develop.** Knight before bishop, attacking e5.",
-          4: "Black mirrors. Two pieces out, central tension established.",
-          5: "**King safety.** White castles on move four — exemplary.",
-          7: "A reserve square for the bishop and a future d4 break.",
-          9: "Both sides have completed the opening by move six. From here it is a real game; no one has weak squares, no one has lost time."
-        },
-        caption: "The Italian Pianissimo — a textbook execution of all three principles."
+        kind: 'puzzle',
+        fen: 'rnbqkb1r/pppp1ppp/5n2/4p3/4P3/2N5/PPPP1PPP/R1BQKBNR w KQkq - 2 3',
+        solution: ['Nf3'],
+        themes: ['opening','development'],
+        prompt: "**Puzzle 4.** Vienna Game position. White to move. Develop the second knight to its best square.",
+        explain: "Nf3 — attacks e5, develops, prepares castling. Even when you've started with a less common move (2.Nc3 instead of 2.Nf3), the principles still rule: get the second knight out toward the centre."
       },
       {
-        type: "heading",
-        value: "When to break the rules"
-      },
-      {
-        type: "text",
-        value:
-          "- **You CAN delay castling** when the centre is closed and your king is safer in the middle than after committing to a side. A common King's Indian theme.\n- **You CAN move a piece twice** when the opponent attacks it, or when there is a forcing tactic.\n- **You CAN ignore development for a tempo** when sacrificing for initiative — that is what gambits do.\n- **You CANNOT** chase a single pawn with your queen on move four while your minors stand at home. That is the *Scholar's Mate* family of self-destruction. The rule of thumb: bring the queen out late, after the minor pieces."
-      },
-      {
-        type: "interactive",
-        fen: "rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2",
-        prompt: "White just played 2.Nf3, attacking e5 and developing. Black to move — apply the principles.",
-        solution: "Nc6",
-        explanation:
-          "**Nc6** does three principled jobs at once: it develops a piece, defends the attacked e5 pawn, and supports a future ...d5 break. Notice it is the *knight*, not the bishop. Knights before bishops, because the knight has fewer good squares so its choice is more obvious."
+        kind: 'puzzle',
+        fen: 'r1bqkb1r/pppp1ppp/2n2n2/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4',
+        solution: ['O-O'],
+        themes: ['opening','king-safety'],
+        prompt: "**Puzzle 5.** Spanish (Ruy López) position, White to move. Both knights out, the bishop is on b5. Finish the opening properly.",
+        explain: "O-O — exactly the same idea as the Italian. Castle on move four whenever it's available; the rook on f1 joins the game and the king is out of the centre before any files open."
       }
-    ],
-    quiz: [
-      {
-        question: "Why is 'knights before bishops' a useful default?",
-        options: [
-          "Knights are more valuable than bishops.",
-          "Knights have fewer reasonable squares, so the choice is easier and bishops can be developed once you see the resulting pawn structure.",
-          "It is a FIDE rule."
-        ],
-        answer: 1,
-        explanation:
-          "Knights belong on f3/c3 (or f6/c6) in most openings. Bishops have several plausible diagonals; commit them after the pawn structure tells you which diagonal is best."
-      },
-      {
-        question: "Which is the WORST violation of opening principles?",
-        options: [
-          "Delaying castling because the centre is closed.",
-          "Moving a knight twice to win a tempo on the queen.",
-          "Bringing the queen out on move 3 to chase a pawn while the minor pieces stay home."
-        ],
-        answer: 2,
-        explanation:
-          "Early queen forays lose tempo to natural developing moves and put the queen at risk. The other two are legitimate, situational decisions."
-      }
-    ],
-    further: [
-      "Italian Game and Spanish (Ruy López) are the canonical principle-respecting openings — see the Opening Explorer.",
-      "Famous demonstration: Morphy vs Duke of Brunswick & Count Isouard, Paris Opera 1858."
     ]
   },
 
@@ -101,94 +139,112 @@ export const LESSONS_OPENINGS = [
     objective: "Pick openings that match your style; understand width vs depth; cover both colours sensibly.",
     tags: ["opening", "strategy"],
     next: "op-003-how-to-study",
-    content: [
+
+    startFen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+
+    script: [
+      // ─── Concept ────────────────────────────────────────────────────────
+      { kind: 'text', md: "## A repertoire is a *small* toolkit\n\nA repertoire is a small set of openings you actually know — not a library you've heard of, a toolkit you've used. The most common amateur mistake is **breadth without depth**: 20 openings, 5 moves deep each, every game out of book by move 6 with no plan.\n\nTwo openings deep beats twenty openings shallow. Pick one White system and one defence to each of 1.e4 / 1.d4, learn them properly, and you're set." },
+
+      { kind: 'text', md: "## Classical vs hypermodern, 1.e4 vs 1.d4\n\n- **1.e4 — open games.** Sharp, tactical, lots of forcing lines. Italian, Spanish, Scotch as White; Sicilian, French, Caro-Kann, Petroff as Black. Suits players who like calculation.\n- **1.d4 — closed/semi-closed games.** Slower manoeuvring, structural play. QGD, Slav, Nimzo-Indian, King's Indian, Grünfeld. Suits players who like strategy.\n- **Hypermodern (Réti, English, KIA).** Let Black occupy the centre, then strike at it from the flanks. Suits patient players.\n- **Flank openings (1.b3, 1.g3).** Surprise weapons; light on theory, heavy on understanding.\n\nMatch the opening to *yourself*, not to the latest super-GM." },
+
+      // ─── Walk through Caro-Kann Classical — model 1.e4 defence ─────────
+      { kind: 'text', md: "## Watch a model Black repertoire move: the Caro-Kann\n\nThe Caro-Kann is a representative \"as Black vs 1.e4\" choice for solid players. We'll walk through the Classical Variation — and the *idea* of the opening is more important than the exact moves. Pay attention to where the bishop on c8 ends up." },
+
+      { kind: 'play-move', san: 'e4', explain: "1.e4 — White claims the centre." },
+      { kind: 'play-move', san: 'c6', explain: "1...c6 — the Caro-Kann. Black prepares ...d5 with pawn support, avoiding the heavy theory of the Sicilian and the bad bishop of the French." },
+      { kind: 'play-move', san: 'd4', explain: "2.d4 — White takes the full centre." },
+      { kind: 'play-move', san: 'd5', explain: "2...d5 — challenging the centre with full pawn support." },
+      { kind: 'play-move', san: 'Nc3', explain: "3.Nc3 — develops, attacks d5." },
+      { kind: 'play-move', san: 'dxe4', explain: "3...dxe4 — Black accepts the exchange." },
+      { kind: 'play-move', san: 'Nxe4', explain: "4.Nxe4 — and now the critical Caro moment for Black." },
+
+      { kind: 'highlight', squares: ['c8'], color: 'yellow' },
+      { kind: 'arrow', from: 'c8', to: 'f5', color: 'green' },
+      { kind: 'callout', square: 'f5', text: "The whole point of the Caro-Kann: the c8-bishop gets out BEFORE Black plays ...e6. In the French, this bishop is locked behind its own pawns. Here it goes to f5, active and free.", color: 'green', durationMs: 6000 },
+      { kind: 'pause', ms: 2000 },
+      { kind: 'clear-shapes' },
+
+      // First your-move — Bf5
+      { kind: 'your-move',
+        san: 'Bf5',
+        hint: "Black to move. The whole point of the Caro is to develop the c8-bishop OUTSIDE the pawn chain before playing ...e6. Where does it go?",
+        wrongHint: "The bishop wants to come to f5 — its most active diagonal. From there it eyes the white kingside and supports Black's structure. The French Defence's main weakness is having this bishop locked in behind ...e6; the Caro fixes it.",
+        rightExplain: "Bf5! Knowing this *plan* — \"get the bishop out before ...e6\" — is more valuable than memorising 15 moves of the Najdorf. This is what \"depth\" means: you understand the opening's purpose." },
+
+      { kind: 'play-move', san: 'Ng3', explain: "5.Ng3 — kicks the bishop and gains a tempo. Standard." },
+      { kind: 'play-move', san: 'Bg6', explain: "5...Bg6 — bishop retreats but stays active on the b1-h7 diagonal." },
+      { kind: 'play-move', san: 'h4', explain: "6.h4 — White probes, threatening h5 to chase the bishop further." },
+      { kind: 'play-move', san: 'h6', explain: "6...h6 — necessary preparation; Black makes a luft for the bishop on h7." },
+      { kind: 'play-move', san: 'Nf3', explain: "7.Nf3 — natural development." },
+      { kind: 'play-move', san: 'Nd7', explain: "7...Nd7 — Black develops the queenside knight, supporting a future ...Ngf6 and ...c5." },
+      { kind: 'play-move', san: 'h5', explain: "8.h5 — kicking the bishop one more time." },
+      { kind: 'play-move', san: 'Bh7', explain: "8...Bh7 — the bishop's final home. It looks passive but it's a real piece behind the pawn wall." },
+
+      { kind: 'callout', square: 'h7', text: "Black has no weaknesses, no exposed pieces, a clear plan: ...e6, ...Ngf6, ...Bd6 or ...Be7, ...O-O, then ...c5. *That* is depth — you know what you're doing for 20 more moves.", color: 'green', durationMs: 5500 },
+      { kind: 'pause', ms: 2000 },
+
+      // Second your-move — develop a piece (Ngf6) — chooses the natural Caro plan
+      { kind: 'play-move', san: 'Bd3', explain: "9.Bd3 — White develops, offers the bishop trade." },
+      { kind: 'play-move', san: 'Bxd3', explain: "9...Bxd3 — Black happily trades; the h7-bishop's job was to come out before ...e6, not to win the game." },
+      { kind: 'play-move', san: 'Qxd3', explain: "10.Qxd3 — recapture." },
+      { kind: 'play-move', san: 'e6', explain: "10...e6 — only NOW does the e-pawn move, after the c8-bishop has already escaped. Compare this to the French." },
+      { kind: 'play-move', san: 'Bd2', explain: "11.Bd2 — White prepares O-O-O." },
+
+      { kind: 'your-move',
+        san: 'Ngf6',
+        hint: "Black to move. Develop the kingside knight to its best square.",
+        wrongHint: "The kingside knight wants to come to f6 — natural development, eyes e4, prepares ...Be7 + ...O-O. (The 'g' disambiguation is needed because the Nd7 knight could also go to f6.)",
+        rightExplain: "Ngf6! Knight to its best square; ...Be7 and ...O-O follow. Black has finished the opening with no weaknesses, an active bishop trade behind them, and a clear middlegame plan. This is what a complete opening understanding feels like." },
+
+      { kind: 'pause', ms: 1500 },
+
+      // ─── Cover both colours ─────────────────────────────────────────────
+      { kind: 'text', md: "## Cover both colours\n\nA complete repertoire needs four pieces:\n\n- One opening as **White** (e.g. 1.e4 → Italian + an anti-Sicilian + lines vs Caro/French).\n- One reply to **1.e4 as Black** (Caro-Kann, French, Sicilian, e4 e5, Petroff).\n- One reply to **1.d4 as Black** (QGD, Slav, KID, Nimzo+QID, Grünfeld).\n- One reply to **everything else** (vs 1.Nf3, 1.c4, 1.b3 — usually transposes to one of the above).\n\nThat's it. Four openings, learned deeply. Most flank openings transpose into one of the four; you don't need a separate system for every White first move." },
+
+      { kind: 'text', md: "## Style cheat sheet\n\n- **Tactical / aggressive:** 1.e4; Sicilian, King's Indian, Grünfeld.\n- **Positional / strategic:** 1.d4 or 1.c4; Caro-Kann, French, QGD, Slav, Catalan.\n- **Solid / drawish:** 1.d4 London System; Petroff, Berlin Wall, QGD Lasker.\n- **Surprise / dynamic:** Scotch, Vienna; Albin, Benko, Sveshnikov.\n\nIf you hate calculating long forced lines, do not play the Najdorf because Magnus does. If you fall asleep in slow positions, do not pick the London. Match the opening to the player." },
+
+      // ─── End-of-lesson puzzles ──────────────────────────────────────────
       {
-        type: "text",
-        value:
-          "A repertoire is a *small* set of openings you actually know. Not a library you've heard of — a toolkit you've used. The most common amateur mistake is breadth without depth: 20 openings, 5 moves deep each, every game out of book by move 6 with no plan."
+        kind: 'puzzle',
+        fen: 'rnbqkbnr/pp2pppp/2p5/8/4N3/8/PPPP1PPP/R1BQKBNR b KQkq - 0 4',
+        solution: ['Bf5'],
+        themes: ['opening','repertoire'],
+        prompt: "**Puzzle 1.** Caro-Kann, after 4.Nxe4. Find the move that defines the opening.",
+        explain: "Bf5 — get the c8-bishop out BEFORE ...e6. This is the entire point of the Caro: solving the French Defence's bad-bishop problem."
       },
       {
-        type: "heading",
-        value: "Classical vs hypermodern, 1.e4 vs 1.d4"
+        kind: 'puzzle',
+        fen: 'rnbqkb1r/pp2pppp/3p1n2/2pP4/2P5/2N5/PP2PPPP/R1BQKBNR w KQkq - 0 4',
+        solution: ['e4'],
+        themes: ['opening','repertoire'],
+        prompt: "**Puzzle 2.** Benoni-style. White to move — claim the full centre.",
+        explain: "e4 — White builds a big pawn centre with d5 + e4 + c4. This is the principled response to ...c5: don't get pushed around, claim the most space possible."
       },
       {
-        type: "text",
-        value:
-          "- **1.e4 — open games.** Sharp, tactical, lots of forcing lines. Italian, Spanish, Scotch as White; the Sicilian, French, Caro-Kann, Petroff as Black. Suits players who like calculation.\n- **1.d4 — closed/semi-closed games.** Slower manoeuvring, structural play, long-term plans. QGD, Slav, Nimzo-Indian, King's Indian, Grünfeld. Suits players who like strategy.\n- **Hypermodern (Réti 1.Nf3, English 1.c4, KIA).** Let Black occupy the centre, then strike at it from the flanks. Suits patient players who like piece play over pawn play.\n- **Flank openings (1.b3, 1.g3, 1.b4).** Surprise weapons; light on theory, heavy on understanding."
+        kind: 'puzzle',
+        fen: 'rnbqkb1r/pppp1ppp/5n2/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3',
+        solution: ['Nxe5'],
+        themes: ['opening','petroff'],
+        prompt: "**Puzzle 3.** Petroff Defence. White to move — there's a tactical try here.",
+        explain: "Nxe5 — White grabs the pawn. This is the main line of the Petroff. Black recaptures with ...d6 (not ...Nxe4??, which loses to the famous Marshall trap Qe2)."
       },
       {
-        type: "text",
-        value:
-          "Match the opening to *yourself*, not to the latest super-GM. If you hate calculating long forced lines, do not play the Najdorf because Magnus does. If you go to sleep in slow positions, do not pick the London."
+        kind: 'puzzle',
+        fen: 'rnbqkbnr/ppp2ppp/4p3/3p4/3PP3/8/PPP2PPP/RNBQKBNR w KQkq - 0 3',
+        solution: ['Nc3'],
+        themes: ['opening','french'],
+        prompt: "**Puzzle 4.** French Defence. White to move — develop with central tension.",
+        explain: "Nc3 — the main-line French. White develops AND defends e4. Other tries (3.Nd2 Tarrasch, 3.e5 Advance) are also playable; Nc3 is the principled developing move that keeps all of White's options open."
       },
       {
-        type: "heading",
-        value: "Cover both colours"
-      },
-      {
-        type: "text",
-        value:
-          "A complete repertoire needs four pieces:\n- One opening as **White** (e.g. you play 1.e4 → know Italian + an anti-Sicilian + lines vs Caro/French).\n- One reply to **1.e4 as Black** (Caro-Kann, French, Sicilian, e4 e5, Petroff).\n- One reply to **1.d4 as Black** (QGD, Slav, KID, Nimzo+QID, Grünfeld).\n- One reply to **everything else** (vs 1.Nf3, 1.c4, 1.b3 — usually you can transpose to one of the above)."
-      },
-      {
-        type: "pgn",
-        pgn: "1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Bf5 5. Ng3 Bg6 6. h4 h6 7. Nf3 Nd7 8. h5 Bh7 9. Bd3 Bxd3 10. Qxd3 e6 11. Bd2 Ngf6",
-        annotations: {
-          1: "Caro-Kann — a solid, strategic answer to 1.e4 that I'll use to demonstrate 'depth'.",
-          7: "Classical Variation. Black gives up the c8-bishop early but in return gets a rock-solid pawn structure and easy development.",
-          12: "**Black has no weaknesses, no exposed pieces, a clear plan** (...c5 or ...Qc7 + ...O-O-O). The opening achieved its job: a playable middlegame the Black side knows well. Two GMs both knowing this line through move 20 is normal — *that* is depth."
-        },
-        caption: "Caro-Kann Classical — a representative 'as Black vs 1.e4' choice for solid players."
-      },
-      {
-        type: "heading",
-        value: "Style cheat sheet"
-      },
-      {
-        type: "text",
-        value:
-          "- **Tactical / aggressive:** 1.e4; Sicilian, King's Indian, Grünfeld.\n- **Positional / strategic:** 1.d4 or 1.c4; Caro-Kann, French, QGD, Slav, Catalan.\n- **Solid / drawish:** 1.d4 London System; Petroff, Berlin Wall, QGD Lasker.\n- **Surprise / dynamic:** Scotch, Vienna; Albin Counter-Gambit, Benko, Sveshnikov."
-      },
-      {
-        type: "interactive",
-        fen: "rnbqkbnr/pp2pppp/2p5/8/4N3/8/PPPP1PPP/R1BQKBNR b KQkq - 0 4",
-        prompt: "You're playing the Caro-Kann Classical as Black. White has captured on e4 with the knight. What's the main-line developing move?",
-        solution: "Bf5",
-        explanation:
-          "**Bf5** — the whole point of the Caro-Kann. Black solves the perennial French-Defence problem (a bad light-squared bishop) by developing it *outside* the pawn chain before playing ...e6. Knowing this *plan* is more valuable than memorising 15 moves of the Najdorf."
+        kind: 'puzzle',
+        fen: 'rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2',
+        solution: ['Nf3'],
+        themes: ['opening','sicilian'],
+        prompt: "**Puzzle 5.** Sicilian Defence. White to move — start the Open Sicilian setup.",
+        explain: "Nf3 — preparing 3.d4. This is the gateway to the Open Sicilian (the heaviest theory in chess). If you'd rather avoid that, 2.c3 (Alapin) or 2.Nc3 (Closed Sicilian) are completely respectable anti-Sicilian choices for the repertoire-minded player."
       }
-    ],
-    quiz: [
-      {
-        question: "An amateur knows 18 openings, 4-5 moves deep each. What's the biggest issue?",
-        options: [
-          "They don't know enough openings.",
-          "They are out of theory and out of plans by move 6 in every game.",
-          "They should pick more aggressive lines."
-        ],
-        answer: 1,
-        explanation: "Width without depth means you're improvising from move 6 onwards in every game. Two openings deep beats twenty shallow."
-      },
-      {
-        question: "You enjoy long manoeuvring games and dislike sharp tactics. Which White first move suits you better?",
-        options: ["1.e4", "1.d4", "It does not matter, style is a myth."],
-        answer: 1,
-        explanation: "1.d4 leads to slower, more structural games on average. 1.e4 tends to open the position and reward calculation."
-      },
-      {
-        question: "Which is NOT part of a complete repertoire?",
-        options: [
-          "A reply to 1.e4 as Black.",
-          "A reply to 1.d4 as Black.",
-          "A different system for every possible opening you might face."
-        ],
-        answer: 2,
-        explanation: "You only need one solid answer to each White first move. Most odd openings transpose to lines you already know."
-      }
-    ],
-    further: [
-      "Pick ONE of: Italian / Spanish / Scotch / London as your White system and play 50 games with it before adding another.",
-      "Most flank and irregular openings can be met by reaching a structure you already know."
     ]
   },
 
@@ -202,83 +258,106 @@ export const LESSONS_OPENINGS = [
     objective: "Study openings IDEAS-FIRST; use your own games as the curriculum; care more about resulting structure than move-12 theory.",
     tags: ["opening", "study-method"],
     next: "op-004-traps",
-    content: [
+
+    startFen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+
+    script: [
+      // ─── Concept ────────────────────────────────────────────────────────
+      { kind: 'text', md: "## Ideas before moves\n\nMost opening study is wasted because it's *move memorisation* divorced from understanding. You memorise 14 moves; your opponent plays the 4th-best move on move 6; you have no idea what to do because you never learned the *plans*.\n\nFor every opening you adopt, write down on one page:\n\n- The **pawn structure** it usually produces (IQP? Carlsbad? Maróczy? Closed centre?).\n- The **typical pawn breaks** for both sides (e.g. ...c5, ...e5, ...f5, ...b5).\n- **Where each minor piece belongs** (knights, bishops — what's their best square?).\n- **The middlegame plan** (minority attack? king-side storm? blockade the IQP?).\n- **The endgame implications** (who's better if queens come off on move 14?)." },
+
+      // ─── Walk through QGD Exchange — Carlsbad structure ────────────────
+      { kind: 'text', md: "## Watch a structure being born: the Carlsbad\n\nThe QGD Exchange Variation produces the *Carlsbad* pawn structure — and the entire game from move 7 onwards is about that structure. We'll play through it; the moves matter less than the resulting pawn formation." },
+
+      { kind: 'play-move', san: 'd4', explain: "1.d4 — Queen's pawn opening." },
+      { kind: 'play-move', san: 'd5', explain: "1...d5 — the classical reply." },
+      { kind: 'play-move', san: 'c4', explain: "2.c4 — the Queen's Gambit." },
+      { kind: 'play-move', san: 'e6', explain: "2...e6 — the Queen's Gambit Declined. Black supports d5 with the e-pawn." },
+      { kind: 'play-move', san: 'Nc3', explain: "3.Nc3 — adds pressure on d5." },
+      { kind: 'play-move', san: 'Nf6', explain: "3...Nf6 — natural development, defends d5 a third time." },
+
+      { kind: 'play-move', san: 'cxd5', explain: "4.cxd5 — White voluntarily resolves the central tension. This is the Exchange Variation, and the whole point is the structure that arises." },
+      { kind: 'play-move', san: 'exd5', explain: "4...exd5 — Black recaptures with the e-pawn (forced, basically)." },
+
+      { kind: 'highlight', squares: ['c6','d5','d4','e3'], color: 'yellow' },
+      { kind: 'callout', square: 'd5', text: "The Carlsbad is born. White will play e3 and have pawns on d4/e3; Black will play c6 and have pawns on c6/d5. *This* is what you study — not the move order.", color: 'yellow', durationMs: 6000 },
+      { kind: 'pause', ms: 2000 },
+      { kind: 'clear-shapes' },
+
+      { kind: 'play-move', san: 'Bg5', explain: "5.Bg5 — pin the f6 knight, eye potential trades on d5." },
+      { kind: 'play-move', san: 'c6', explain: "5...c6 — Black completes the Carlsbad pawn structure." },
+
+      { kind: 'highlight', squares: ['a2','b2','c6','d5'], color: 'green' },
+      { kind: 'arrow', from: 'b2', to: 'b4', color: 'green' },
+      { kind: 'arrow', from: 'b4', to: 'b5', color: 'green' },
+      { kind: 'callout', square: 'b5', text: "White's plan now: the *minority attack*. Two pawns (a, b) march to attack three (a, b, c) — eventually b5xc6, leaving Black with a weak isolated c-pawn. This is THE entire strategic point of 4.cxd5.", color: 'green', durationMs: 7000 },
+      { kind: 'pause', ms: 2500 },
+      { kind: 'clear-shapes' },
+
+      { kind: 'play-move', san: 'e3', explain: "6.e3 — solid support for d4." },
+      { kind: 'play-move', san: 'Be7', explain: "6...Be7 — develop." },
+      { kind: 'play-move', san: 'Bd3', explain: "7.Bd3 — bishop takes its best diagonal." },
+      { kind: 'play-move', san: 'Nbd7', explain: "7...Nbd7 — quiet development; the knight is heading to f8 then g6 (the famous Black manoeuvre in this structure)." },
+
+      // First your-move — castle
+      { kind: 'your-move',
+        san: 'Qc2',
+        hint: "White to move. Connect the rooks, prepare to castle either side, and indirectly support a future b2-b4 push (the minority attack).",
+        wrongHint: "Qc2 is the textbook move: lifts the queen off d1 onto a useful square, prepares O-O-O or O-O, and looks at h7 in case Black drops the guard. This is preparation for the minority attack.",
+        rightExplain: "Qc2! Multipurpose queen lift. Now O-O is one move away, the minority attack (b2-b4-b5) is on the horizon, and the queen is off the back rank. *Knowing this whole plan* matters more than the exact move." },
+
+      { kind: 'play-move', san: 'O-O', explain: "8...O-O — Black castles." },
+      { kind: 'play-move', san: 'Nf3', explain: "9.Nf3 — natural." },
+      { kind: 'play-move', san: 'Re8', explain: "9...Re8 — rook to the open file? Not yet, but it's a developing move." },
+      { kind: 'play-move', san: 'O-O', explain: "10.O-O — White castles kingside (sometimes O-O-O is preferred to support the b-pawn push, but kingside is the main line)." },
+      { kind: 'play-move', san: 'Nf8', explain: "10...Nf8 — the *minor piece dance* begins. Black's plan: Nf8-Ng6, Bd6, ...h6/g5 for kingside counterplay (or ...Ne4 for central play)." },
+
+      // Second your-move — Black's principled move
+      { kind: 'your-move',
+        san: 'Rab1',
+        hint: "White to move. Where does the queen-side rook belong if you're planning the minority attack b2-b4-b5?",
+        wrongHint: "Rab1 — the rook supports the future b-pawn push. White's whole queenside is now coordinated for the minority attack: Qc2, Rab1, b2-b4-b5xc6.",
+        rightExplain: "Rab1! Now b2-b4-b5xc6 is fully prepared. White is following a clear, well-known plan; Black has their own plan (kingside attack). Both sides are 'in book' even though no one is memorising specific moves — they're following structural plans." },
+
+      { kind: 'pause', ms: 2000 },
+
+      // ─── Use your own games ─────────────────────────────────────────────
+      { kind: 'text', md: "## Use your own games\n\n**The single most useful opening study you can do:** annotate your own losses and find the move you went out of book. *That* move tells you what to study next. The encyclopaedic line you don't need is the one your opponents never play. Spend your study budget on positions *you actually reach*.\n\nA player who annotates one of their own losses per week, identifies the move where they ran out of plan, and studies that single position will improve faster than a player who watches 10 hours of opening videos." },
+
+      { kind: 'text', md: "## Memorise structure, not novelties\n\nIf you forget the move-12 novelty you can reconstruct it from the plan. If you forget the plan, no amount of memorised novelties will save you.\n\n**Plan > moves.** Always." },
+
+      // ─── End-of-lesson puzzles ──────────────────────────────────────────
       {
-        type: "text",
-        value:
-          "Most opening study is wasted because it's *move memorisation* divorced from understanding. You memorise 14 moves, your opponent plays the 4th-best move on move 6, and you have no idea what to do because you never learned the *plans*."
+        kind: 'puzzle',
+        fen: 'r1bq1rk1/pp1nbppp/2p2n2/3p2B1/3P4/2NBP3/PPQ2PPP/R3K1NR w KQ - 0 9',
+        solution: ['Nf3'],
+        themes: ['opening','structure'],
+        prompt: "**Puzzle 1.** Carlsbad structure. White to move — develop the last minor piece toward its natural square.",
+        explain: "Nf3 — the kingside knight's natural home, supporting d4 and preparing to castle. Once both knights and both bishops are on natural squares, you can start the minority attack with Rab1 and b2-b4."
       },
       {
-        type: "heading",
-        value: "Ideas before moves"
+        kind: 'puzzle',
+        fen: 'r1bqk2r/pp1n1ppp/2pbpn2/8/3P4/2NBPN2/PP3PPP/R1BQK2R w KQkq - 0 8',
+        solution: ['O-O'],
+        themes: ['opening','development'],
+        prompt: "**Puzzle 3.** Carlsbad-style position. White to move — finish the opening.",
+        explain: "O-O — same answer, same reason. In structural openings the moves are obvious *because* the structure tells you what to do. You're not memorising; you're applying principles."
       },
       {
-        type: "text",
-        value:
-          "For every opening you adopt, write down on one page:\n- **The pawn structure** it usually produces (IQP? Carlsbad? Maróczy bind? Closed centre?).\n- **Typical pawn breaks** for both sides (e.g. ...c5, ...e5, ...f5, ...b5).\n- **Where each minor piece belongs** (e.g. Nimzo: knight on c3 will eventually be doubled-pawned — accept it for the bishop pair).\n- **The middlegame plan** (minority attack? king-side pawn storm? blockade the IQP?).\n- **The endgame implications** (who has the better structure if queens come off on move 14?)."
+        kind: 'puzzle',
+        fen: 'rnbqk2r/pppp1ppp/4pn2/8/1bPP4/2N1P3/PP3PPP/R1BQKBNR b KQkq - 0 4',
+        solution: ['O-O'],
+        themes: ['opening','nimzo'],
+        prompt: "**Puzzle 4.** Nimzo-Indian after 4.e3. Black to move — keep the most flexibility.",
+        explain: "O-O — castle and stay flexible. Black hasn't committed to ...c5, ...d5, ...b6 or ...Bxc3 yet. Castling first preserves *all* the typical Nimzo plans (Hübner, Classical, Queen's-Indian-ish). Move-order matters as much as moves."
       },
       {
-        type: "pgn",
-        pgn: "1. d4 d5 2. c4 e6 3. Nc3 Nf6 4. cxd5 exd5 5. Bg5 c6 6. e3 Be7 7. Bd3 Nbd7 8. Qc2 O-O 9. Nf3 Re8 10. O-O Nf8 11. Rab1 a5 12. a3",
-        annotations: {
-          7: "**Carlsbad pawn structure** — White has pawns on d4/e3, Black on c6/d5. *This* is what you study, not the move order.",
-          14: "Black's plan: the 'minor piece dance' — Nf8, Ng6, Bd6 — preparing a kingside attack with ...h6/g5 or central play with ...Ne4.",
-          22: "**White's plan: the minority attack** — b2-b4-b5xc6, leaving Black with a weak c-pawn. *This* is the entire point of 4.cxd5. If you don't know this you don't know the QGD Exchange — even if you know 25 moves of theory."
-        },
-        caption: "QGD Exchange Variation — Carlsbad structure. Studying THIS structure equips you for hundreds of games."
-      },
-      {
-        type: "heading",
-        value: "Use your own games"
-      },
-      {
-        type: "text",
-        value:
-          "**The single most useful opening study you can do:** annotate your own losses and find the move you went out of book. That move tells you what to study next. The encyclopaedic line you don't need is the one your opponents never play. Spend your study budget on positions *you actually reach*."
-      },
-      {
-        type: "heading",
-        value: "Memorise structure, not novelties"
-      },
-      {
-        type: "text",
-        value:
-          "If you forget the move-12 novelty you can reconstruct it from the plan. If you forget the plan, no amount of memorised novelties will save you. **Plan > moves.**"
-      },
-      {
-        type: "interactive",
-        fen: "rnbqk2r/pppp1ppp/4pn2/8/1bPP4/2N1P3/PP3PPP/R1BQKBNR b KQkq - 0 4",
-        prompt: "Nimzo-Indian: 1.d4 Nf6 2.c4 e6 3.Nc3 Bb4 4.e3. Black has a clear plan (control e4, double White's c-pawns, accept slight cramp for the bishop pair). What's the most flexible developing move?",
-        solution: "O-O",
-        explanation:
-          "**O-O** — castle and stay flexible. Black hasn't yet committed to ...c5, ...d5, ...b6 or ...Bxc3. Castling first preserves *all* the typical Nimzo plans (Hübner with ...c5+...d6, classical with ...d5+...c5, or queen's-indian-ish ...b6+...Bb7). Bringing the king to safety while the bishop sits on b4 keeping the c3 knight pinned is the textbook flexible move-order."
+        kind: 'puzzle',
+        fen: 'rn1qk2r/pp2bppp/2p1pn2/3p4/3P4/2NBPN2/PP3PPP/R1BQ1RK1 b kq - 0 7',
+        solution: ['O-O'],
+        themes: ['opening','king-safety'],
+        prompt: "**Puzzle 5.** Carlsbad, Black to move. Finish development the principled way.",
+        explain: "O-O — castle. From here Black can play ...Re8, ...Nf8-g6, ...Bd6 — the standard Black plan in the Carlsbad. The pattern: in any structural opening, complete king safety before starting plans."
       }
-    ],
-    quiz: [
-      {
-        question: "Your opponent played the 'wrong' move on move 5 and you don't know the resulting line. Best approach?",
-        options: [
-          "Reconstruct the right plan from the pawn structure and piece placement.",
-          "Try to remember a similar move from a book you read three years ago.",
-          "Resign — you're out of book."
-        ],
-        answer: 0,
-        explanation: "Plans transfer; memorised lines don't. Knowing why moves are played is what lets you find the right move when your opponent goes off-script."
-      },
-      {
-        question: "Which study method gives the highest return per hour?",
-        options: [
-          "Memorising the first 18 moves of every Najdorf sub-variation.",
-          "Annotating your own recent games to find where you (or the opponent) left book, and studying that.",
-          "Watching opening videos at 2x speed without taking notes."
-        ],
-        answer: 1,
-        explanation: "Your own games are a perfectly tailored curriculum: every position is one you actually reach."
-      }
-    ],
-    further: [
-      "Soltis, *Pawn Structure Chess* — the canonical 'study structures, not moves' book.",
-      "Annotate one of your own losses per week. Find the move where you stopped knowing what to do."
     ]
   },
 
@@ -292,122 +371,113 @@ export const LESSONS_OPENINGS = [
     objective: "Recognise classic opening traps from both sides so you neither fall in nor miss them.",
     tags: ["opening", "tactics", "traps"],
     next: "op-005-transitions",
-    content: [
+
+    startFen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+
+    script: [
+      // ─── Concept ────────────────────────────────────────────────────────
+      { kind: 'text', md: "## Why traps matter\n\nTraps aren't a serious way to win — strong players defuse them in seconds. But two facts make them worth a lesson: (1) club opponents fall into them constantly, and (2) *you* will too if you don't know them.\n\nEach trap has a clear *signal* — once you spot it, you avoid it forever. We'll walk through Légal's Mate move by move, then survey the others." },
+
+      // ─── Walk through Légal's Mate ──────────────────────────────────────
+      { kind: 'text', md: "## Légal's Mate — the granddaddy\n\nWhite sacrifices the queen to mate with three minor pieces. The signal: **a pinned knight is not actually pinned if breaking the pin gives mate**. Watch:" },
+
+      { kind: 'play-move', san: 'e4', explain: "1.e4 — standard." },
+      { kind: 'play-move', san: 'e5', explain: "1...e5 — standard." },
+      { kind: 'play-move', san: 'Nf3', explain: "2.Nf3 — develop." },
+      { kind: 'play-move', san: 'd6', explain: "2...d6 — Philidor Defence; solid but a bit passive." },
+      { kind: 'play-move', san: 'Bc4', explain: "3.Bc4 — bishop on its best diagonal." },
+      { kind: 'play-move', san: 'Bg4', explain: "3...Bg4?! — Black 'pins' the f3 knight against the queen. Looks safe — moving the knight would lose the queen, right?" },
+
+      { kind: 'arrow', from: 'g4', to: 'd1', color: 'red' },
+      { kind: 'callout', square: 'f3', text: "The knight on f3 looks pinned: if it moves, ...Bxd1 wins the queen.", color: 'red', durationMs: 4500 },
+      { kind: 'pause', ms: 2000 },
+      { kind: 'clear-shapes' },
+
+      { kind: 'play-move', san: 'Nc3', explain: "4.Nc3 — develop and prepare the trap." },
+      { kind: 'play-move', san: 'g6', explain: "4...g6?? — too slow. Black should defuse the threat, e.g. with ...Nf6 first. This move walks straight into the trap." },
+
+      { kind: 'highlight', squares: ['f7','d5'], color: 'red' },
+      { kind: 'callout', square: 'f7', text: "Watch carefully: White is about to play Nxe5! breaking the 'pin', because if ...Bxd1 then Bxf7+ Ke7 Nd5# is checkmate.", color: 'red', durationMs: 6500 },
+      { kind: 'pause', ms: 3000 },
+      { kind: 'clear-shapes' },
+
+      // Your-move — find Nxe5 (the queen sac)
+      { kind: 'your-move',
+        san: 'Nxe5',
+        hint: "White to move. Black's bishop on g4 is 'pinning' your knight — but the pin is FALSE because moving the knight enables a forced mate. Find the move that grabs the e5-pawn and ignores the 'pin'.",
+        wrongHint: "Nxe5! The knight grabs e5, breaking the pin. If Black greedily takes the queen with ...Bxd1, White plays Bxf7+ Ke7 Nd5#. The 'pin' was an illusion all along.",
+        rightExplain: "Nxe5! The setup. Black's best is now ...Nxe5 (giving back the pawn but losing the bishop), but they almost always grab the queen with ...Bxd1?? — and then the mate flows." },
+
+      { kind: 'play-move', san: 'Bxd1', explain: "5...Bxd1?? — greedy. Black takes the queen, expecting to be up material. Now the trap closes." },
+      { kind: 'play-move', san: 'Bxf7+', explain: "6.Bxf7+ — check! The king has no good square. Kd7 walks into Nd5+/Ne6+, ...Ke7 is forced." },
+      { kind: 'play-move', san: 'Ke7', explain: "6...Ke7 — only legal-ish move." },
+      { kind: 'play-move', san: 'Nd5#', explain: "7.Nd5# — Légal's Mate. Three minor pieces deliver checkmate while Black's queen never moved. The 'pin' that wasn't a pin." },
+
+      { kind: 'callout', square: 'e7', text: "Mate. The lesson: a piece is only *truly* pinned if breaking the pin doesn't give immediate mate or win material. Always check the consequences before relying on a pin.", color: 'green', durationMs: 6000 },
+      { kind: 'pause', ms: 2500 },
+
+      // ─── Fried Liver Attack — survey + your-move for the safe side ─────
+      { kind: 'text', md: "## Fried Liver Attack — Italian Two Knights\n\nThe trap White wants: 1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d5 5.exd5 **Nxd5?** 6.Nxf7! Kxf7 7.Qf3+ — Black's king is dragged to e6 and the position is brutally lost.\n\nThe signal: any time White's knight on g5 hits f7 with extra support, recapturing on d5 with the knight is asking for trouble. The safe move is **5...Na5** (Polerio Defence), giving back the pawn cleanly." },
+
+      { kind: 'set-position', fen: 'r1bqkb1r/ppp2ppp/2n2n2/3Pp1N1/2B5/8/PPPP1PPP/RNBQK2R b KQkq - 0 5', orientation: 'black' },
+
+      { kind: 'highlight', squares: ['f7'], color: 'red' },
+      { kind: 'arrow', from: 'g5', to: 'f7', color: 'red' },
+      { kind: 'arrow', from: 'c4', to: 'f7', color: 'red' },
+      { kind: 'callout', square: 'f7', text: "TWO white pieces target f7. If Black plays the natural Nxd5, then 6.Nxf7 sacrifices the knight to drag the king to f7 and the attack wins. Avoid this with 5...Na5 instead.", color: 'red', durationMs: 6500 },
+      { kind: 'pause', ms: 2500 },
+      { kind: 'clear-shapes' },
+
+      { kind: 'your-move',
+        san: 'Na5',
+        hint: "Black to move. DON'T fall into the Fried Liver. Recapturing with 5...Nxd5 loses to 6.Nxf7! What's the safe move?",
+        wrongHint: "5...Na5 — the Polerio Defence. Black attacks the c4 bishop and is happy to give back the pawn after 6.Bb5+ c6 7.dxc6 bxc6 8.Be2. Theory has worked out 5...Na5 in great depth and Black is fine.",
+        rightExplain: "Na5! Hits the c4 bishop and sidesteps the Fried Liver entirely. Black accepts giving the pawn back; in return, Black's king stays safe. This is the key Two Knights survival move." },
+
+      { kind: 'pause', ms: 1500 },
+
+      // ─── Survey the rest of the traps ───────────────────────────────────
+      { kind: 'text', md: "## Englund Gambit trap\n\nThe trap *Black* wants vs unprepared 1.d4 players: **1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4?? Qb4+** wins the b2-pawn and the rook on a1 (5.Bd2 Qxb2 6.Bc3 Bb4!).\n\nWhite's safe response: **4.Nc3** or **4.a3** instead. Sound gambit? No. Surprising at club level? Constantly." },
+
+      { kind: 'text', md: "## Noah's Ark trap (Ruy López)\n\n**1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 d6 5.d4 b5 6.Bb3 Nxd4 7.Nxd4 exd4 8.Qxd4? c5! 9.Qd5 Be6 10.Qc6+ Bd7 11.Qd5 c4** — and the b3-bishop is **trapped** behind Black's pawn wall.\n\nThe signal: any time the Spanish bishop is on b3 and Black has the c4-square available with ...c5 + ...c4, watch out." },
+
+      { kind: 'text', md: "## Lasker trap (Albin Counter-Gambit)\n\nThe most famous *underpromotion* in the opening:\n\n**1.d4 d5 2.c4 e5 3.dxe5 d4 4.e3? Bb4+ 5.Bd2 dxe3 6.Bxb4?? exf2+ 7.Ke2 fxg1=N+!** — promoting to a knight (not a queen) wins the game with a discovered check picking up White's queen.\n\nUnderpromotion is so unusual that even strong club players miss it. Worth knowing as Black; worth avoiding 4.e3 entirely as White (play 4.Nf3)." },
+
+      { kind: 'text', md: "## The general trap-defence rule\n\n**If your opponent's last move makes no sense by ordinary developing logic, *stop and look for the tactic*.** They aren't being random; they are setting something up. The 5 seconds you spend checking will save you the hour you'd spend resigning." },
+
+      // ─── End-of-lesson puzzles ──────────────────────────────────────────
       {
-        type: "text",
-        value:
-          "Traps are not a serious way to win — strong players defuse them in seconds. But two facts make them worth a lesson: (1) club opponents fall into them constantly, and (2) *you* will too if you don't know them. Each of these traps has a clear *signal* — once you spot it, you avoid it forever."
+        kind: 'puzzle',
+        fen: 'rnb1kb1r/ppp1qppp/3p1n2/3P4/2B5/2N2N2/PPPPQPPP/R1B2RK1 b kq - 0 6',
+        solution: ['Nxd5'],
+        themes: ['opening','development'],
+        prompt: "**Puzzle 2.** Black to move — recapture the central pawn.",
+        explain: "Nxd5 — Black grabs the d5 pawn back. In open positions where you've safely developed, the natural recapture is the right one."
       },
       {
-        type: "heading",
-        value: "Légal's Mate (Philidor)"
+        kind: 'puzzle',
+        fen: 'r1bqkb1r/ppp2ppp/2n2n2/3Pp1N1/2B5/8/PPPP1PPP/RNBQK2R b KQkq - 0 5',
+        solution: ['Na5'],
+        themes: ['trap','fried-liver'],
+        prompt: "**Puzzle 3.** Two Knights Defence. Black to move — DON'T fall into the Fried Liver.",
+        explain: "Na5 — the Polerio Defence. Attacks the c4 bishop and sidesteps Nxf7. The greedy 5...Nxd5? is a textbook losing move; remember the signal: when two white pieces target f7, don't recapture on d5 with the knight."
       },
       {
-        type: "text",
-        value:
-          "The granddaddy. White sacrifices the queen to mate with three minor pieces. The signal: **a pinned knight is not actually pinned if breaking the pin gives mate**."
+        kind: 'puzzle',
+        fen: 'rnb1kbnr/pppp1ppp/8/4P3/8/8/PPP1PPPP/RN1QKBNR w KQkq - 0 4',
+        solution: ['Nc3'],
+        themes: ['trap','englund'],
+        prompt: "**Puzzle 4.** Englund Gambit setup (Black has played ...Qe7 hitting e5). White to move — defuse the trap.",
+        explain: "Nc3 — the safe developing move. Defends the e5 pawn indirectly via tactics on Qb4+ (after Qxb2 the rook on a1 is defended after Nxb5). 4.Bf4?? walks straight into the Englund trap; the principled developing move is the right one."
       },
       {
-        type: "pgn",
-        pgn: "1. e4 e5 2. Nf3 d6 3. Bc4 Bg4 4. Nc3 g6 5. Nxe5 Bxd1 6. Bxf7+ Ke7 7. Nd5#",
-        annotations: {
-          5: "Black 'pins' the f3 knight. Looks safe.",
-          6: "**The 'pin' is broken!** White grabs the e5 pawn because ...Bxd1 walks into mate.",
-          7: "Greedy — Black should play Ke7 hoping to hold. ...Bxd1?? is the natural-looking blunder.",
-          10: "**Légal's Mate.** Three minor pieces deliver checkmate while the Black queen never moved. Avoid as Black: do not play 3...Bg4 + 4...g6. Spot as White: any time your knight is 'pinned' to the queen but moving it gives mate."
-        },
-        caption: "Légal's Mate — the original queen sacrifice in the opening."
-      },
-      {
-        type: "heading",
-        value: "Fried Liver Attack (Italian Two Knights)"
-      },
-      {
-        type: "text",
-        value:
-          "The trap White wants: 1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d5 5.exd5 **Nxd5?** 6.Nxf7! Kxf7 7.Qf3+ — Black's king is dragged to e6 and the position is brutally lost. The signal: any time White's knight on g5 hits f7 with extra support, recapturing on d5 with the knight is asking for trouble. The safe move is **5...Na5** (Polerio Defence), giving back the pawn cleanly."
-      },
-      {
-        type: "interactive",
-        fen: "r1bqkb1r/ppp2ppp/2n2n2/3Pp1N1/2B5/8/PPPP1PPP/RNBQK2R b KQkq - 0 5",
-        prompt: "Two Knights Defence: 1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d5 5.exd5. Black to move — DON'T fall into the Fried Liver. What's the safe move?",
-        solution: "Na5",
-        explanation:
-          "**5...Na5** — the Polerio (or 'main-line') defence. Black attacks the c4 bishop and is happy to give back the pawn after 6.Bb5+ c6 7.dxc6 bxc6 8.Be2. The greedy 5...Nxd5? loses to 6.Nxf7! and the king is hunted from f7 to e6. Theory has worked out 5...Na5 in great depth and Black is fine."
-      },
-      {
-        type: "heading",
-        value: "Englund Gambit trap"
-      },
-      {
-        type: "text",
-        value:
-          "The trap *Black* wants vs unprepared 1.d4 players: **1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4?? Qb4+** wins the b2-pawn and the rook on a1 (5.Bd2 Qxb2 6.Bc3 Bb4!). Most White players know to defend with **4.Nc3** or **4.a3** instead. Sound? No. Surprising at club level? Constantly."
-      },
-      {
-        type: "heading",
-        value: "Noah's Ark trap (Ruy López)"
-      },
-      {
-        type: "text",
-        value:
-          "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 d6 5.d4 b5 6.Bb3 Nxd4 7.Nxd4 exd4 8.Qxd4? c5! 9.Qd5 Be6 10.Qc6+ Bd7 11.Qd5 c4 — and the b3-bishop is **trapped** behind Black's pawn wall. The signal: any time the Spanish bishop is on b3 and Black has the c4-square available with ...c5 + ...c4, watch out."
-      },
-      {
-        type: "heading",
-        value: "Trompowsky bishop trap"
-      },
-      {
-        type: "text",
-        value:
-          "Two-edged. After **1.d4 Nf6 2.Bg5 c5 3.d5 Qb6** the Black queen attacks both b2 and the g5 bishop. White's standard defence is 4.Nc3 (defending b2 and protecting the bishop indirectly via tactics). Greedy 4.Bxf6?? exf6 leaves the b2 pawn dropping with tempo. The signal for Trompowsky players: **don't leave the b2 pawn AND the g5 bishop both hanging on the same move**."
-      },
-      {
-        type: "heading",
-        value: "Lasker trap (Albin Counter-Gambit)"
-      },
-      {
-        type: "text",
-        value:
-          "The most famous *underpromotion* in the opening. **1.d4 d5 2.c4 e5 3.dxe5 d4 4.e3? Bb4+ 5.Bd2 dxe3 6.Bxb4?? exf2+ 7.Ke2 fxg1=N+!** — promoting to a knight (not a queen) wins the game with a discovered check picking up White's queen. Underpromotion is so unusual that even strong club players miss it. Worth knowing as Black; worth avoiding 4.e3 entirely as White (play 4.Nf3)."
-      },
-      {
-        type: "text",
-        value:
-          "**General trap-defence rule:** if your opponent's last move makes no sense by ordinary developing logic, *stop and look for the tactic.* They are not being random; they are setting something up."
+        kind: 'puzzle',
+        fen: 'rnbqkbnr/ppp2ppp/8/3pp3/2PP4/8/PP2PPPP/RNBQKBNR w KQkq - 0 3',
+        solution: ['dxe5'],
+        themes: ['opening','albin'],
+        prompt: "**Puzzle 5.** Albin Counter-Gambit (...e5 played). White to move — accept the gambit.",
+        explain: "dxe5 — White takes the pawn. The follow-up matters: after 3...d4 White must NOT play 4.e3? (Lasker trap), but instead 4.Nf3 keeps the extra pawn cleanly. Knowing the wrong move is the first step to playing the right one."
       }
-    ],
-    quiz: [
-      {
-        question: "In Légal's Mate, what's the conceptual lesson?",
-        options: [
-          "Never pin a knight.",
-          "A piece is only pinned if breaking the pin doesn't give mate or win material immediately.",
-          "Always trade queens early."
-        ],
-        answer: 1,
-        explanation: "Pins relax when the pinned piece can move with sufficient threat. Always check the consequences of breaking the pin before relying on it."
-      },
-      {
-        question: "Black plays the Englund Gambit (1.d4 e5). What's the safe White response?",
-        options: ["4.Bf4 (or any natural developing move)", "4.Nc3 / 4.a3 — defend b2 calmly and develop", "Decline the pawn with 2.d5"],
-        answer: 1,
-        explanation: "4.Nc3 (defending b2 indirectly via tactics) or 4.a3 (preventing ...Qb4+) keeps the extra pawn cleanly. 2.d5 isn't necessary — Black's gambit is unsound and White just defends."
-      },
-      {
-        question: "The Lasker trap in the Albin Counter-Gambit ends with what unusual move?",
-        options: [
-          "A queen sacrifice.",
-          "An underpromotion to a knight.",
-          "Castling queenside with check."
-        ],
-        answer: 1,
-        explanation: "...fxg1=N+ — promoting to a knight (not a queen) is the only move that delivers check and wins material. Easy to miss because we promote to queens by reflex."
-      }
-    ],
-    further: [
-      "Lessons in basic-tactics for the underlying patterns: pins, deflections, discovered checks.",
-      "Know one trap from each opening you play — both as bait and as something to avoid."
     ]
   },
 
@@ -421,93 +491,119 @@ export const LESSONS_OPENINGS = [
     objective: "Recognise the structure your opening produces and pick a middlegame plan based on the structure, not on memorised moves.",
     tags: ["opening", "middlegame", "structure"],
     next: null,
-    content: [
+
+    startFen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+
+    script: [
+      // ─── Concept ────────────────────────────────────────────────────────
+      { kind: 'text', md: "## The secret of the strongest players\n\n**The opening is a tool to reach a middlegame structure they understand.** They aren't memorising 25 moves to blitz a novelty — they are choosing an opening that produces a position type they know how to play.\n\nIf you learn to recognise the structure, the plans choose themselves." },
+
+      { kind: 'text', md: "## The four structures every player should recognise\n\n**1. Isolated Queen's Pawn (IQP)** — pawn on d4 (or d5) with no c- or e-pawn next to it. Comes from many openings (QGD Tarrasch, Caro-Kann Panov, Nimzo with ...c5/...d5, several Sicilians).\n  - *IQP side:* attack on the kingside, push the d-break, use the half-open files.\n  - *Vs IQP:* blockade on d5 (or d4) with a knight, trade pieces, win the endgame.\n\n**2. Carlsbad** — White d4/e3, Black c6/d5, from QGD Exchange. Minority attack b2-b4-b5xc6 vs kingside counter.\n\n**3. Maróczy Bind** — White c4 + e4 vs Black d6/e6. Squeeze vs ...b5/...d5 breaks.\n\n**4. Hedgehog** — Black a6/b6/d6/e6 vs White c4/e4. Patient manoeuvring vs eventual ...b5/...d5." },
+
+      // ─── Walk through Caro-Kann Panov-Botvinnik → IQP for White ────────
+      { kind: 'text', md: "## Watch a structure transition: Caro-Kann Panov (IQP arises)\n\nWe'll play through the Panov-Botvinnik attack. The opening 'delivers' an Isolated Queen's Pawn position for White; from move 9 onwards the entire game is about that pawn." },
+
+      { kind: 'play-move', san: 'e4', explain: "1.e4." },
+      { kind: 'play-move', san: 'c6', explain: "1...c6 — Caro-Kann." },
+      { kind: 'play-move', san: 'd4', explain: "2.d4." },
+      { kind: 'play-move', san: 'd5', explain: "2...d5." },
+      { kind: 'play-move', san: 'exd5', explain: "3.exd5 — White exchanges centrally; this leads to the Panov." },
+      { kind: 'play-move', san: 'cxd5', explain: "3...cxd5 — Black recaptures with the c-pawn." },
+      { kind: 'play-move', san: 'c4', explain: "4.c4 — the Panov-Botvinnik move. White plays an attacking sub-system." },
+
+      { kind: 'highlight', squares: ['c4','d4','d5'], color: 'yellow' },
+      { kind: 'callout', square: 'd4', text: "White is preparing to deliver an IQP. After ...Nf6, Nc3, e6, Nf3, Be7, cxd5 Nxd5 — Black ends up with an isolated d-pawn. (Or sometimes White gets the IQP. Both happen in this line.)", color: 'yellow', durationMs: 6500 },
+      { kind: 'pause', ms: 2500 },
+      { kind: 'clear-shapes' },
+
+      { kind: 'play-move', san: 'Nf6', explain: "4...Nf6 — natural development, attacks c4." },
+      { kind: 'play-move', san: 'Nc3', explain: "5.Nc3 — defends c4." },
+      { kind: 'play-move', san: 'e6', explain: "5...e6 — Black supports d5." },
+      { kind: 'play-move', san: 'Nf3', explain: "6.Nf3 — develop." },
+      { kind: 'play-move', san: 'Be7', explain: "6...Be7 — Black develops; structure is about to crystallise." },
+
+      // First your-move — White creates the IQP
+      { kind: 'your-move',
+        san: 'cxd5',
+        hint: "White to move. The whole point of the Panov is to give Black an isolated d-pawn — make the structural exchange now.",
+        wrongHint: "cxd5 — White exchanges to leave Black with an IQP after ...Nxd5. The pawn on d5 will become isolated (no c- or e-pawn neighbours), giving White the classical 'play vs the IQP' position.",
+        rightExplain: "cxd5! After ...Nxd5 the d5 pawn IS Black's IQP-to-be (it's defended now, but White's plan is to trade pieces and isolate it permanently)." },
+
+      { kind: 'play-move', san: 'Nxd5', explain: "7...Nxd5 — Black recaptures." },
+      { kind: 'play-move', san: 'Bd3', explain: "8.Bd3 — develops, eyes h7." },
+      { kind: 'play-move', san: 'Nc6', explain: "8...Nc6 — develops, defends e5 indirectly." },
+      { kind: 'play-move', san: 'O-O', explain: "9.O-O — finish king safety." },
+      { kind: 'play-move', san: 'O-O', explain: "9...O-O — Black does the same." },
+
+      { kind: 'highlight', squares: ['d5'], color: 'red' },
+      { kind: 'arrow', from: 'c3', to: 'd5', color: 'green' },
+      { kind: 'callout', square: 'd5', text: "THIS is the structural moment. Black's d5-pawn is isolated (no c- or e-pawn neighbours). White's plan: trade pieces, blockade d5 with a knight, win the endgame. Black's plan: piece activity, keep pieces on, attack the kingside.", color: 'red', durationMs: 7000 },
+      { kind: 'pause', ms: 3000 },
+      { kind: 'clear-shapes' },
+
+      // ─── Maróczy Bind walkthrough ──────────────────────────────────────
+      { kind: 'text', md: "## A second structure: the Maróczy Bind\n\nFrom the Sicilian Accelerated Dragon, White can clamp down on the position with c4 + e4 — the Maróczy Bind. Black has to live with this for 30+ moves. The plans are long-term." },
+
+      { kind: 'set-position', fen: 'r1bqkbnr/pp1ppp1p/2n3p1/8/2PNP3/8/PP3PPP/RNBQKB1R b KQkq - 0 5', orientation: 'black' },
+
+      { kind: 'highlight', squares: ['c4','e4'], color: 'yellow' },
+      { kind: 'callout', square: 'd5', text: "White's c4 + e4 'bind' Black: the d5 break is hard, the b5 break is hard. Black has to manoeuvre patiently and find the right moment to strike.", color: 'yellow', durationMs: 5500 },
+      { kind: 'pause', ms: 2500 },
+      { kind: 'clear-shapes' },
+
+      // Second your-move — Nf6 (just develop and live with the structure)
+      { kind: 'your-move',
+        san: 'Nf6',
+        hint: "Black to move. You're going to live with the Maróczy structure for 30 moves — first develop the kingside knight to its natural square.",
+        wrongHint: "Nf6 — develop, prepare ...Bg7 + ...O-O. The Maróczy Bind isn't refuted by any single move; Black plays patiently, completes development, and looks for ...b5 or ...d5 in the future.",
+        rightExplain: "Nf6! The opening served its purpose: it deposited you in a structure (Maróczy) you understand. Now play the structure: develop, fianchetto with ...Bg7, castle, and wait for the right moment to break." },
+
+      { kind: 'pause', ms: 1500 },
+
+      // ─── Wrap-up ────────────────────────────────────────────────────────
+      { kind: 'text', md: "## How to use this practically\n\nWhen you choose an opening, ask: **what structure does this produce?** Then study that structure separately, in model games. After that, you can almost forget the opening moves — once you reach the structure, you'll know what to do.\n\n**Memorising moves works until your opponent leaves theory** (move 7 against a club player). **Structure-based thinking works forever** because every game ends in one of a few dozen recognisable structures.\n\nSpend an hour learning the IQP, and you'll know what to do in 15% of all your games for the rest of your chess life." },
+
+      // ─── End-of-lesson puzzles ──────────────────────────────────────────
       {
-        type: "text",
-        value:
-          "Here is the secret of the strongest players: **the opening is a tool to reach a middlegame structure they understand**. They aren't memorising 25 moves so they can blitz a novelty — they are choosing an opening that produces a position type they know how to play. If you learn to recognise the structure, the plans choose themselves."
+        kind: 'puzzle',
+        fen: 'rnbqk2r/pp2bppp/4pn2/3p4/2PP4/2N2N2/PP3PPP/R1BQKB1R w KQkq - 2 7',
+        solution: ['cxd5'],
+        themes: ['structure','iqp'],
+        prompt: "**Puzzle 1.** Caro-Kann Panov. White to move — make the structural choice.",
+        explain: "cxd5 — gives Black an IQP after ...Nxd5. White's whole plan now is 'play against the d5 pawn': trade pieces, blockade with Nc3-a4-c5 or Nb1-d2-f1-e3, win the endgame. The opening was a delivery vehicle for the structure."
       },
       {
-        type: "heading",
-        value: "The four structures every player should recognise"
+        kind: 'puzzle',
+        fen: 'r1bqkbnr/pp1ppp1p/2n3p1/8/2PNP3/8/PP3PPP/RNBQKB1R b KQkq - 0 5',
+        solution: ['Nf6'],
+        themes: ['structure','maroczy'],
+        prompt: "**Puzzle 2.** Maróczy Bind. Black to move — develop and prepare to live with the structure.",
+        explain: "Nf6 — the Maróczy isn't refuted; Black just plays patiently. Develop, fianchetto, castle, wait for the right break. Knowing the structural plan is more valuable than memorising 12 moves of theory."
       },
       {
-        type: "text",
-        value:
-          "**1. Isolated Queen's Pawn (IQP)** — White has a pawn on d4, no c- or e-pawn next to it. Comes from many openings (QGD Tarrasch, Caro-Kann Panov, Nimzo with ...c5/...d5, several Sicilians). *Plan for the IQP side:* attack on the kingside, push d5 break, use the half-open files. *Plan vs IQP:* blockade d5 with a knight, trade pieces, win the endgame.\n\n**2. Carlsbad** — White pawns d4/e3, Black pawns c6/d5. Comes from the QGD Exchange. *Plan for White:* the minority attack — b2-b4-b5xc6 to leave Black with a weak c6 pawn. *Plan for Black:* counter-attack on the kingside (...Nf8-g6, ...f5).\n\n**3. Maróczy Bind** — White pawns on c4 + e4 against Black's d6/e6. Comes from Sicilian Accelerated Dragon and some English systems. *Plan for White:* squeeze, prevent ...d5, slowly improve. *Plan for Black:* the freeing breaks ...b5 or ...d5, and the dark-squared bishop on g7 is a huge piece.\n\n**4. Hedgehog** — Black has pawns on a6/b6/d6/e6 against White's c4/e4. From English / Symmetrical setups. *Plan for Black:* sit, manoeuvre, wait for the right moment to strike with ...b5 or ...d5. *Plan for White:* prevent the breaks, advance on the kingside."
+        kind: 'puzzle',
+        fen: 'r1bq1rk1/pp2bppp/2n1p3/3n4/3P4/2NB1N2/PP3PPP/R1BQ1RK1 w - - 4 10',
+        solution: ['Re1'],
+        themes: ['structure','iqp'],
+        prompt: "**Puzzle 3.** IQP for White. White to move — find a typical IQP-side developing move.",
+        explain: "Re1 — typical IQP side play: rook to the half-open e-file, supports the knight on e5 if it lands there later, prepares Nb1-d2-f1 manoeuvres. The IQP-side wants pieces active; the rook on e1 is one of the standard placements."
       },
       {
-        type: "heading",
-        value: "Why structure beats memorisation"
+        kind: 'puzzle',
+        fen: 'r1bqk2r/pp1nbppp/2p2n2/3p2B1/3P4/2NBP3/PPQ2PPP/R3K1NR w KQkq - 4 8',
+        solution: ['Nf3'],
+        themes: ['structure','carlsbad'],
+        prompt: "**Puzzle 4.** Carlsbad structure. White to move — finish minor-piece development.",
+        explain: "Nf3 — the last minor piece comes out. In structural openings, complete development first, then start the structural plan (here: O-O, Rab1, b2-b4-b5xc6, the minority attack)."
       },
       {
-        type: "text",
-        value:
-          "Memorising moves works *until your opponent leaves theory*, which is on move 7 against a club player. Structure-based thinking works **forever** because every game ends up in one of a few dozen recognisable structures. Spend an hour learning the IQP, and you'll know what to do in 15% of all your games for the rest of your life."
-      },
-      {
-        type: "pgn",
-        pgn: "1. e4 c5 2. Nf3 e6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d5 6. exd5 Nxd5 7. Nxd5 exd5 8. Be2 Nc6 9. O-O Be7 10. c4 d4",
-        annotations: {
-          12: "**Structural moment.** Black's d5-pawn becomes an IQP after a future ...d4 push or trade. The whole game now is about that pawn.",
-          16: "**This is the deal.** Black accepts an isolated d-pawn in exchange for piece activity, half-open e- and c-files, and a queen-side outpost. *White's job:* trade pieces, blockade d5 with a knight, win the endgame. *Black's job:* attack the kingside before pieces come off.",
-          20: "Both players now know their plans without 'memorising' anything past this point. The structure dictates the strategy."
-        },
-        caption: "An IQP arises from a Sicilian. The opening was a delivery vehicle for the structure."
-      },
-      {
-        type: "heading",
-        value: "How to use this practically"
-      },
-      {
-        type: "text",
-        value:
-          "When you choose an opening, ask: **what structure does this produce?** Then study that structure separately, in model games. After that, you can almost forget the opening moves — once you reach the structure, you'll know what to do."
-      },
-      {
-        type: "interactive",
-        fen: "r1bqkbnr/pp1ppp1p/2n3p1/8/2PNP3/8/PP3PPP/RNBQKB1R b KQkq - 0 5",
-        prompt: "Sicilian Accelerated Dragon: 1.e4 c5 2.Nf3 Nc6 3.d4 cxd4 4.Nxd4 g6 5.c4. White has set up the Maróczy Bind. As Black, you're going to live with this structure for 30 moves — first develop the kingside knight.",
-        solution: "Nf6",
-        explanation:
-          "**Nf6** — develop, prepare ...Bg7 + ...O-O. The Maróczy Bind isn't refuted by any single move; Black's plan is long-term: complete development, double-fianchetto sometimes, find the right moment for ...b5 or ...d5. **Knowing this** matters more than memorising 12 moves of any Maróczy line. The opening served its purpose by depositing you in a structure you understand — now play the structure."
+        kind: 'puzzle',
+        fen: 'r1bqkb1r/pp2pppp/2n2n2/3p4/3P4/2N2N2/PP2PPPP/R1BQKB1R w KQkq - 0 6',
+        solution: ['Bg5'],
+        themes: ['structure','development'],
+        prompt: "**Puzzle 5.** White to move — develop the bishop with pressure on a key piece.",
+        explain: "Bg5 — pins the f6 knight, applies pressure on d5 indirectly (f6 is the key defender). This is a typical IQP-flavoured developing move: get pieces active, create pressure, then think about which structure you're heading toward."
       }
-    ],
-    quiz: [
-      {
-        question: "What's the typical White plan in the Carlsbad structure (QGD Exchange)?",
-        options: [
-          "Sacrifice the exchange on c3.",
-          "The minority attack: b2-b4-b5xc6 to weaken Black's c-pawn.",
-          "King-side pawn storm with g4-g5."
-        ],
-        answer: 1,
-        explanation: "The minority attack is the textbook Carlsbad plan. Two pawns (a, b) attack three (a, b, c) to create a weak c6 pawn for Black."
-      },
-      {
-        question: "Why is structure-based opening study more powerful than line-memorisation for an improving player?",
-        options: [
-          "Because memorisation is impossible.",
-          "Because you reach a recognisable structure in nearly every game, while specific theoretical lines only occur when both sides cooperate.",
-          "Because GMs say so."
-        ],
-          answer: 1,
-          explanation: "Structures generalise across openings; memorised novelties only fire when the opponent plays the exact line. Structure knowledge compounds; line-memorisation depreciates."
-      },
-      {
-        question: "If you adopt a new opening, the FIRST thing to learn is...",
-        options: [
-          "The first 15 moves of the main line.",
-          "The pawn structure it tends to produce, and the resulting plans for both sides.",
-          "All the gambits Black might try."
-        ],
-        answer: 1,
-        explanation: "Structure first; lines fall out of structure. The middlegame your opening leads to is the actual game you'll be playing."
-      }
-    ],
-    further: [
-      "Soltis, *Pawn Structure Chess* — covers IQP, Carlsbad, Maróczy, Hedgehog, French chains, Stonewall, Closed Sicilian.",
-      "Find one model master game per structure — see the Master Games section."
     ]
   }
 ];

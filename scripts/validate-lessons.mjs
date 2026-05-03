@@ -19,7 +19,10 @@ let files = process.argv.slice(2);
 if (!files.length) {
   const dir = resolve(root, 'js/data');
   const all = await readdir(dir);
-  files = all.filter(f => f.startsWith('lessons-ref-')).map(f => resolve(dir, f));
+  // Validate every lessons-*.js file. Lessons WITHOUT a `script` array are
+  // skipped (they're still on the legacy block format) — this is fine; only
+  // script-format lessons need move-legality validation.
+  files = all.filter(f => f.startsWith('lessons-') && f.endsWith('.js')).map(f => resolve(dir, f));
 }
 
 let totalErrors = 0;
