@@ -504,9 +504,12 @@ h4 { font-size: var(--text-headline); font-family: var(--font-sans); }
 .btn--icon { padding: 0; }
 
 /* ============================================================
-   Visually hidden (a11y)
+   Visually hidden (a11y) — both names supported. Runtime emits
+   `class="visually-hidden"` for screen-reader-only fallback text
+   inside icon buttons; we alias to .sr-only.
    ============================================================ */
-.sr-only {
+.sr-only,
+.visually-hidden {
   position: absolute !important;
   width: 1px; height: 1px;
   padding: 0; margin: -1px;
