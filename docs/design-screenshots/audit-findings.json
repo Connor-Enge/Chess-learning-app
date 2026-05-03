@@ -11,5 +11,21 @@
         "text": "Failed to load resource: the server responded with a status of 404 ()"
       }
     ]
+  },
+  {
+    "viewport": {
+      "name": "iphonese",
+      "width": 375,
+      "height": 667
+    },
+    "errors": []
+  },
+  {
+    "viewport": {
+      "name": "pixel7",
+      "width": 412,
+      "height": 915
+    },
+    "errors": []
   }
 ]

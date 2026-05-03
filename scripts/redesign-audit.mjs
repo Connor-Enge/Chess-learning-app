@@ -30,6 +30,8 @@ const ROUTES = [
 
 const VIEWPORTS = [
   { name: 'iphone14', width: 390, height: 844 },
+  { name: 'iphonese', width: 375, height: 667 },
+  { name: 'pixel7',   width: 412, height: 915 },
 ];
 
 const browser = await chromium.launch({ headless: true, channel: 'chrome' });
