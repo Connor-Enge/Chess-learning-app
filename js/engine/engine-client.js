@@ -13,6 +13,8 @@ import { generateLegal } from './core/movegen.js';
 import { perft } from './core/perft.js';
 import { moveFrom, moveTo, movePromo, moveIsCap, moveIsEp, moveIsCast } from './core/board.js';
 import { squareName, PIECE_CHARS } from './core/squares.js';
+import { searchIterative } from './search/search.js';
+import { evaluate } from './eval/eval.js';
 
 // ── Move serialization (UCI long-algebraic, e.g. "e2e4", "e7e8q") ─────────
 export function moveToUci(m) {
@@ -73,27 +75,36 @@ export const engine = {
   },
 
   /**
-   * M1 placeholder for `go`: returns a random legal move (so the engine can
-   * already "play" — terribly — before search lands in M2).
+   * Negamax+α-β iterative-deepening search. Time-limited by default; depth
+   * cap respected if specified.
+   *
+   * @param {object} opts {fen, timeMs?, depth?}
+   * @returns {Promise<{bestMove, score, pv, depth, nodes, time, terminal?, note?}>}
    */
-  go({ fen }) {
+  go({ fen, timeMs = 1000, depth = 64 }) {
     const b = Board.fromFen(fen);
     const moves = generateLegal(b);
     if (moves.length === 0) {
       return Promise.resolve({ bestMove: null, score: null, pv: [], depth: 0, nodes: 0, time: 0, terminal: true });
     }
-    const m = moves[Math.floor(Math.random() * moves.length)];
+    const result = searchIterative(b, { maxDepth: depth, timeMs });
     return Promise.resolve({
-      bestMove: moveToUci(m), score: 0, pv: [moveToUci(m)],
-      depth: 0, nodes: moves.length, time: 0,
-      note: 'M1 random-move placeholder — search arrives in M2',
+      bestMove: result.bestMove ? moveToUci(result.bestMove) : null,
+      score: result.score,
+      pv: result.pv.map(moveToUci),
+      depth: result.depth,
+      nodes: result.nodes,
+      time: result.time,
     });
   },
 
-  // ── Future API (stubbed) ─────────────────────────────────────────────────
-  evaluate(/* { fen, personality } */) {
-    throw new Error('engine.evaluate is not implemented yet (arrives in M3)');
+  /** Static evaluation in centipawns from the side-to-move's POV. */
+  evaluate({ fen }) {
+    const b = Board.fromFen(fen);
+    return Promise.resolve({ score: evaluate(b) });
   },
+
+  // ── Future API (stubbed) ─────────────────────────────────────────────────
   analyzeMove(/* { fenBefore, move, personality } */) {
     throw new Error('engine.analyzeMove is not implemented yet (arrives in M6)');
   },
