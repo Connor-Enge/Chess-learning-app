@@ -7,11 +7,6 @@
     },
     "errors": [
       {
-        "kind": "reqfailed",
-        "url": "https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/index.js",
-        "reason": "net::ERR_BLOCKED_BY_ORB"
-      },
-      {
         "kind": "console-error",
         "text": "Failed to load resource: the server responded with a status of 404 ()"
       }

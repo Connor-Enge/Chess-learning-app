@@ -460,13 +460,17 @@ h4 { font-size: var(--text-headline); font-family: var(--font-sans); }
    .ph already has font-family: Phosphor; we just normalize the
    default size via .icon. Components override per-context.
    ============================================================ */
+/* Phosphor renders glyphs via .ph::before content: '\eXXX'.
+   We only normalize size/spacing here — leave the existing :before
+   alone (don't set display: flex on the icon node, that can suppress
+   the pseudo-element's content rendering in some webview engines). */
 .icon {
   font-size: 20px;
   line-height: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   flex: 0 0 auto;
+}
+.icon::before {
+  display: inline-block;
 }
 
 /* Within buttons, scale by button size */
