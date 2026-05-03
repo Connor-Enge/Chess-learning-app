@@ -102,6 +102,30 @@ async function navigate() {
 function applyTheme() {
   const t = storage.state.theme || 'dark';
   document.documentElement.setAttribute('data-theme', t);
+
+  // Board theme — drives [data-board-theme] tokens in design-system.css
+  const bt = storage.state.boardTheme || 'walnut';
+  if (bt === 'walnut') {
+    document.documentElement.removeAttribute('data-board-theme');
+  } else {
+    document.documentElement.setAttribute('data-board-theme', bt);
+  }
+}
+
+// Add a subtle scroll-aware shadow under the app bar (iOS pattern)
+function bindAppBarScroll() {
+  const appbar = document.querySelector('.appbar');
+  if (!appbar) return;
+  let scrolled = false;
+  const onScroll = () => {
+    const next = window.scrollY > 4;
+    if (next !== scrolled) {
+      scrolled = next;
+      appbar.classList.toggle('is-scrolled', scrolled);
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 }
 
 function bindShell() {
@@ -173,6 +197,7 @@ window.addEventListener('hashchange', navigate);
 window.addEventListener('DOMContentLoaded', () => {
   applyTheme();
   bindShell();
+  bindAppBarScroll();
   initSearch();
   navigate();
 });

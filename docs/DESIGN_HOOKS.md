@@ -1,10 +1,17 @@
-# Design Hooks — runtime → CSS contract
+# Design Hooks — runtime ↔ CSS contract
 
-> Coordination doc between the **runtime/content session** (`main` branch — owns JS, content, engine) and the **mobile UI/UX redesign session** (`redesign` branch — owns CSS, visual structure of `index.html`, assets).
+> Coordination doc between the **runtime/content session** (owns JS, content, engine) and the **mobile UI/UX redesign session** (owns CSS, visual structure of `index.html`, assets).
 >
 > The runtime renders DOM with the class names listed below. The design system styles them. Don't rename runtime classes without updating both sides.
 
+This file is split into two halves:
+
+- **Part A — runtime classes** (`.lp-*`, `.cg-*`, top-level shell). Owned by the runtime session; the design system styles them.
+- **Part B — design-system classes** (`.btn`, `.card`, `.list-row`, `.move-list`, `.empty`, `.toast`, etc.). Owned by the design session; the runtime should reach for these names when rendering generic UI.
+
 ---
+
+# Part A — Runtime → CSS contract
 
 ## Class-name conventions
 
@@ -80,7 +87,7 @@ The runtime calls `cg.setShapes([...])` with shape objects keyed to chessground'
 
 ## Top-level shell (`index.html` + `js/app.js`)
 
-Mostly already styled. The runtime-mounted hooks are:
+The runtime-mounted hooks are:
 
 - `.appbar` (header)
   - `.appbar-back` (button, `[hidden]` until inside a deeper view)
@@ -102,9 +109,7 @@ Mostly already styled. The runtime-mounted hooks are:
 
 ## Inline styles I rely on
 
-The runtime sets inline styles ONLY for layout-derived values that change at runtime (callout positioning from board-square coords, ghost-piece tracking during drag). These are safe to leave alone. Visual properties are NOT set inline.
-
-Specifically, inline `style.left`, `style.top`, `style.width`, `style.height`, `style.fontSize`, `style.opacity`, `style.transform` may appear on:
+The runtime sets inline styles ONLY for layout-derived values that change at runtime (callout positioning from board-square coords, ghost-piece tracking during drag). Specifically, inline `style.left`, `style.top`, `style.width`, `style.height`, `style.fontSize`, `style.opacity`, `style.transform` may appear on:
 
 - `.lp-callout` — board-anchored positioning
 - Chessground's internal piece elements during drag (chessground manages these)
@@ -116,9 +121,9 @@ Specifically, inline `style.left`, `style.top`, `style.width`, `style.height`, `
 
 ## CSS variable contract (what the runtime expects to exist)
 
-Used by `js/lesson-player.css` and the existing `css/main.css`. The runtime treats these as the design tokens; if the redesign renames them, also update the references in JS where they're echoed to inline styles (currently none — but the lesson-player `flash` and callout fallback colors should continue to read from these variables).
+Used by `js/lesson-player.css` and the existing `css/main.css`. The redesign system has renamed many tokens semantically but **keeps the legacy aliases below** so the runtime keeps rendering. New runtime code should prefer the new tokens (see `css/design-system.css`); old code continues to work via shims in `css/main.css`.
 
-Required:
+Legacy tokens (still working — runtime can keep using):
 - `--bg`, `--bg-elev`, `--bg-elev-2`, `--bg-elev-3`
 - `--border`
 - `--text`, `--text-dim`, `--muted`
@@ -128,19 +133,30 @@ Required:
 - `--tap` (minimum tap-target size)
 - `--radius`
 
+Preferred (new) semantic tokens:
+- `--bg-elevated`, `--surface`, `--surface-elevated`, `--surface-overlay`, `--surface-sunken`
+- `--border-strong`, `--divider`, `--focus-ring`
+- `--text-primary`, `--text-secondary`, `--text-muted`, `--text-disabled`, `--on-primary`
+- `--primary`, `--primary-hover`, `--primary-active`, `--primary-soft`
+- `--accent`, `--success`, `--warning`, `--error`, `--info` (each has a `-soft` variant)
+- `--space-1…--space-11` (4-pt grid)
+- `--radius-xs/sm/md/lg/xl/2xl/pill/full`
+- `--shadow-1…--shadow-5`, `--shadow-inset`
+- `--motion-fast/base/slow/slower`, `--ease-ios/material/out/in-out`
+
 Board / chessground:
-- `--board-light`, `--board-dark` (used by my legacy custom board only — phased out)
+- `--board-light`, `--board-dark`, `--board-light-active`, `--board-dark-active`
 - `--cg-coord-color-light`, `--cg-coord-color-dark` (chessground respects these)
 
 ---
 
-## What the runtime needs from the redesign (FYI)
+## What the runtime needs from the redesign (status)
 
-- A consistent button styling for `.lp-btn`, `.lp-mark-btn`, `.lp-next-btn`, `.lp-pz-load|hint|reveal`. Tap targets ≥ 44 × 44 px.
-- A visual treatment for revealed vs unrevealed lesson text cards (`.lp-text-card.lp-revealed` vs not-revealed). Currently we use opacity + border-color shift.
-- A clear visual distinction between `.lp-puzzle-card.solved` and unsolved (we use a green left border + tinted background).
-- A "primary" treatment for `.lp-play` and `.lp-mark-btn` (these are the "do the thing" buttons in their respective contexts).
-- The chessground board theme: brown is bundled now (Cburnett pieces); a darker board theme as an option would be nice, but the brown is fine on phones in dim light.
+- A consistent button styling for `.lp-btn`, `.lp-mark-btn`, `.lp-next-btn`, `.lp-pz-load|hint|reveal`. Tap targets ≥ 44 × 44 px. → **Done.** The new design system styles bare `<button>` and `.btn` styling cascades to `.lp-btn`. For new code, prefer `class="btn btn--primary"` / `btn--secondary`.
+- A visual treatment for revealed vs unrevealed lesson text cards. → **Picked up;** see `css/screens/lessons.css` (`data-status`) plus legacy class wiring in `css/main.css`.
+- A clear visual distinction between `.lp-puzzle-card.solved` and unsolved. → **Done.**
+- A "primary" treatment for `.lp-play` and `.lp-mark-btn`. → **Done.**
+- The chessground board theme — alternates needed for ocean / tournament / midnight. → The redesign added `[data-board-theme]` overrides for `walnut` (default), `ocean`, `tournament`, `midnight`. Chessground's brown.css hard-codes brown colors for `.cg-board square.light/.dark`; the redesign should ship a small overlay CSS that overrides those rules to use the `--board-light`/`--board-dark` tokens. **Open follow-up.**
 
 ---
 
@@ -156,10 +172,196 @@ When Practice Mode lands, it'll add:
 - `.pm-coach-explanation` (NL text)
 - `.pm-coach-actions` (Show me / Got it / Hint)
 
-Spec lives in `FEATURES.md`. Will update this doc when the runtime lands.
+Spec lives in `FEATURES.md`. The redesign session is preparing a Practice mode shell stylesheet that reads these classes.
 
 ---
 
 ## Future: Custom engine
 
-The custom chess engine (see `ENGINE_SPEC.md`) ships in `js/engine/` — it has no UI surface of its own. It exposes API to Practice Mode and the lesson player. No CSS implications.
+Engine spec is `docs/ENGINE_SPEC.md` — design hooks aren't relevant until the engine UI lands.
+
+---
+
+# Part B — Design system → runtime contract
+
+These are class names the runtime should apply when rendering generic UI surfaces (lists, cards, transport, toasts, empty states). The CSS for every class is already shipped — you don't need to touch any styling.
+
+Class naming follows BEM-ish: block (`.move-list`), element (`.move-list__move`), modifier (`.move-list--compact`), state (`.is-current` or `aria-*`).
+
+## Lesson player — design hooks (alternative names)
+
+If the runtime migrates from `.lp-*` to design-system primitives, here are the equivalents. **Both sets are styled** — keep using `.lp-*` for now; reach for these when convenient.
+
+| Runtime (legacy) | Design system primitive |
+|---|---|
+| `.lp-board-panel` | `.lesson-board-panel` (sticky board container) |
+| `.lp-text` | `.lesson-body` |
+| `.lp-title` | `<h1 class="lesson-h1">` or just `<h1>` inside `.lesson-body` |
+| `.lp-meta` | `.lesson-meta` |
+| `.lp-card.lp-text-card` | `.lesson-card[data-variant="position"\|"pgn"\|"freeplay"]` |
+| `.lp-card.lp-puzzle-card` | `.lesson-card[data-variant="puzzle"]` |
+| `.lp-puzzle-card.solved` | `.lesson-card[data-status="solved"]` |
+| `.lp-card-header` | `.lesson-card__header` |
+| `.lp-badge` | `.lesson-card__badge` |
+| `.lp-card-body` | `.lesson-card__body` |
+| `.lp-card-actions` | `.lesson-card__row` |
+| `.lp-card-explain` | `.lesson-card__explain` |
+| `.lp-criterion .dot` | `.criterion > .criterion__dot` |
+| `.lp-mark-btn` | `.lesson-mark-complete` |
+| `.lp-transport` | `.transport` |
+| `.lp-play` | `.transport__btn--primary` |
+| `.lp-restart / -back / -fwd / -flip` | `.transport__btn` |
+
+## Move list
+
+```html
+<div class="move-list" id="gameMoves">
+  <span class="move-list__pair">
+    <span class="move-list__num">1.</span>
+    <span class="move-list__move" data-ply="0">e4</span>
+    <span class="move-list__move" data-ply="1">e5</span>
+  </span>
+</div>
+```
+
+State: `.is-current` (selected ply, primary background), `.has-comment` (accent underline).
+
+> Legacy alias: `<div class="game-moves">` with `<span class="ply">` inside. Both styled.
+
+## Engine pane
+
+```html
+<div class="dock-sheet" id="engineSheet">
+  <div class="dock-sheet__handle">
+    <i class="ph ph-cpu icon"></i>
+    <span class="dock-sheet__title">Engine</span>
+    <span class="dock-sheet__subtitle">+0.32</span>
+    <i class="ph ph-caret-up icon"></i>
+  </div>
+  <div class="dock-sheet__body">
+    <!-- engine controls + eval display -->
+  </div>
+</div>
+```
+
+Toggle open with `dock-sheet.classList.add('is-open')`. On tablet+ (≥1024 px), it becomes a static side panel. Eval readout: `.eval-display` with `__value`/`__line`/`__depth`. Modifier on the value: `--positive` (green) or `--negative` (neutral).
+
+> Legacy: `<div class="engine-sheet">` with `.engine-sheet-handle` / `.engine-sheet-body` is still styled.
+
+## Lists
+
+```html
+<div class="list-section">
+  <button class="list-row">
+    <span class="list-row__leading list-row__leading--filled">
+      <span class="list-row__status list-row__status--done">
+        <i class="ph ph-check icon" style="width:14px;height:14px"></i>
+      </span>
+    </span>
+    <span class="list-row__main">
+      <span class="list-row__title">The opposition</span>
+      <span class="list-row__subtitle">King &amp; pawn endings · 8 min</span>
+    </span>
+    <i class="ph ph-caret-right icon list-row__chevron"></i>
+  </button>
+</div>
+```
+
+Status pill modifiers: `--done` (green check), `--current` (primary blue), `--locked` (lock icon, dim). Active row: `aria-current="true"` or `.is-active`.
+
+> Legacy: `<ol id="lessonIndex">` etc. styled to look like grouped lists; new code should use `.list-section`/`.list-row`.
+
+## Toasts
+
+Mount nodes into `#toastHost`:
+
+```html
+<div class="toast toast--success">
+  <i class="ph ph-check icon"></i>
+  <span>Puzzle solved · 18s</span>
+  <button class="toast__action">Next</button>
+</div>
+```
+
+Variants: `toast--success` / `--warning` / `--error`. Dismiss: set `data-state="closing"` for 220 ms, then remove.
+
+## Empty states
+
+```html
+<div class="empty">
+  <span class="empty__art" aria-hidden="true">
+    <i class="ph ph-clock-counter-clockwise icon"></i>
+  </span>
+  <p class="empty__title">No activity yet</p>
+  <p class="empty__body">Start a lesson, drill, or puzzle and your progress will show up here.</p>
+  <button class="btn btn--primary empty__cta">
+    <i class="ph ph-play icon"></i><span>Start a lesson</span>
+  </button>
+</div>
+```
+
+## Skeletons
+
+```html
+<div class="skeleton skeleton--row"></div>
+<div class="skeleton skeleton--card"></div>
+<div class="skeleton skeleton--board"></div>
+```
+
+Variants: `--text` / `--text-lg` / `--text-sm` / `--avatar` / `--row` / `--card` / `--board`.
+
+## Theme + board switching
+
+Theme on `<html>`:
+
+- `data-theme="dark"` (default)
+- `data-theme="light"`
+- omit attribute → follows system preference
+
+Board theme also on `<html>`:
+
+- (no attribute) → walnut default
+- `data-board-theme="ocean"`
+- `data-board-theme="tournament"`
+- `data-board-theme="midnight"`
+
+Persist via `storage.setTheme(name)` / `storage.setBoardTheme(name)`. Apply on app start in `applyTheme()` (in `js/app.js`).
+
+---
+
+## Existing legacy IDs the runtime can keep using
+
+These IDs still exist in `index.html` and the CSS recognises them:
+
+- `#tacticsBoard`, `#endgameBoard`, `#gameBoard`, `#playBoard`
+- `#lessonContent`, `#lessonIndex`, `#lessonListPanel`, `#lessonListToggle`, `#lessonTrackFilter`
+- `#openingTree`, `#openingContent`, `#openingTreeToggle`
+- `#tacticsPrompt`, `#tacticsFeedback`, `#tacticsHint`, `#tacticsSolution`, `#tacticsNext`, `#tacticsThemes`, `#tacticsSolved`, `#tacticsAttempted`, `#tacticsAccuracy`, `#tacticsExplanation`
+- `#endgameIndex`, `#endgameTitle`, `#endgamePrompt`, `#endgameReset`, `#endgameFlip`, `#endgameHint`, `#endgameExplainer`, `#endgameListPanel`, `#endgameListToggle`
+- `#gameIndex`, `#gameTitle`, `#gameMeta`, `#gameAnnotation`, `#gameLessons`, `#gameMoves`, `#gamePrev`, `#gameNext`, `#gameAutoplay`, `#gameFlip`, `#gameListPanel`, `#gameListToggle`
+- `#playReset`, `#playFlip`, `#playUndo`, `#playMoves`
+- `#engineSheet`, `#engineSheetHandle`, `#engineToggle`, `#engineDepth`, `#engineEval`, `#engineLine`, `#engineDepthDisplay`, `#engineEvalQuick`
+- `#fenInput`, `#loadFenBtn`, `#copyFenBtn`, `#pgnInput`, `#loadPgnBtn`, `#exportPgnBtn`
+- `#searchOverlay`, `#globalSearch`, `#searchClose`, `#searchResults`
+- `#appbarBack`, `#appbarTitle`, `#appbarSearch`, `#themeToggle`
+- `#moreSheet`, `#moreTab`
+- `#recentActivity`, `#heroTitle`, `#heroMeta`, `#heroCta` (hero card on dashboard)
+- `#toastHost` (toast mount point)
+- `#settingThemeToggle`, `#settingBoardTheme`, `#settingBoardThemeValue`, `#settingPieceSet`, `#settingPieceSetValue`, `#settingDepth`, `#settingDepthUp`, `#settingDepthDown`, `#settingReducedMotion` (settings template)
+
+---
+
+## What's owned by which session
+
+| Path | Owner |
+|---|---|
+| `css/**` | Redesign |
+| `index.html` (structure, classes) | Redesign |
+| `assets/icons/`, `assets/pieces/`, `assets/board-themes/` | Redesign |
+| `docs/DESIGN_*` | Redesign |
+| `docs/design-system.html` | Redesign |
+| `docs/ENGINE_SPEC.md`, `docs/FEATURES.md` | Runtime |
+| `js/lesson-player.js`, `js/lesson-player.css` | Runtime |
+| `js/data/**`, `content/**` | Runtime |
+| `js/views/**` | Both, by mutual convention. Migrate to use design hooks; don't change layout structure casually |
+| `js/app.js`, `js/storage.js`, `js/board.js`, `js/chess-utils.js`, `js/engine.js`, `js/content-loader.js`, `js/search.js` | Both, by mutual convention. Routing additions need coordination |

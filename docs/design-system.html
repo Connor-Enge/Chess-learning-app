@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Chess Academy — Design System</title>
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/index.js" defer></script>
+<link rel="stylesheet" href="../css/main.css" />
+<link rel="stylesheet" href="../css/board.css" />
+
+<style>
+  /* Style-guide-only chrome */
+  body { padding-bottom: 80px; }
+  .ds-page {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+  .ds-toc {
+    position: sticky;
+    top: 56px;
+    background: var(--surface-blur);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px;
+    z-index: 5;
+    margin-bottom: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .ds-toc a {
+    font-size: 12px;
+    background: var(--surface);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    padding: 6px 10px;
+    border-radius: 999px;
+    text-decoration: none;
+  }
+  .ds-toc a:hover { background: var(--surface-elevated); color: var(--text-primary); }
+  .ds-section {
+    margin: 56px 0;
+    scroll-margin-top: 80px;
+  }
+  .ds-section > h2 {
+    margin: 0 0 4px;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    font-family: var(--font-display);
+  }
+  .ds-section > p.lede {
+    font-size: 17px;
+    color: var(--text-secondary);
+    margin: 0 0 24px;
+  }
+  .ds-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    margin: 16px 0;
+  }
+  .ds-block + .ds-block { margin-top: 12px; }
+  .ds-block-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 16px;
+  }
+  .ds-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+  .ds-row-narrow .ds-swatch { width: 48px; }
+  .ds-grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 600px) { .ds-grid-3 { grid-template-columns: 1fr 1fr; } }
+  .ds-swatch {
+    width: 100%;
+    height: 64px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: end;
+    padding: 8px 10px;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+  }
+  .ds-swatch-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 8px;
+  }
+  .ds-token-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--divider);
+    font-size: 14px;
+  }
+  .ds-token-row:last-child { border-bottom: none; }
+  .ds-token-name { font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); flex: 0 0 200px; }
+  .ds-token-val { font-family: var(--font-mono); font-size: 13px; color: var(--text-secondary); flex: 1; }
+  .ds-token-demo { flex: 0 0 auto; }
+  .ds-spacing {
+    background: var(--primary-soft);
+    border-radius: 4px;
+    height: 16px;
+  }
+  .ds-radius {
+    width: 64px;
+    height: 64px;
+    background: var(--primary-soft);
+    border: 1px solid var(--primary);
+  }
+  .ds-elevation {
+    width: 100%;
+    height: 80px;
+    background: var(--surface);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .ds-icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px;
+  }
+  .ds-icon-cell {
+    aspect-ratio: 1;
+    background: var(--surface-elevated);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 9px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+  .ds-icon-cell .icon { width: 22px; height: 22px; color: var(--text-primary); }
+  .ds-board-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+  }
+  .ds-mini-board {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    box-shadow: var(--shadow-2);
+  }
+  .ds-mini-sq.l { background: var(--board-light); }
+  .ds-mini-sq.d { background: var(--board-dark); }
+  pre.code {
+    background: var(--surface-sunken);
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 12px;
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+    overflow-x: auto;
+    margin: 8px 0 0;
+  }
+</style>
+</head>
+<body>
+
+<header class="appbar">
+  <a href="../index.html" class="appbar__back appbar-back" aria-label="Back to app" style="display:inline-flex">
+    <i class="ph ph-caret-left icon" aria-hidden="true"></i>
+  </a>
+  <h1 class="appbar__title">Design System</h1>
+  <button class="appbar__action" id="dsThemeToggle" aria-label="Toggle theme">
+    <i class="ph ph-circle-half icon" aria-hidden="true"></i>
+  </button>
+</header>
+
+<main class="ds-page">
+  <h1 class="t-display" style="margin: 12px 0">Chess Academy<br>Design System</h1>
+  <p class="t-callout t-secondary" style="max-width: 640px">
+    Live style guide for every component, token, and pattern in the app.
+    Toggle theme above to verify dark + light. Resize the window to see
+    responsive behavior. View source on this page to see HTML usage.
+  </p>
+
+  <nav class="ds-toc" aria-label="Sections">
+    <a href="#tokens">Tokens</a>
+    <a href="#typography">Typography</a>
+    <a href="#color">Color</a>
+    <a href="#spacing">Spacing</a>
+    <a href="#radius">Radius</a>
+    <a href="#elevation">Elevation</a>
+    <a href="#motion">Motion</a>
+    <a href="#icons">Icons</a>
+    <a href="#buttons">Buttons</a>
+    <a href="#inputs">Inputs</a>
+    <a href="#cards">Cards</a>
+    <a href="#lists">Lists</a>
+    <a href="#chips">Chips</a>
+    <a href="#progress">Progress</a>
+    <a href="#feedback">Feedback</a>
+    <a href="#transport">Transport</a>
+    <a href="#sheets">Sheets</a>
+    <a href="#nav">Nav</a>
+    <a href="#board">Board</a>
+  </nav>
+
+  <!-- ============================================================
+       TOKENS
+       ============================================================ -->
+  <section id="tokens" class="ds-section">
+    <h2>Foundation Tokens</h2>
+    <p class="lede">All semantic tokens live in <code>css/design-system.css</code>. Components reference these names; theme overrides flow through automatically.</p>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Surfaces</p>
+      <div class="ds-swatch-row">
+        <div class="ds-swatch" style="background: var(--bg)">--bg</div>
+        <div class="ds-swatch" style="background: var(--bg-elevated)">--bg-elevated</div>
+        <div class="ds-swatch" style="background: var(--surface)">--surface</div>
+        <div class="ds-swatch" style="background: var(--surface-elevated)">--surface-elevated</div>
+        <div class="ds-swatch" style="background: var(--surface-sunken)">--surface-sunken</div>
+        <div class="ds-swatch" style="background: var(--surface-overlay)">--surface-overlay</div>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Text</p>
+      <div class="ds-row" style="flex-direction:column; align-items:flex-start; gap:8px">
+        <span style="color: var(--text-primary); font-size: 17px">--text-primary · the most important text on the page</span>
+        <span style="color: var(--text-secondary); font-size: 17px">--text-secondary · supporting copy and metadata</span>
+        <span style="color: var(--text-muted); font-size: 14px">--text-muted · timestamps, captions, hints</span>
+        <span style="color: var(--text-disabled); font-size: 14px">--text-disabled · disabled controls</span>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Brand &amp; Semantic</p>
+      <div class="ds-swatch-row">
+        <div class="ds-swatch" style="background: var(--primary)">--primary</div>
+        <div class="ds-swatch" style="background: var(--accent)">--accent</div>
+        <div class="ds-swatch" style="background: var(--success)">--success</div>
+        <div class="ds-swatch" style="background: var(--warning)">--warning</div>
+        <div class="ds-swatch" style="background: var(--error)">--error</div>
+        <div class="ds-swatch" style="background: var(--info)">--info</div>
+      </div>
+      <p class="ds-block-title" style="margin-top:16px">Soft variants</p>
+      <div class="ds-swatch-row">
+        <div class="ds-swatch" style="background: var(--primary-soft); color: var(--primary)">--primary-soft</div>
+        <div class="ds-swatch" style="background: var(--accent-soft); color: var(--accent)">--accent-soft</div>
+        <div class="ds-swatch" style="background: var(--success-soft); color: var(--success)">--success-soft</div>
+        <div class="ds-swatch" style="background: var(--warning-soft); color: var(--warning)">--warning-soft</div>
+        <div class="ds-swatch" style="background: var(--error-soft); color: var(--error)">--error-soft</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TYPOGRAPHY
+       ============================================================ -->
+  <section id="typography" class="ds-section">
+    <h2>Typography</h2>
+    <p class="lede">System font stack: SF Pro on iOS, Segoe UI Variable on Windows, Inter as a fallback.</p>
+
+    <div class="ds-block">
+      <div class="ds-token-row">
+        <span class="ds-token-name">--text-display · 40 / 1.15 / bold</span>
+        <span class="t-display">Master the middlegame</span>
+      </div>
+      <div class="ds-token-row">
+        <span class="ds-token-name">--text-title-1 · 30 / 1.15 / bold</span>
+        <span class="t-title-1">Continue learning</span>
+      </div>
+      <div class="ds-token-row">
+        <span class="ds-token-name">--text-title-2 · 24 / 1.3 / semibold</span>
+        <span class="t-title-2">Tactical patterns</span>
+      </div>
+      <div class="ds-token-row">
+        <span class="ds-token-name">--text-title-3 · 20 / 1.3 / semibold</span>
+        <span class="t-title-3">Sicilian Najdorf</span>
+      </div>
+      <div class="ds-token-row">
+        <span class="ds-token-name">--text-headline · 17 / 1.3 / semibold</span>
+        <span class="t-headline">Find the best move</span>
+      </div>
+      <div class="ds-token-row">
+        <span class="ds-token-name">--text-body · 17 / 1.45 / regular</span>
+        <span class="t-body">Black to move and win material in three moves.</span>
+      </div>
+      <div class="ds-token-row">
+        <span class="ds-token-name">--text-callout · 16 / 1.45 / regular</span>
+        <span class="t-callout">In this position, focus on king safety before grabbing the pawn.</span>
+      </div>
+      <div class="ds-token-row">
+        <span class="ds-token-name">--text-subhead · 15 / 1.3 / medium</span>
+        <span class="t-subhead">Tap a square to move</span>
+      </div>
+      <div class="ds-token-row">
+        <span class="ds-token-name">--text-footnote · 13 / 1.3 / regular</span>
+        <span class="t-footnote t-secondary">Solved 18m ago</span>
+      </div>
+      <div class="ds-token-row">
+        <span class="ds-token-name">--text-caption · 11 / 1.3 / medium / uppercase</span>
+        <span class="t-caption t-muted">Continue learning</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SPACING
+       ============================================================ -->
+  <section id="spacing" class="ds-section">
+    <h2>Spacing</h2>
+    <p class="lede">4-point grid. Reach for these tokens for any padding, margin, or gap.</p>
+    <div class="ds-block">
+      <div class="ds-token-row"><span class="ds-token-name">--space-1 · 4px</span>  <div class="ds-spacing" style="width: 4px"></div></div>
+      <div class="ds-token-row"><span class="ds-token-name">--space-2 · 8px</span>  <div class="ds-spacing" style="width: 8px"></div></div>
+      <div class="ds-token-row"><span class="ds-token-name">--space-3 · 12px</span> <div class="ds-spacing" style="width: 12px"></div></div>
+      <div class="ds-token-row"><span class="ds-token-name">--space-4 · 16px</span> <div class="ds-spacing" style="width: 16px"></div></div>
+      <div class="ds-token-row"><span class="ds-token-name">--space-5 · 20px</span> <div class="ds-spacing" style="width: 20px"></div></div>
+      <div class="ds-token-row"><span class="ds-token-name">--space-6 · 24px</span> <div class="ds-spacing" style="width: 24px"></div></div>
+      <div class="ds-token-row"><span class="ds-token-name">--space-7 · 32px</span> <div class="ds-spacing" style="width: 32px"></div></div>
+      <div class="ds-token-row"><span class="ds-token-name">--space-8 · 40px</span> <div class="ds-spacing" style="width: 40px"></div></div>
+      <div class="ds-token-row"><span class="ds-token-name">--space-9 · 56px</span> <div class="ds-spacing" style="width: 56px"></div></div>
+      <div class="ds-token-row"><span class="ds-token-name">--space-10 · 72px</span><div class="ds-spacing" style="width: 72px"></div></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       RADIUS
+       ============================================================ -->
+  <section id="radius" class="ds-section">
+    <h2>Radius</h2>
+    <div class="ds-block">
+      <div class="ds-row">
+        <div class="ds-radius" style="border-radius: var(--radius-xs)">xs</div>
+        <div class="ds-radius" style="border-radius: var(--radius-sm)">sm</div>
+        <div class="ds-radius" style="border-radius: var(--radius-md)">md</div>
+        <div class="ds-radius" style="border-radius: var(--radius-lg)">lg</div>
+        <div class="ds-radius" style="border-radius: var(--radius-xl)">xl</div>
+        <div class="ds-radius" style="border-radius: var(--radius-2xl)">2xl</div>
+        <div class="ds-radius" style="border-radius: var(--radius-pill)">pill</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ELEVATION
+       ============================================================ -->
+  <section id="elevation" class="ds-section">
+    <h2>Elevation</h2>
+    <p class="lede">Subtle, dark-mode-aware. Reach for higher levels only when something needs to float over content.</p>
+    <div class="ds-block">
+      <div class="ds-grid-3">
+        <div class="ds-elevation" style="box-shadow: var(--shadow-1)">--shadow-1</div>
+        <div class="ds-elevation" style="box-shadow: var(--shadow-2)">--shadow-2</div>
+        <div class="ds-elevation" style="box-shadow: var(--shadow-3)">--shadow-3</div>
+        <div class="ds-elevation" style="box-shadow: var(--shadow-4)">--shadow-4</div>
+        <div class="ds-elevation" style="box-shadow: var(--shadow-5)">--shadow-5</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       MOTION
+       ============================================================ -->
+  <section id="motion" class="ds-section">
+    <h2>Motion</h2>
+    <div class="ds-block">
+      <div class="ds-token-row"><span class="ds-token-name">--motion-fast · 150ms</span> <span class="t-token-val">Hover state, button press, color flash</span></div>
+      <div class="ds-token-row"><span class="ds-token-name">--motion-base · 220ms</span> <span class="t-token-val">Sheet scrim, toast in/out, list animations</span></div>
+      <div class="ds-token-row"><span class="ds-token-name">--motion-slow · 320ms</span> <span class="t-token-val">Sheet slide-up, page transitions, dock-sheet</span></div>
+      <div class="ds-token-row"><span class="ds-token-name">--motion-slower · 480ms</span> <span class="t-token-val">Decorative entrances</span></div>
+      <div class="ds-token-row"><span class="ds-token-name">--ease-ios</span> <span class="t-token-val">cubic-bezier(0.32, 0.72, 0, 1) — for sheets, scale presses</span></div>
+      <div class="ds-token-row"><span class="ds-token-name">--ease-material</span> <span class="t-token-val">cubic-bezier(0.2, 0, 0, 1) — for content area transitions</span></div>
+      <div class="ds-token-row"><span class="ds-token-name">--ease-out</span> <span class="t-token-val">cubic-bezier(0.16, 1, 0.3, 1) — for hover states</span></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ICONS
+       ============================================================ -->
+  <section id="icons" class="ds-section">
+    <h2>Icons</h2>
+    <p class="lede">Phosphor Icons (regular weight) is the only icon set we use. Apply with <code>&lt;i class="ph ph-name icon"&gt;</code>.</p>
+    <div class="ds-block">
+      <div class="ds-icon-grid">
+        <div class="ds-icon-cell"><i class="ph ph-book-open-text icon"></i><span>book-open-text</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-tree-structure icon"></i><span>tree-structure</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-lightning icon"></i><span>lightning</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-flag-checkered icon"></i><span>flag-checkered</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-trophy icon"></i><span>trophy</span></div>
+        <div class="ph ph-play-circle ds-icon-cell" style="font-size:0"><i class="ph ph-play-circle icon"></i><span>play-circle</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-strategy icon"></i><span>strategy</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-scales icon"></i><span>scales</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-magnifying-glass icon"></i><span>magnifying-glass</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-circle-half icon"></i><span>circle-half</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-caret-left icon"></i><span>caret-left</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-caret-right icon"></i><span>caret-right</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-caret-up icon"></i><span>caret-up</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-x icon"></i><span>x</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-check icon"></i><span>check</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-lightbulb icon"></i><span>lightbulb</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-eye icon"></i><span>eye</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-arrow-right icon"></i><span>arrow-right</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-arrows-down-up icon"></i><span>arrows-down-up</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-cpu icon"></i><span>cpu</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-gear icon"></i><span>gear</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-house icon"></i><span>house</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-info icon"></i><span>info</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-warning icon"></i><span>warning</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-list icon"></i><span>list</span></div>
+        <div class="ds-icon-cell"><i class="ph ph-dots-three icon"></i><span>dots-three</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       BUTTONS
+       ============================================================ -->
+  <section id="buttons" class="ds-section">
+    <h2>Buttons</h2>
+    <p class="lede">Primary for the most important action, secondary for siblings, tertiary for inline links, destructive for irreversibles.</p>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Variants</p>
+      <div class="ds-row">
+        <button class="btn btn--primary">Primary</button>
+        <button class="btn btn--secondary">Secondary</button>
+        <button class="btn btn--tertiary">Tertiary</button>
+        <button class="btn btn--ghost">Ghost</button>
+        <button class="btn btn--destructive">Destructive</button>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Sizes</p>
+      <div class="ds-row">
+        <button class="btn btn--primary btn--sm">Small</button>
+        <button class="btn btn--primary">Default</button>
+        <button class="btn btn--primary btn--lg">Large</button>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-block-title">With icon</p>
+      <div class="ds-row">
+        <button class="btn btn--primary"><i class="ph ph-play icon"></i><span>Start lesson</span></button>
+        <button class="btn btn--secondary"><i class="ph ph-lightbulb icon"></i><span>Hint</span></button>
+        <button class="btn btn--secondary"><span>Continue</span><i class="ph ph-arrow-right icon"></i></button>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Icon-only</p>
+      <div class="ds-row">
+        <button class="btn btn--secondary btn--icon" aria-label="Settings"><i class="ph ph-gear icon"></i></button>
+        <button class="btn btn--secondary btn--icon btn--round" aria-label="More"><i class="ph ph-dots-three icon"></i></button>
+        <button class="btn btn--primary btn--icon btn--round btn--lg" aria-label="Play"><i class="ph ph-play icon"></i></button>
+        <button class="btn btn--primary btn--fab" aria-label="Next puzzle"><i class="ph ph-arrow-right icon"></i></button>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-block-title">States</p>
+      <div class="ds-row">
+        <button class="btn btn--primary" data-loading="true">Loading…</button>
+        <button class="btn btn--primary" disabled>Disabled</button>
+        <button class="btn btn--primary btn--block">Block (full width)</button>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Button group</p>
+      <div class="btn-group" role="group">
+        <button class="btn" aria-pressed="true">Day</button>
+        <button class="btn">Week</button>
+        <button class="btn">Month</button>
+        <button class="btn">All time</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       INPUTS
+       ============================================================ -->
+  <section id="inputs" class="ds-section">
+    <h2>Inputs</h2>
+    <div class="ds-block">
+      <p class="ds-block-title">Text + helper</p>
+      <div class="field" style="max-width: 320px">
+        <label class="field__label" for="ds-fen">FEN</label>
+        <input id="ds-fen" class="input" type="text" placeholder="rnbqkbnr/pppppppp/8/8…" />
+        <span class="field__hint">Paste a position to load it on the board.</span>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Error state</p>
+      <div class="field" data-error="true" style="max-width: 320px">
+        <label class="field__label" for="ds-error">PGN</label>
+        <input id="ds-error" class="input" type="text" value="invalid-pgn" />
+        <span class="field__error">Couldn't parse PGN — make sure it starts with 1. e4.</span>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Search field</p>
+      <div class="search-field" style="max-width: 320px">
+        <i class="ph ph-magnifying-glass icon"></i>
+        <input type="search" placeholder="Search lessons, openings, games…" />
+        <button class="search-field__clear" aria-label="Clear">×</button>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Select</p>
+      <select class="select" style="max-width: 320px">
+        <option>All tracks</option>
+        <option>Lessons</option>
+        <option>Tactics</option>
+      </select>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Switch</p>
+      <div class="row" style="gap:24px">
+        <label class="switch">
+          <input type="checkbox" />
+          <span class="switch__track"><span class="switch__thumb"></span></span>
+        </label>
+        <label class="switch">
+          <input type="checkbox" checked />
+          <span class="switch__track"><span class="switch__thumb"></span></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Toggle row (in a list)</p>
+      <div class="list-section" style="max-width: 360px">
+        <label class="list-row">
+          <span class="list-row__main">
+            <span class="list-row__title">Reduced motion</span>
+            <span class="list-row__subtitle">Honors your OS preference</span>
+          </span>
+          <span class="switch"><input type="checkbox" /><span class="switch__track"><span class="switch__thumb"></span></span></span>
+        </label>
+        <label class="list-row">
+          <span class="list-row__main">
+            <span class="list-row__title">Sound on solve</span>
+            <span class="list-row__subtitle">Plays a quick chime</span>
+          </span>
+          <span class="switch"><input type="checkbox" checked /><span class="switch__track"><span class="switch__thumb"></span></span></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Stepper</p>
+      <span class="stepper">
+        <button>−</button>
+        <input value="12" />
+        <button>+</button>
+      </span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CARDS
+       ============================================================ -->
+  <section id="cards" class="ds-section">
+    <h2>Cards</h2>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Track card (dashboard)</p>
+      <div class="dash-grid">
+        <button class="track-card card" data-track="lessons">
+          <span class="track-card__icon"><i class="ph ph-book-open-text icon"></i></span>
+          <span class="track-card__main">
+            <span class="track-card__title">Lessons</span>
+            <span class="track-card__meta">12/64 complete</span>
+          </span>
+          <i class="ph ph-caret-right icon track-card__chevron"></i>
+        </button>
+        <button class="track-card card" data-track="tactics">
+          <span class="track-card__icon"><i class="ph ph-lightning icon"></i></span>
+          <span class="track-card__main">
+            <span class="track-card__title">Tactics</span>
+            <span class="track-card__meta">38/66 · 78%</span>
+          </span>
+          <i class="ph ph-caret-right icon track-card__chevron"></i>
+        </button>
+        <button class="track-card card" data-track="openings">
+          <span class="track-card__icon"><i class="ph ph-tree-structure icon"></i></span>
+          <span class="track-card__main">
+            <span class="track-card__title">Openings</span>
+            <span class="track-card__meta">9 explored</span>
+          </span>
+          <i class="ph ph-caret-right icon track-card__chevron"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Hero card</p>
+      <div class="card--hero" style="margin: 0">
+        <span class="card__eyebrow">Continue learning</span>
+        <h3 class="card__title">Pawn structures, Part 2</h3>
+        <p class="t-callout t-secondary" style="margin: 0">Isolated and hanging pawns — when they help, when they hurt.</p>
+        <button class="btn btn--primary" style="align-self: flex-start; margin-top: 8px">
+          <i class="ph ph-play icon"></i><span>Resume lesson</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Callout</p>
+      <div class="callout">
+        <span class="callout__icon"><i class="ph ph-info icon"></i></span>
+        <div class="callout__main">
+          <p class="callout__title">Position note</p>
+          <p class="callout__body">Black's d6 pawn is a backward weakness — White's pieces will target it for the rest of the game.</p>
+        </div>
+      </div>
+      <div class="callout callout--success">
+        <span class="callout__icon"><i class="ph ph-check icon"></i></span>
+        <div class="callout__main">
+          <p class="callout__title">Right idea!</p>
+          <p class="callout__body">Centralizing the knight forced Black to weaken the kingside.</p>
+        </div>
+      </div>
+      <div class="callout callout--warning">
+        <span class="callout__icon"><i class="ph ph-warning icon"></i></span>
+        <div class="callout__main">
+          <p class="callout__title">Watch the back rank</p>
+          <p class="callout__body">After Re1, your back-rank weakness becomes critical.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       LISTS
+       ============================================================ -->
+  <section id="lists" class="ds-section">
+    <h2>Lists</h2>
+    <div class="ds-block">
+      <p class="ds-block-title">Grouped list with sections</p>
+      <div class="list-section" style="max-width: 480px">
+        <button class="list-row">
+          <span class="list-row__leading list-row__leading--filled"><span class="list-row__status list-row__status--done"><i class="ph ph-check icon" style="width:14px;height:14px"></i></span></span>
+          <span class="list-row__main">
+            <span class="list-row__title">The opposition</span>
+            <span class="list-row__subtitle">King &amp; pawn endings · 8 min</span>
+          </span>
+          <i class="ph ph-caret-right icon list-row__chevron"></i>
+        </button>
+        <button class="list-row">
+          <span class="list-row__leading list-row__leading--filled"><span class="list-row__status list-row__status--current">3</span></span>
+          <span class="list-row__main">
+            <span class="list-row__title">Lucena position</span>
+            <span class="list-row__subtitle">Rook endings · 12 min</span>
+          </span>
+          <i class="ph ph-caret-right icon list-row__chevron"></i>
+        </button>
+        <button class="list-row">
+          <span class="list-row__leading list-row__leading--filled"><span class="list-row__status">4</span></span>
+          <span class="list-row__main">
+            <span class="list-row__title">Philidor position</span>
+            <span class="list-row__subtitle">Rook endings · 10 min</span>
+          </span>
+          <i class="ph ph-caret-right icon list-row__chevron"></i>
+        </button>
+        <button class="list-row">
+          <span class="list-row__leading list-row__leading--filled"><span class="list-row__status list-row__status--locked"><i class="ph ph-lock icon" style="width:12px;height:12px"></i></span></span>
+          <span class="list-row__main">
+            <span class="list-row__title">Bishop vs. knight</span>
+            <span class="list-row__subtitle">Minor piece endings · locked</span>
+          </span>
+          <i class="ph ph-caret-right icon list-row__chevron"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CHIPS
+       ============================================================ -->
+  <section id="chips" class="ds-section">
+    <h2>Chips, badges, tags</h2>
+    <div class="ds-block">
+      <p class="ds-block-title">Filter chips</p>
+      <div class="chip-group">
+        <button class="chip" aria-pressed="true">All</button>
+        <button class="chip">Pin</button>
+        <button class="chip">Fork</button>
+        <button class="chip">Skewer</button>
+        <button class="chip">Discovered</button>
+        <button class="chip">Mate in 2</button>
+      </div>
+    </div>
+    <div class="ds-block">
+      <p class="ds-block-title">Badges</p>
+      <div class="ds-row">
+        <span class="badge">Default</span>
+        <span class="badge badge--primary">Primary</span>
+        <span class="badge badge--success">Success</span>
+        <span class="badge badge--warning">Warning</span>
+        <span class="badge badge--error">Error</span>
+        <span class="badge badge--accent">Accent</span>
+        <span class="badge badge--new">New</span>
+      </div>
+    </div>
+    <div class="ds-block">
+      <p class="ds-block-title">Tags</p>
+      <div class="ds-row">
+        <span class="tag">1972</span>
+        <span class="tag">Reykjavik</span>
+        <span class="tag">B97</span>
+        <span class="tag tag--filled">Sicilian Najdorf</span>
+      </div>
+    </div>
+    <div class="ds-block">
+      <p class="ds-block-title">Avatars</p>
+      <div class="ds-row">
+        <span class="avatar avatar--sm">CE</span>
+        <span class="avatar">CE</span>
+        <span class="avatar avatar--lg">CE</span>
+        <span class="avatar avatar--xl avatar--ring">CE</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROGRESS
+       ============================================================ -->
+  <section id="progress" class="ds-section">
+    <h2>Progress</h2>
+    <div class="ds-block">
+      <p class="ds-block-title">Linear</p>
+      <div class="stack-3" style="max-width: 320px">
+        <div class="progress" style="--progress-value: 0.25"><div class="progress__bar"></div></div>
+        <div class="progress" style="--progress-value: 0.62"><div class="progress__bar"></div></div>
+        <div class="progress progress--success" style="--progress-value: 1"><div class="progress__bar"></div></div>
+        <div class="progress progress--indeterminate"><div class="progress__bar"></div></div>
+      </div>
+    </div>
+    <div class="ds-block">
+      <p class="ds-block-title">Circular ring (set --ring-circumference based on size)</p>
+      <div class="ds-row">
+        <span class="ring" style="--ring-value: 0.25; --ring-circumference: 138">
+          <svg viewBox="0 0 56 56"><circle class="ring__track" cx="28" cy="28" r="22"></circle><circle class="ring__fill" cx="28" cy="28" r="22"></circle></svg>
+          <span class="ring__label">25%</span>
+        </span>
+        <span class="ring ring--lg" style="--ring-value: 0.62; --ring-circumference: 207">
+          <svg viewBox="0 0 80 80"><circle class="ring__track" cx="40" cy="40" r="33"></circle><circle class="ring__fill" cx="40" cy="40" r="33"></circle></svg>
+          <span class="ring__label">62%</span>
+        </span>
+        <span class="ring ring--lg ring--success" style="--ring-value: 1; --ring-circumference: 207">
+          <svg viewBox="0 0 80 80"><circle class="ring__track" cx="40" cy="40" r="33"></circle><circle class="ring__fill" cx="40" cy="40" r="33"></circle></svg>
+          <span class="ring__label">100%</span>
+        </span>
+      </div>
+    </div>
+    <div class="ds-block">
+      <p class="ds-block-title">Step dots / criteria</p>
+      <div class="step-dots" style="margin-bottom: 16px">
+        <span class="step-dots__dot is-done"></span>
+        <span class="step-dots__dot is-done"></span>
+        <span class="step-dots__dot is-active"></span>
+        <span class="step-dots__dot"></span>
+        <span class="step-dots__dot"></span>
+      </div>
+      <div class="stack-2" style="max-width: 320px">
+        <span class="criterion is-met"><span class="criterion__dot"></span><span>Made the right first move</span></span>
+        <span class="criterion is-met"><span class="criterion__dot"></span><span>Found the tactic in &lt; 30s</span></span>
+        <span class="criterion"><span class="criterion__dot"></span><span>Solved without hint</span></span>
+        <span class="criterion"><span class="criterion__dot"></span><span>Read the explanation</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FEEDBACK
+       ============================================================ -->
+  <section id="feedback" class="ds-section">
+    <h2>Feedback (skeletons, toasts, empty, banners)</h2>
+    <div class="ds-block">
+      <p class="ds-block-title">Skeletons</p>
+      <div class="stack-2" style="max-width: 360px">
+        <div class="skeleton skeleton--card"></div>
+        <div class="row" style="gap:12px">
+          <div class="skeleton skeleton--avatar"></div>
+          <div style="flex:1">
+            <div class="skeleton skeleton--text"></div>
+            <div class="skeleton skeleton--text-sm" style="width: 60%"></div>
+          </div>
+        </div>
+        <div class="skeleton skeleton--row"></div>
+        <div class="skeleton skeleton--row"></div>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Toasts (live mounting via Toast helper, demo here)</p>
+      <div class="stack-2" style="max-width: 480px">
+        <div class="toast"><i class="ph ph-info icon"></i><span>Lesson saved</span></div>
+        <div class="toast toast--success"><i class="ph ph-check icon"></i><span>Puzzle solved · 18s</span><button class="toast__action">Next</button></div>
+        <div class="toast toast--warning"><i class="ph ph-warning icon"></i><span>Engine disabled — analysis off</span></div>
+        <div class="toast toast--error"><i class="ph ph-x icon"></i><span>Could not parse PGN</span><button class="toast__action">Retry</button></div>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Empty state</p>
+      <div class="empty">
+        <span class="empty__art"><i class="ph ph-clock-counter-clockwise icon"></i></span>
+        <p class="empty__title">No activity yet</p>
+        <p class="empty__body">Start a lesson, drill, or puzzle and your progress will show up here.</p>
+        <button class="btn btn--primary empty__cta"><i class="ph ph-play icon"></i><span>Start a lesson</span></button>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Banners</p>
+      <div class="stack-2">
+        <div class="banner">
+          <span class="banner__icon"><i class="ph ph-info icon"></i></span>
+          <div class="banner__main">
+            <p class="banner__title">Sync your progress</p>
+            <p class="banner__body">Cloud sync isn't available — progress is saved on this device only.</p>
+          </div>
+          <button class="banner__close" aria-label="Dismiss"><i class="ph ph-x icon"></i></button>
+        </div>
+        <div class="banner banner--warning">
+          <span class="banner__icon"><i class="ph ph-warning icon"></i></span>
+          <div class="banner__main">
+            <p class="banner__title">Battery saver active</p>
+            <p class="banner__body">Stockfish runs at reduced depth.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TRANSPORT
+       ============================================================ -->
+  <section id="transport" class="ds-section">
+    <h2>Transport &amp; move list</h2>
+    <div class="ds-block">
+      <p class="ds-block-title">Transport</p>
+      <div class="row">
+        <div class="transport">
+          <button class="transport__btn" aria-label="First"><i class="ph ph-skip-back icon"></i></button>
+          <button class="transport__btn" aria-label="Previous"><i class="ph ph-caret-left icon"></i></button>
+          <button class="transport__btn transport__btn--primary" aria-label="Play"><i class="ph ph-play icon"></i></button>
+          <button class="transport__btn" aria-label="Next"><i class="ph ph-caret-right icon"></i></button>
+          <button class="transport__btn" aria-label="Last"><i class="ph ph-skip-forward icon"></i></button>
+          <span class="transport__divider"></span>
+          <button class="transport__btn" aria-label="Flip"><i class="ph ph-arrows-down-up icon"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Move list</p>
+      <div class="move-list" style="max-width: 480px">
+        <span class="move-list__pair"><span class="move-list__num">1.</span><span class="move-list__move">e4</span><span class="move-list__move">e5</span></span>
+        <span class="move-list__pair"><span class="move-list__num">2.</span><span class="move-list__move">Nf3</span><span class="move-list__move">Nc6</span></span>
+        <span class="move-list__pair"><span class="move-list__num">3.</span><span class="move-list__move">Bb5</span><span class="move-list__move has-comment">a6</span></span>
+        <span class="move-list__pair"><span class="move-list__num">4.</span><span class="move-list__move">Ba4</span><span class="move-list__move is-current">Nf6</span></span>
+        <span class="move-list__pair"><span class="move-list__num">5.</span><span class="move-list__move">O-O</span><span class="move-list__move">Be7</span></span>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Eval display</p>
+      <div class="eval-display" style="max-width: 240px">
+        <span class="eval-display__value">+1.42</span>
+        <span class="eval-display__line">Nf3 d6 d4 cxd4 Nxd4 Nf6 Nc3 a6</span>
+        <span class="eval-display__depth">depth 18</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SHEETS / NAV
+       ============================================================ -->
+  <section id="sheets" class="ds-section">
+    <h2>Sheets &amp; navigation</h2>
+    <div class="ds-block">
+      <p class="ds-block-title">Sheet link rows</p>
+      <div class="stack-1" style="max-width: 360px">
+        <button class="sheet-link"><i class="ph ph-house icon"></i><span>Dashboard</span><i class="ph ph-caret-right icon sheet-link__chevron"></i></button>
+        <button class="sheet-link"><i class="ph ph-strategy icon"></i><span>Positional lessons</span><i class="ph ph-caret-right icon sheet-link__chevron"></i></button>
+        <button class="sheet-link"><i class="ph ph-trophy icon"></i><span>Master games</span><i class="ph ph-caret-right icon sheet-link__chevron"></i></button>
+        <button class="sheet-link sheet-link--muted">Close</button>
+      </div>
+    </div>
+
+    <div id="nav" class="ds-block">
+      <p class="ds-block-title">Tab pills (scroll-x on mobile)</p>
+      <div class="tabs">
+        <button class="tab-pill" aria-pressed="true">All</button>
+        <button class="tab-pill">Lessons</button>
+        <button class="tab-pill">Tactics</button>
+        <button class="tab-pill">Positional</button>
+        <button class="tab-pill">Endgame</button>
+        <button class="tab-pill">Calculation</button>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-block-title">Underline tabbar</p>
+      <div class="tabbar">
+        <button class="tabbar__tab" aria-pressed="true">Plans</button>
+        <button class="tabbar__tab">Variations</button>
+        <button class="tabbar__tab">Traps</button>
+        <button class="tabbar__tab">Notable games</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       BOARD
+       ============================================================ -->
+  <section id="board" class="ds-section">
+    <h2>Board themes</h2>
+    <p class="lede">Switch via <code>[data-board-theme="…"]</code> on any ancestor of the board.</p>
+
+    <div class="ds-block">
+      <div class="ds-board-grid">
+        <div>
+          <p class="ds-block-title" style="margin: 0 0 8px">Classic walnut (default)</p>
+          <div class="ds-mini-board">
+            <script>document.write(Array.from({length:64}, (_,i) => `<div class="ds-mini-sq ${((i + Math.floor(i/8)) % 2 === 0) ? 'l' : 'd'}"></div>`).join(''))</script>
+          </div>
+        </div>
+        <div data-board-theme="ocean">
+          <p class="ds-block-title" style="margin: 0 0 8px">Ocean</p>
+          <div class="ds-mini-board">
+            <script>document.write(Array.from({length:64}, (_,i) => `<div class="ds-mini-sq ${((i + Math.floor(i/8)) % 2 === 0) ? 'l' : 'd'}"></div>`).join(''))</script>
+          </div>
+        </div>
+        <div data-board-theme="tournament">
+          <p class="ds-block-title" style="margin: 0 0 8px">Tournament</p>
+          <div class="ds-mini-board">
+            <script>document.write(Array.from({length:64}, (_,i) => `<div class="ds-mini-sq ${((i + Math.floor(i/8)) % 2 === 0) ? 'l' : 'd'}"></div>`).join(''))</script>
+          </div>
+        </div>
+        <div data-board-theme="midnight">
+          <p class="ds-block-title" style="margin: 0 0 8px">Midnight</p>
+          <div class="ds-mini-board">
+            <script>document.write(Array.from({length:64}, (_,i) => `<div class="ds-mini-sq ${((i + Math.floor(i/8)) % 2 === 0) ? 'l' : 'd'}"></div>`).join(''))</script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  document.getElementById('dsThemeToggle').addEventListener('click', () => {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') !== 'light';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  });
+</script>
+
+</body>
+</html>

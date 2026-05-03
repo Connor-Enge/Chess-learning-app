@@ -30,6 +30,8 @@ function defaults() {
     studiedGames: {},       // gameId -> timestamp
     exploredOpenings: {},   // openingId -> timestamp
     theme: 'dark',
+    boardTheme: 'walnut',   // walnut | ocean | tournament | midnight
+    pieceSet: 'cburnett',   // for future use
     recent: [],             // [{type, id, title, ts}]
   };
 }
@@ -88,6 +90,8 @@ export const storage = {
   isOpeningExplored(id) { return !!state.exploredOpenings[id]; },
 
   setTheme(t) { state.theme = t; save(state); },
+  setBoardTheme(t) { state.boardTheme = t; save(state); },
+  setPieceSet(s) { state.pieceSet = s; save(state); },
 
   reset() {
     state = defaults();
