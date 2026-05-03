@@ -822,32 +822,22 @@ export const PUZZLES = [
   },
   {
     id: "p083",
-    fen: "4k3/8/8/8/8/8/4q3/4K3 b - - 0 1",
-    sideToMove: "b",
-    solution: "Qxe1#",
-    themes: ["back-rank"],
-    difficulty: "easy",
-    explanation: "King on the back rank with no escape squares (no luft, surrounded by the edge): the queen simply slides to e1 with mate. The first lesson of king safety: always make luft for your king once an enemy queen reaches your back rank.",
-    title: "Queen mates the king on the edge"
+    fen: "r3r1k1/5ppp/8/8/8/4R3/5PPP/4R1K1 w - - 0 1",
+    sideToMove: "w",
+    solution: "R3xe8+ Rxe8 Rxe8#",
+    themes: ["overloading", "back-rank"],
+    difficulty: "medium",
+    explanation: "Doubled white rooks on the e-file vs. one defending black rook on e8 (a8 also defends along the rank). Trade the front defender with R3xe8+; after Rxe8, the back rook on e1 crashes through for Rxe8 mate. Doubled attackers always overwhelm a single defender.",
+    title: "Doubled rooks overload defender"
   },
   {
     id: "p084",
-    fen: "4k3/8/8/8/8/8/8/3rK3 w - - 0 1",
+    fen: "4k3/4q3/8/8/8/8/4R3/4K3 w - - 0 1",
     sideToMove: "w",
-    solution: "Kxd1",
-    themes: ["removing-the-defender"],
+    solution: "Rxe7+ Kxe7",
+    themes: ["removing-the-defender", "decoy"],
     difficulty: "easy",
-    explanation: "The black rook is undefended next to the king — capture it. A trivial illustration of why hanging pieces lose games: always check whether the piece attacking you is itself defended before you panic.",
-    title: "King captures undefended rook"
-  },
-  {
-    id: "p085",
-    fen: "4k3/8/4r3/8/4N3/8/8/4K3 w - - 0 1",
-    sideToMove: "w",
-    solution: "Nxe6",
-    themes: ["fork"],
-    difficulty: "easy",
-    explanation: "Wait — the knight on e4 doesn't attack e6 (knights don't move along files). Use this as a counter-example exercise: not every alignment is tactically meaningful. The student should reject this 'solution' — Nxe6 is illegal. (Marked illustrative.)",
-    title: "Counter-example: not every alignment wins"
+    explanation: "The queen sits on e7, defended by the king on e8. Trading the rook for the queen is a fine bargain (rook for queen = +4). Whenever a queen is defended only by the king and your rook attacks her, calculate the trade — usually you're winning material.",
+    title: "Rook for queen exchange"
   }
 ];

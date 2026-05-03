@@ -30,9 +30,9 @@ export const LESSONS_POSITIONAL_3 = [
 
       { type: "pgn",
         title: "Karpov's two-weakness technique (illustrative endgame)",
-        moves: "1.Nd4 Rb8 2.Nb5 Rfc8 3.a4 a5 4.Kf2 Kf8 5.Ke3 Ke7 6.Kd3 Kd7 7.Kc4 Kc6 8.f4",
+        moves: "1.Nb5 Rfd8 2.a4 a6 3.Nd4 Rb8 4.Kf2 Kf8 5.Ke3 Ke7 6.Kd3 Kd7 7.Kc4 Kc7 8.f4",
         startFen: "2r2rk1/pp3ppp/2p5/8/3N4/4P1P1/PP3P1P/2R2RK1 w - - 0 1",
-        annotations: "White has a small structural edge (better minor piece, more active rook setup). The plan: 1) plant the knight on b5 to fix Black's queenside, 2) march the king to the queenside while Black has no useful play, 3) once Black has shuffled himself into zugzwang on one flank, open a second front with f4-f5 on the kingside. Two fronts, one defender — the position cracks." },
+        annotations: "White has a small structural edge (better minor piece, more active rook setup). The plan: 1) probe the queenside with the knight (Nb5 + a4), 2) reposition the knight, 3) march the king to the queenside while Black has no useful play, 4) once Black has shuffled himself into a tied-down position on one flank, open a second front with f4-f5 on the kingside. Two fronts, one defender — the position cracks." },
 
       { type: "subheading", value: "How to create the second weakness" },
       { type: "text", value: "You don't usually attack the second weakness — you **make** it. Three reliable methods:\n\n- **Pawn break on the other flank.** Once your opponent's pieces are tied to one wing, a pawn break (b4-b5, f4-f5, h4-h5) on the empty side opens lines and creates a target.\n- **Force a structural concession.** If the opponent is in zugzwang, any pawn move creates a square — exploit it. *...g6* leaves the dark squares; *...h6* weakens g6.\n- **Trade into a winning endgame.** Sometimes the second \"weakness\" is the opponent's king itself. Trade pieces until your active king and a single passed pawn outweigh the static defender." },
@@ -172,7 +172,7 @@ export const LESSONS_POSITIONAL_3 = [
 
       { type: "pgn",
         title: "A model minority attack sequence",
-        moves: "1.Rab1 a6 2.a3 Re8 3.b4 Nf8 4.b5 axb5 5.Nxb5 cxb5 6.Rxb5 Bd7 7.Rb2 Rec8 8.Rfb1",
+        moves: "1.Rab1 a6 2.a3 Qc7 3.b4 Rfc8 4.b5 axb5 5.Nxb5 Qb8 6.Bd2 Bd6 7.Rfc1 Ne8 8.Qb3",
         startFen: "r2q1rk1/pp1nbppp/2p1pn2/3p4/3P4/2N1PN2/PPQ1BPPP/R1B2RK1 w - - 0 1",
         annotations: "Rab1 prepares the push, a3 supports b4, then b4-b5 forces the issue. After the trades, White owns the b-file with both rooks and Black's queenside pawns are weak. From here White can target b7, infiltrate to b6 or b8, and the position is strategically winning. Black has tried to seek counterplay on the kingside (Nf8 heading to g6 / e6) but the structural damage is already done." },
 
@@ -313,9 +313,8 @@ export const LESSONS_POSITIONAL_3 = [
 
       { type: "pgn",
         title: "Capablanca-style harmony (illustrative middlegame conversion)",
-        moves: "1.dxc5 Bxc5 2.Bf4 Qe7 3.Rfd1 Rfd8 4.Rac1 Rac8 5.Be5 Qe8 6.Qe2 Bd6 7.Bxd6 Rxd6 8.Nb5",
-        startFen: "r4rk1/1bq2ppp/p1nbpn2/1pp5/3P4/P1NBPN2/P1NBPN2/R1BQ1RK1 w - - 0 1",
-        annotations: "White first clarifies the structure with dxc5, then redeploys the dark-squared bishop to f4 and e5, while doubling rooks on the c- and d-files. Every White piece reinforces another: rooks on the central files, queen on e2 connecting them, bishop dominating the long dark diagonal. The final Nb5 attacks the rook on d6 and threatens an outpost. Black's pieces are decent in isolation but never coordinate the same way — that gap is the win." },
+        moves: "1.d4 Nf6 2.c4 e6 3.Nc3 d5 4.Nf3 Be7 5.Bf4 O-O 6.e3 c5 7.dxc5 Bxc5 8.cxd5 Nxd5 9.Nxd5 exd5 10.Be2 Nc6 11.O-O Be6 12.Rc1",
+        annotations: "A Queen's Gambit Declined where White builds harmony piece by piece. Bf4 develops the dark-squared bishop to a great diagonal before e3 locks it in. After the central trades, White finishes with Be2 + O-O + Rc1 — every piece on a useful square, the rook on the open c-file, the bishop pair eyeing both sides. Black has equal material but no coordinated plan — White's pieces all reinforce each other, Black's don't. That harmony differential is what Capablanca-style players exploit over the next twenty moves." },
 
       { type: "subheading", value: "Spotting disharmony in your own position" },
       { type: "text", value: "Three diagnostic questions:\n\n- **Is any piece doing nothing?** A bishop blocked by your own pawns, a knight on a3 with no future, a rook stuck on a1. That piece is your problem — find it a job.\n- **Are any two pieces tripping over each other?** Bishop and knight on the same diagonal, two rooks fighting for one file. Reroute one.\n- **Is my queen doing the work of a minor piece?** Queens defending pawns, blocking files, or babysitting weak squares are misused. Use a smaller piece for the small job and free the queen for big work." },
