@@ -9,15 +9,35 @@
   flex-direction: column;
 }
 
+/* When the lesson player mounts inside the legacy lesson-content card,
+   neutralize the card chrome so the sticky board sits cleanly on the
+   page background. Otherwise the card's own border + padding scrolls
+   while the board sticks, creating a "floating board over a moving
+   card" visual that feels broken. */
+.lesson-content:has(.lp-root) {
+  background: transparent;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+}
+
 /* ── Board panel (sticky top on mobile) ──────────────────────── */
 .lp-board-panel {
   position: sticky;
-  top: calc(var(--appbar-h) + var(--safe-top));
+  /* Stick 1px BEHIND the appbar so sub-pixel rounding can't open a seam
+     where the underlying text would peek through. */
+  top: calc(var(--appbar-h) + var(--safe-top) - 1px);
   z-index: 6;
   background: var(--bg);
-  margin: 0 -12px;          /* breakout to viewport edges */
-  padding: 8px 12px 10px;
+  /* Full bleed: cancel parent padding (lessons-view padding-x). */
+  margin-left: calc(-1 * var(--space-3));
+  margin-right: calc(-1 * var(--space-3));
+  /* The 1px top padding covers the 1px overlap with the appbar. */
+  padding: 9px 12px 10px;
+  /* Solid bottom edge — the sticky panel must fully cover any text
+     scrolling up behind it. */
   border-bottom: 1px solid var(--border);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.18);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -171,15 +191,17 @@
 /* Text card stream */
 .lp-stream { display: flex; flex-direction: column; gap: 10px; }
 .lp-card { background: var(--bg-elev); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+/* Cards are fully readable on first paint; the play loop highlights
+   the currently-active card with a subtle accent border instead of
+   fading the future ones. (Previously every card was 0.45 opacity +
+   grayscale until "revealed" — that left the lesson unreadable until
+   the user pressed Play.) */
 .lp-text-card {
-  opacity: 0.45;
-  filter: grayscale(0.3);
-  transition: opacity 0.25s ease, filter 0.25s ease, border-color 0.25s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 .lp-text-card.lp-revealed {
-  opacity: 1;
-  filter: none;
   border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
 }
 .lp-text-card p { margin: 0 0 8px; line-height: 1.6; }
 .lp-text-card p:last-child { margin-bottom: 0; }

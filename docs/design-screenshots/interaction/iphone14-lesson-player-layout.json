@@ -1,0 +1,212 @@
+[
+  {
+    "tag": "header",
+    "class": "appbar",
+    "id": null,
+    "position": "sticky",
+    "zIndex": "20",
+    "top": "0px",
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 41
+    }
+  },
+  {
+    "tag": "div",
+    "class": "lp-board-panel",
+    "id": null,
+    "position": "sticky",
+    "zIndex": "6",
+    "top": "56px",
+    "rect": {
+      "x": 17,
+      "y": 130,
+      "w": 356,
+      "h": 465
+    }
+  },
+  {
+    "tag": "cg-container",
+    "class": "",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "auto",
+    "top": "0px",
+    "rect": {
+      "x": 10,
+      "y": 138,
+      "w": 368,
+      "h": 368
+    }
+  },
+  {
+    "tag": "cg-board",
+    "class": "",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "auto",
+    "top": "0px",
+    "rect": {
+      "x": 10,
+      "y": 138,
+      "w": 368,
+      "h": 368
+    }
+  },
+  {
+    "tag": "piece",
+    "class": "black king",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "2",
+    "top": "0px",
+    "rect": {
+      "x": 194,
+      "y": 138,
+      "w": 46,
+      "h": 46
+    }
+  },
+  {
+    "tag": "piece",
+    "class": "white knight",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "2",
+    "top": "0px",
+    "rect": {
+      "x": 148,
+      "y": 276,
+      "w": 46,
+      "h": 46
+    }
+  },
+  {
+    "tag": "piece",
+    "class": "white king",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "2",
+    "top": "0px",
+    "rect": {
+      "x": 102,
+      "y": 414,
+      "w": 46,
+      "h": 46
+    }
+  },
+  {
+    "tag": "svg",
+    "class": "[object SVGAnimatedString]",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "2",
+    "top": "0px",
+    "rect": {
+      "x": 10,
+      "y": 138,
+      "w": 368,
+      "h": 368
+    }
+  },
+  {
+    "tag": "svg",
+    "class": "[object SVGAnimatedString]",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "9",
+    "top": "0px",
+    "rect": {
+      "x": 10,
+      "y": 138,
+      "w": 368,
+      "h": 368
+    }
+  },
+  {
+    "tag": "cg-auto-pieces",
+    "class": "",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "2",
+    "top": "0px",
+    "rect": {
+      "x": 10,
+      "y": 138,
+      "w": 368,
+      "h": 368
+    }
+  },
+  {
+    "tag": "coords",
+    "class": "ranks",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "auto",
+    "top": "-20px",
+    "rect": {
+      "x": 14,
+      "y": 118,
+      "w": 12,
+      "h": 368
+    }
+  },
+  {
+    "tag": "coords",
+    "class": "files",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "auto",
+    "top": "356px",
+    "rect": {
+      "x": 34,
+      "y": 494,
+      "w": 368,
+      "h": 16
+    }
+  },
+  {
+    "tag": "piece",
+    "class": "ghost",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "2",
+    "top": "0px",
+    "rect": {
+      "x": 10,
+      "y": 138,
+      "w": 46,
+      "h": 46
+    }
+  },
+  {
+    "tag": "div",
+    "class": "lp-callout-overlay",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "10",
+    "top": "0px",
+    "rect": {
+      "x": 17,
+      "y": 130,
+      "w": 356,
+      "h": 464
+    }
+  },
+  {
+    "tag": "nav",
+    "class": "bottom-nav",
+    "id": null,
+    "position": "fixed",
+    "zIndex": "20",
+    "top": "780px",
+    "rect": {
+      "x": 0,
+      "y": 780,
+      "w": 390,
+      "h": 64
+    }
+  }
+]

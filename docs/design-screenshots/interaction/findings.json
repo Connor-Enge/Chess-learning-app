@@ -1,0 +1,2682 @@
+{
+  "capturedAt": "2026-05-03T22:08:24.234Z",
+  "errors": [
+    {
+      "screen": "dashboard",
+      "kind": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 ()"
+    }
+  ],
+  "findings": [
+    {
+      "screen": "dashboard",
+      "url": "https://connor-enge.github.io/Chess-learning-app/?cb=1777846048346#dashboard",
+      "scrollCtx": {
+        "bodyScrollHeight": 1243,
+        "bodyClientHeight": 844,
+        "htmlScrollHeight": 1243,
+        "htmlClientHeight": 844,
+        "mainScrollHeight": 1202,
+        "mainClientHeight": 1202,
+        "viewScrollHeight": 1202,
+        "viewClientHeight": 1202,
+        "viewportHeight": 844,
+        "bodyOverflowY": "visible",
+        "htmlOverflowY": "visible",
+        "mainOverflowY": "visible",
+        "blockingOverlays": []
+      },
+      "layoutMap": [
+        {
+          "tag": "header",
+          "class": "appbar",
+          "id": null,
+          "position": "sticky",
+          "zIndex": "20",
+          "top": "0px",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 390,
+            "h": 41
+          }
+        },
+        {
+          "tag": "nav",
+          "class": "bottom-nav",
+          "id": null,
+          "position": "fixed",
+          "zIndex": "20",
+          "top": "780px",
+          "rect": {
+            "x": 0,
+            "y": 780,
+            "w": 390,
+            "h": 64
+          }
+        }
+      ],
+      "sequence": [
+        {
+          "requestedY": 0,
+          "actualY": 0,
+          "file": "iphone14-dashboard-scroll-0.png"
+        },
+        {
+          "requestedY": 400,
+          "actualY": 399,
+          "file": "iphone14-dashboard-scroll-400.png"
+        },
+        {
+          "requestedY": 800,
+          "actualY": 399,
+          "file": "iphone14-dashboard-scroll-800.png"
+        },
+        {
+          "requestedY": 1200,
+          "actualY": 399,
+          "file": "iphone14-dashboard-scroll-1200.png"
+        },
+        {
+          "requestedY": "end",
+          "actualY": 399,
+          "file": "iphone14-dashboard-scroll-end.png"
+        }
+      ],
+      "contrast": {
+        "bodyP": {
+          "fg": "rgb(194, 200, 212)",
+          "bg": "rgb(15, 18, 24)",
+          "ratio": 11.17,
+          "text": "Start a lesson to track progress here."
+        },
+        "muted": null,
+        "heroTitle": {
+          "fg": "rgb(242, 244, 248)",
+          "bg": "rgb(15, 18, 24)",
+          "ratio": 17.03,
+          "text": "Pick up where you left off"
+        },
+        "bottomNavLabel": {
+          "fg": "rgb(142, 150, 166)",
+          "bg": "rgba(20, 24, 31, 0.88)",
+          "ratio": 5.98,
+          "text": "Lessons"
+        },
+        "cardSub": {
+          "fg": "rgb(142, 150, 166)",
+          "bg": "rgb(27, 31, 39)",
+          "ratio": 5.55,
+          "text": "0/74 complete"
+        }
+      }
+    },
+    {
+      "screen": "lessons-list",
+      "url": "https://connor-enge.github.io/Chess-learning-app/?cb=1777846048346#lessons",
+      "scrollCtx": {
+        "bodyScrollHeight": 4326,
+        "bodyClientHeight": 844,
+        "htmlScrollHeight": 4326,
+        "htmlClientHeight": 844,
+        "mainScrollHeight": 4285,
+        "mainClientHeight": 4285,
+        "viewScrollHeight": 4285,
+        "viewClientHeight": 4285,
+        "viewportHeight": 844,
+        "bodyOverflowY": "visible",
+        "htmlOverflowY": "visible",
+        "mainOverflowY": "visible",
+        "blockingOverlays": []
+      },
+      "layoutMap": [
+        {
+          "tag": "header",
+          "class": "appbar",
+          "id": null,
+          "position": "sticky",
+          "zIndex": "20",
+          "top": "0px",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 390,
+            "h": 41
+          }
+        },
+        {
+          "tag": "div",
+          "class": "lesson-board-panel",
+          "id": null,
+          "position": "sticky",
+          "zIndex": "10",
+          "top": "56px",
+          "rect": {
+            "x": 17,
+            "y": 130,
+            "w": 356,
+            "h": 595
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 144,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 190,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 236,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 281,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 327,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 373,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 419,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 62,
+            "y": 498,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 465,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 102,
+            "y": 498,
+            "w": 6,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 145,
+            "y": 498,
+            "w": 4,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 185,
+            "y": 498,
+            "w": 6,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 228,
+            "y": 498,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 271,
+            "y": 498,
+            "w": 3,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 310,
+            "y": 498,
+            "w": 6,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 352,
+            "y": 498,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "nav",
+          "class": "bottom-nav",
+          "id": null,
+          "position": "fixed",
+          "zIndex": "20",
+          "top": "780px",
+          "rect": {
+            "x": 0,
+            "y": 780,
+            "w": 390,
+            "h": 64
+          }
+        }
+      ],
+      "sequence": [
+        {
+          "requestedY": 0,
+          "actualY": 0,
+          "file": "iphone14-lessons-list-scroll-0.png"
+        },
+        {
+          "requestedY": 400,
+          "actualY": 400,
+          "file": "iphone14-lessons-list-scroll-400.png"
+        },
+        {
+          "requestedY": 800,
+          "actualY": 800,
+          "file": "iphone14-lessons-list-scroll-800.png"
+        },
+        {
+          "requestedY": 1200,
+          "actualY": 1200,
+          "file": "iphone14-lessons-list-scroll-1200.png"
+        },
+        {
+          "requestedY": "end",
+          "actualY": 3482,
+          "file": "iphone14-lessons-list-scroll-end.png"
+        }
+      ],
+      "contrast": {
+        "bodyP": {
+          "fg": "rgb(242, 244, 248)",
+          "bg": "rgb(27, 31, 39)",
+          "ratio": 14.99,
+          "text": "Track: calculation · Estimated: 1"
+        },
+        "muted": {
+          "fg": "rgb(142, 150, 166)",
+          "bg": "rgb(27, 31, 39)",
+          "ratio": 5.55,
+          "text": ""
+        },
+        "heroTitle": null,
+        "bottomNavLabel": {
+          "fg": "rgb(79, 134, 240)",
+          "bg": "rgba(20, 24, 31, 0.88)",
+          "ratio": 5.08,
+          "text": "Lessons"
+        },
+        "cardSub": null
+      }
+    },
+    {
+      "screen": "lesson-player",
+      "url": "https://connor-enge.github.io/Chess-learning-app/?cb=1777846048346#lessons/tac-ref-knight-fork",
+      "scrollCtx": {
+        "bodyScrollHeight": 4413,
+        "bodyClientHeight": 844,
+        "htmlScrollHeight": 4413,
+        "htmlClientHeight": 844,
+        "mainScrollHeight": 4372,
+        "mainClientHeight": 4372,
+        "viewScrollHeight": 4372,
+        "viewClientHeight": 4372,
+        "viewportHeight": 844,
+        "bodyOverflowY": "visible",
+        "htmlOverflowY": "visible",
+        "mainOverflowY": "visible",
+        "blockingOverlays": []
+      },
+      "layoutMap": [
+        {
+          "tag": "header",
+          "class": "appbar",
+          "id": null,
+          "position": "sticky",
+          "zIndex": "20",
+          "top": "0px",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 390,
+            "h": 41
+          }
+        },
+        {
+          "tag": "div",
+          "class": "lp-board-panel",
+          "id": null,
+          "position": "sticky",
+          "zIndex": "6",
+          "top": "56px",
+          "rect": {
+            "x": 17,
+            "y": 130,
+            "w": 356,
+            "h": 465
+          }
+        },
+        {
+          "tag": "cg-container",
+          "class": "",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "0px",
+          "rect": {
+            "x": 10,
+            "y": 138,
+            "w": 368,
+            "h": 368
+          }
+        },
+        {
+          "tag": "cg-board",
+          "class": "",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "0px",
+          "rect": {
+            "x": 10,
+            "y": 138,
+            "w": 368,
+            "h": 368
+          }
+        },
+        {
+          "tag": "piece",
+          "class": "black king",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "2",
+          "top": "0px",
+          "rect": {
+            "x": 194,
+            "y": 138,
+            "w": 46,
+            "h": 46
+          }
+        },
+        {
+          "tag": "piece",
+          "class": "white knight",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "2",
+          "top": "0px",
+          "rect": {
+            "x": 148,
+            "y": 276,
+            "w": 46,
+            "h": 46
+          }
+        },
+        {
+          "tag": "piece",
+          "class": "white king",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "2",
+          "top": "0px",
+          "rect": {
+            "x": 102,
+            "y": 414,
+            "w": 46,
+            "h": 46
+          }
+        },
+        {
+          "tag": "svg",
+          "class": "[object SVGAnimatedString]",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "2",
+          "top": "0px",
+          "rect": {
+            "x": 10,
+            "y": 138,
+            "w": 368,
+            "h": 368
+          }
+        },
+        {
+          "tag": "svg",
+          "class": "[object SVGAnimatedString]",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "9",
+          "top": "0px",
+          "rect": {
+            "x": 10,
+            "y": 138,
+            "w": 368,
+            "h": 368
+          }
+        },
+        {
+          "tag": "cg-auto-pieces",
+          "class": "",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "2",
+          "top": "0px",
+          "rect": {
+            "x": 10,
+            "y": 138,
+            "w": 368,
+            "h": 368
+          }
+        },
+        {
+          "tag": "coords",
+          "class": "ranks",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "-20px",
+          "rect": {
+            "x": 14,
+            "y": 118,
+            "w": 12,
+            "h": 368
+          }
+        },
+        {
+          "tag": "coords",
+          "class": "files",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "356px",
+          "rect": {
+            "x": 34,
+            "y": 494,
+            "w": 368,
+            "h": 16
+          }
+        },
+        {
+          "tag": "piece",
+          "class": "ghost",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "2",
+          "top": "0px",
+          "rect": {
+            "x": 10,
+            "y": 138,
+            "w": 46,
+            "h": 46
+          }
+        },
+        {
+          "tag": "div",
+          "class": "lp-callout-overlay",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "10",
+          "top": "0px",
+          "rect": {
+            "x": 17,
+            "y": 130,
+            "w": 356,
+            "h": 464
+          }
+        },
+        {
+          "tag": "nav",
+          "class": "bottom-nav",
+          "id": null,
+          "position": "fixed",
+          "zIndex": "20",
+          "top": "780px",
+          "rect": {
+            "x": 0,
+            "y": 780,
+            "w": 390,
+            "h": 64
+          }
+        }
+      ],
+      "sequence": [
+        {
+          "requestedY": 0,
+          "actualY": 0,
+          "file": "iphone14-lesson-player-scroll-0.png"
+        },
+        {
+          "requestedY": 400,
+          "actualY": 400,
+          "file": "iphone14-lesson-player-scroll-400.png"
+        },
+        {
+          "requestedY": 800,
+          "actualY": 800,
+          "file": "iphone14-lesson-player-scroll-800.png"
+        },
+        {
+          "requestedY": 1200,
+          "actualY": 1200,
+          "file": "iphone14-lesson-player-scroll-1200.png"
+        },
+        {
+          "requestedY": "end",
+          "actualY": 3569,
+          "file": "iphone14-lesson-player-scroll-end.png"
+        }
+      ],
+      "contrast": {
+        "bodyP": {
+          "fg": "rgb(242, 244, 248)",
+          "bg": "rgb(27, 31, 39)",
+          "ratio": 14.99,
+          "text": "Track: tactics\n         · 12 min"
+        },
+        "muted": {
+          "fg": "rgb(142, 150, 166)",
+          "bg": "rgb(27, 31, 39)",
+          "ratio": 5.55,
+          "text": "Tap ▶ Play to start the narrated walkthr"
+        },
+        "heroTitle": {
+          "fg": "rgb(242, 244, 248)",
+          "bg": "rgb(27, 31, 39)",
+          "ratio": 14.99,
+          "text": "Knight forks: the L-jump that wins games"
+        },
+        "bottomNavLabel": {
+          "fg": "rgb(79, 134, 240)",
+          "bg": "rgba(20, 24, 31, 0.88)",
+          "ratio": 5.08,
+          "text": "Lessons"
+        },
+        "cardSub": null
+      }
+    },
+    {
+      "screen": "openings",
+      "url": "https://connor-enge.github.io/Chess-learning-app/?cb=1777846048346#openings",
+      "scrollCtx": {
+        "bodyScrollHeight": 2260,
+        "bodyClientHeight": 844,
+        "htmlScrollHeight": 2260,
+        "htmlClientHeight": 844,
+        "mainScrollHeight": 2219,
+        "mainClientHeight": 2219,
+        "viewScrollHeight": 2219,
+        "viewClientHeight": 2219,
+        "viewportHeight": 857,
+        "bodyOverflowY": "visible",
+        "htmlOverflowY": "visible",
+        "mainOverflowY": "visible",
+        "blockingOverlays": []
+      },
+      "layoutMap": [
+        {
+          "tag": "header",
+          "class": "appbar",
+          "id": null,
+          "position": "sticky",
+          "zIndex": "20",
+          "top": "0px",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 390,
+            "h": 41
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 302,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 348,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 394,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 439,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 485,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 531,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 577,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 66,
+            "y": 656,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 623,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 111,
+            "y": 656,
+            "w": 6,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 158,
+            "y": 656,
+            "w": 4,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 203,
+            "y": 656,
+            "w": 6,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 249,
+            "y": 656,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 296,
+            "y": 656,
+            "w": 3,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 340,
+            "y": 656,
+            "w": 6,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 386,
+            "y": 656,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "nav",
+          "class": "bottom-nav",
+          "id": null,
+          "position": "fixed",
+          "zIndex": "20",
+          "top": "793px",
+          "rect": {
+            "x": 0,
+            "y": 793,
+            "w": 396,
+            "h": 64
+          }
+        }
+      ],
+      "sequence": [
+        {
+          "requestedY": 0,
+          "actualY": 0,
+          "file": "iphone14-openings-scroll-0.png"
+        },
+        {
+          "requestedY": 400,
+          "actualY": 400,
+          "file": "iphone14-openings-scroll-400.png"
+        },
+        {
+          "requestedY": 800,
+          "actualY": 800,
+          "file": "iphone14-openings-scroll-800.png"
+        },
+        {
+          "requestedY": 1200,
+          "actualY": 1200,
+          "file": "iphone14-openings-scroll-1200.png"
+        },
+        {
+          "requestedY": "end",
+          "actualY": 1403,
+          "file": "iphone14-openings-scroll-end.png"
+        }
+      ],
+      "contrast": {
+        "bodyP": {
+          "fg": "rgb(242, 244, 248)",
+          "bg": "rgb(27, 31, 39)",
+          "ratio": 14.99,
+          "text": "Symmetric c3/d3 vs ...c6/...d6 small-cen"
+        },
+        "muted": {
+          "fg": "rgb(142, 150, 166)",
+          "bg": "rgb(27, 31, 39)",
+          "ratio": 5.55,
+          "text": "1."
+        },
+        "heroTitle": null,
+        "bottomNavLabel": {
+          "fg": "rgb(142, 150, 166)",
+          "bg": "rgba(20, 24, 31, 0.88)",
+          "ratio": 5.98,
+          "text": "Lessons"
+        },
+        "cardSub": null
+      }
+    },
+    {
+      "screen": "opening-detail",
+      "url": "https://connor-enge.github.io/Chess-learning-app/?cb=1777846048346#openings/sicilian-najdorf",
+      "scrollCtx": {
+        "bodyScrollHeight": 1880,
+        "bodyClientHeight": 844,
+        "htmlScrollHeight": 1880,
+        "htmlClientHeight": 844,
+        "mainScrollHeight": 1839,
+        "mainClientHeight": 1839,
+        "viewScrollHeight": 1839,
+        "viewClientHeight": 1839,
+        "viewportHeight": 857,
+        "bodyOverflowY": "visible",
+        "htmlOverflowY": "visible",
+        "mainOverflowY": "visible",
+        "blockingOverlays": []
+      },
+      "layoutMap": [
+        {
+          "tag": "header",
+          "class": "appbar",
+          "id": null,
+          "position": "sticky",
+          "zIndex": "20",
+          "top": "0px",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 390,
+            "h": 41
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 302,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 348,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 394,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 439,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 485,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 531,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 577,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 66,
+            "y": 656,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 623,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 111,
+            "y": 656,
+            "w": 6,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 158,
+            "y": 656,
+            "w": 4,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 203,
+            "y": 656,
+            "w": 6,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 249,
+            "y": 656,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 296,
+            "y": 656,
+            "w": 3,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 340,
+            "y": 656,
+            "w": 6,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 386,
+            "y": 656,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "nav",
+          "class": "bottom-nav",
+          "id": null,
+          "position": "fixed",
+          "zIndex": "20",
+          "top": "793px",
+          "rect": {
+            "x": 0,
+            "y": 793,
+            "w": 396,
+            "h": 64
+          }
+        }
+      ],
+      "sequence": [
+        {
+          "requestedY": 0,
+          "actualY": 0,
+          "file": "iphone14-opening-detail-scroll-0.png"
+        },
+        {
+          "requestedY": 400,
+          "actualY": 400,
+          "file": "iphone14-opening-detail-scroll-400.png"
+        },
+        {
+          "requestedY": 800,
+          "actualY": 800,
+          "file": "iphone14-opening-detail-scroll-800.png"
+        },
+        {
+          "requestedY": 1200,
+          "actualY": 1023,
+          "file": "iphone14-opening-detail-scroll-1200.png"
+        },
+        {
+          "requestedY": "end",
+          "actualY": 1023,
+          "file": "iphone14-opening-detail-scroll-end.png"
+        }
+      ],
+      "contrast": {
+        "bodyP": {
+          "fg": "rgb(242, 244, 248)",
+          "bg": "rgb(27, 31, 39)",
+          "ratio": 14.99,
+          "text": "Razor-sharp opposite-side castling fight"
+        },
+        "muted": {
+          "fg": "rgb(142, 150, 166)",
+          "bg": "rgb(27, 31, 39)",
+          "ratio": 5.55,
+          "text": "1."
+        },
+        "heroTitle": null,
+        "bottomNavLabel": {
+          "fg": "rgb(142, 150, 166)",
+          "bg": "rgba(20, 24, 31, 0.88)",
+          "ratio": 5.98,
+          "text": "Lessons"
+        },
+        "cardSub": null
+      }
+    },
+    {
+      "screen": "tactics",
+      "url": "https://connor-enge.github.io/Chess-learning-app/?cb=1777846048346#tactics",
+      "scrollCtx": {
+        "bodyScrollHeight": 968,
+        "bodyClientHeight": 844,
+        "htmlScrollHeight": 968,
+        "htmlClientHeight": 844,
+        "mainScrollHeight": 927,
+        "mainClientHeight": 927,
+        "viewScrollHeight": 927,
+        "viewClientHeight": 927,
+        "viewportHeight": 844,
+        "bodyOverflowY": "visible",
+        "htmlOverflowY": "visible",
+        "mainOverflowY": "visible",
+        "blockingOverlays": []
+      },
+      "layoutMap": [
+        {
+          "tag": "header",
+          "class": "appbar",
+          "id": null,
+          "position": "sticky",
+          "zIndex": "20",
+          "top": "0px",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 390,
+            "h": 41
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 72,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 118,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 164,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 209,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 255,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 301,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 347,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 62,
+            "y": 426,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 393,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 102,
+            "y": 426,
+            "w": 6,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 145,
+            "y": 426,
+            "w": 4,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 185,
+            "y": 426,
+            "w": 6,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 228,
+            "y": 426,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 271,
+            "y": 426,
+            "w": 3,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 310,
+            "y": 426,
+            "w": 6,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 352,
+            "y": 426,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "nav",
+          "class": "bottom-nav",
+          "id": null,
+          "position": "fixed",
+          "zIndex": "20",
+          "top": "780px",
+          "rect": {
+            "x": 0,
+            "y": 780,
+            "w": 390,
+            "h": 64
+          }
+        }
+      ],
+      "sequence": [
+        {
+          "requestedY": 0,
+          "actualY": 0,
+          "file": "iphone14-tactics-scroll-0.png"
+        },
+        {
+          "requestedY": 400,
+          "actualY": 124,
+          "file": "iphone14-tactics-scroll-400.png"
+        },
+        {
+          "requestedY": 800,
+          "actualY": 124,
+          "file": "iphone14-tactics-scroll-800.png"
+        },
+        {
+          "requestedY": 1200,
+          "actualY": 124,
+          "file": "iphone14-tactics-scroll-1200.png"
+        },
+        {
+          "requestedY": "end",
+          "actualY": 124,
+          "file": "iphone14-tactics-scroll-end.png"
+        }
+      ],
+      "contrast": {
+        "bodyP": {
+          "fg": "rgb(242, 244, 248)",
+          "bg": "rgb(27, 31, 39)",
+          "ratio": 14.99,
+          "text": "White to move. Theme: mating-attack · me"
+        },
+        "muted": {
+          "fg": "rgb(142, 150, 166)",
+          "bg": "rgb(27, 31, 39)",
+          "ratio": 5.55,
+          "text": "Solve or reveal the puzzle to see the ex"
+        },
+        "heroTitle": null,
+        "bottomNavLabel": {
+          "fg": "rgb(142, 150, 166)",
+          "bg": "rgba(20, 24, 31, 0.88)",
+          "ratio": 5.98,
+          "text": "Lessons"
+        },
+        "cardSub": null
+      }
+    },
+    {
+      "screen": "endgames",
+      "url": "https://connor-enge.github.io/Chess-learning-app/?cb=1777846048346#endgames",
+      "scrollCtx": {
+        "bodyScrollHeight": 1776,
+        "bodyClientHeight": 844,
+        "htmlScrollHeight": 1776,
+        "htmlClientHeight": 844,
+        "mainScrollHeight": 1735,
+        "mainClientHeight": 1735,
+        "viewScrollHeight": 1735,
+        "viewClientHeight": 1735,
+        "viewportHeight": 844,
+        "bodyOverflowY": "visible",
+        "htmlOverflowY": "visible",
+        "mainOverflowY": "visible",
+        "blockingOverlays": []
+      },
+      "layoutMap": [
+        {
+          "tag": "header",
+          "class": "appbar",
+          "id": null,
+          "position": "sticky",
+          "zIndex": "20",
+          "top": "0px",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 390,
+            "h": 41
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 50,
+            "y": 149,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 50,
+            "y": 195,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 50,
+            "y": 241,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 50,
+            "y": 286,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 50,
+            "y": 332,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 50,
+            "y": 378,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 50,
+            "y": 424,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 74,
+            "y": 503,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 50,
+            "y": 470,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 111,
+            "y": 503,
+            "w": 6,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 149,
+            "y": 503,
+            "w": 4,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 185,
+            "y": 503,
+            "w": 6,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 223,
+            "y": 503,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 262,
+            "y": 503,
+            "w": 3,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 297,
+            "y": 503,
+            "w": 6,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 335,
+            "y": 503,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "nav",
+          "class": "bottom-nav",
+          "id": null,
+          "position": "fixed",
+          "zIndex": "20",
+          "top": "780px",
+          "rect": {
+            "x": 0,
+            "y": 780,
+            "w": 390,
+            "h": 64
+          }
+        }
+      ],
+      "sequence": [
+        {
+          "requestedY": 0,
+          "actualY": 0,
+          "file": "iphone14-endgames-scroll-0.png"
+        },
+        {
+          "requestedY": 400,
+          "actualY": 400,
+          "file": "iphone14-endgames-scroll-400.png"
+        },
+        {
+          "requestedY": 800,
+          "actualY": 800,
+          "file": "iphone14-endgames-scroll-800.png"
+        },
+        {
+          "requestedY": 1200,
+          "actualY": 932,
+          "file": "iphone14-endgames-scroll-1200.png"
+        },
+        {
+          "requestedY": "end",
+          "actualY": 932,
+          "file": "iphone14-endgames-scroll-end.png"
+        }
+      ],
+      "contrast": {
+        "bodyP": {
+          "fg": "rgb(242, 244, 248)",
+          "bg": "rgb(27, 31, 39)",
+          "ratio": 14.99,
+          "text": "K+P vs K — King in Front of the Pawn"
+        },
+        "muted": {
+          "fg": "rgb(142, 150, 166)",
+          "bg": "rgb(27, 31, 39)",
+          "ratio": 5.55,
+          "text": "Engine played Kd8. Your move."
+        },
+        "heroTitle": null,
+        "bottomNavLabel": {
+          "fg": "rgb(142, 150, 166)",
+          "bg": "rgba(20, 24, 31, 0.88)",
+          "ratio": 5.98,
+          "text": "Lessons"
+        },
+        "cardSub": null
+      }
+    },
+    {
+      "screen": "games",
+      "url": "https://connor-enge.github.io/Chess-learning-app/?cb=1777846048346#games",
+      "scrollCtx": {
+        "bodyScrollHeight": 1502,
+        "bodyClientHeight": 844,
+        "htmlScrollHeight": 1502,
+        "htmlClientHeight": 844,
+        "mainScrollHeight": 1461,
+        "mainClientHeight": 1461,
+        "viewScrollHeight": 1461,
+        "viewClientHeight": 1461,
+        "viewportHeight": 844,
+        "bodyOverflowY": "visible",
+        "htmlOverflowY": "visible",
+        "mainOverflowY": "visible",
+        "blockingOverlays": []
+      },
+      "layoutMap": [
+        {
+          "tag": "header",
+          "class": "appbar",
+          "id": null,
+          "position": "sticky",
+          "zIndex": "20",
+          "top": "0px",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 390,
+            "h": 41
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 50,
+            "y": 149,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 50,
+            "y": 195,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 50,
+            "y": 241,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 50,
+            "y": 286,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 50,
+            "y": 332,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 50,
+            "y": 378,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 50,
+            "y": 424,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 74,
+            "y": 503,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 50,
+            "y": 470,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 111,
+            "y": 503,
+            "w": 6,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 149,
+            "y": 503,
+            "w": 4,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 185,
+            "y": 503,
+            "w": 6,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 223,
+            "y": 503,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 262,
+            "y": 503,
+            "w": 3,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 297,
+            "y": 503,
+            "w": 6,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 335,
+            "y": 503,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "nav",
+          "class": "bottom-nav",
+          "id": null,
+          "position": "fixed",
+          "zIndex": "20",
+          "top": "780px",
+          "rect": {
+            "x": 0,
+            "y": 780,
+            "w": 390,
+            "h": 64
+          }
+        }
+      ],
+      "sequence": [
+        {
+          "requestedY": 0,
+          "actualY": 0,
+          "file": "iphone14-games-scroll-0.png"
+        },
+        {
+          "requestedY": 400,
+          "actualY": 400,
+          "file": "iphone14-games-scroll-400.png"
+        },
+        {
+          "requestedY": 800,
+          "actualY": 658,
+          "file": "iphone14-games-scroll-800.png"
+        },
+        {
+          "requestedY": 1200,
+          "actualY": 658,
+          "file": "iphone14-games-scroll-1200.png"
+        },
+        {
+          "requestedY": "end",
+          "actualY": 658,
+          "file": "iphone14-games-scroll-end.png"
+        }
+      ],
+      "contrast": {
+        "bodyP": {
+          "fg": "rgb(142, 150, 166)",
+          "bg": "rgb(27, 31, 39)",
+          "ratio": 5.55,
+          "text": "Paris (Opera Game) · 1858 · Philidor Def"
+        },
+        "muted": {
+          "fg": "rgb(142, 150, 166)",
+          "bg": "rgb(27, 31, 39)",
+          "ratio": 5.55,
+          "text": "1."
+        },
+        "heroTitle": null,
+        "bottomNavLabel": {
+          "fg": "rgb(142, 150, 166)",
+          "bg": "rgba(20, 24, 31, 0.88)",
+          "ratio": 5.98,
+          "text": "Lessons"
+        },
+        "cardSub": null
+      }
+    },
+    {
+      "screen": "play",
+      "url": "https://connor-enge.github.io/Chess-learning-app/?cb=1777846048346#play",
+      "scrollCtx": {
+        "bodyScrollHeight": 844,
+        "bodyClientHeight": 844,
+        "htmlScrollHeight": 844,
+        "htmlClientHeight": 844,
+        "mainScrollHeight": 788,
+        "mainClientHeight": 788,
+        "viewScrollHeight": 788,
+        "viewClientHeight": 788,
+        "viewportHeight": 844,
+        "bodyOverflowY": "visible",
+        "htmlOverflowY": "visible",
+        "mainOverflowY": "visible",
+        "blockingOverlays": []
+      },
+      "layoutMap": [
+        {
+          "tag": "header",
+          "class": "appbar",
+          "id": null,
+          "position": "sticky",
+          "zIndex": "20",
+          "top": "0px",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 390,
+            "h": 56
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 87,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 133,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 179,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 224,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 270,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 316,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 362,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 62,
+            "y": 441,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord rank",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "2px",
+          "rect": {
+            "x": 33,
+            "y": 408,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 102,
+            "y": 441,
+            "w": 6,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 145,
+            "y": 441,
+            "w": 4,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 185,
+            "y": 441,
+            "w": 6,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 228,
+            "y": 441,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 271,
+            "y": 441,
+            "w": 3,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 310,
+            "y": 441,
+            "w": 6,
+            "h": 9
+          }
+        },
+        {
+          "tag": "span",
+          "class": "coord file",
+          "id": null,
+          "position": "absolute",
+          "zIndex": "auto",
+          "top": "34.8281px",
+          "rect": {
+            "x": 352,
+            "y": 441,
+            "w": 5,
+            "h": 9
+          }
+        },
+        {
+          "tag": "div",
+          "class": "engine-sheet",
+          "id": "engineSheet",
+          "position": "fixed",
+          "zIndex": "25",
+          "top": "189.203px",
+          "rect": {
+            "x": 0,
+            "y": 724,
+            "w": 390,
+            "h": 591
+          }
+        },
+        {
+          "tag": "nav",
+          "class": "bottom-nav",
+          "id": null,
+          "position": "fixed",
+          "zIndex": "20",
+          "top": "780px",
+          "rect": {
+            "x": 0,
+            "y": 780,
+            "w": 390,
+            "h": 64
+          }
+        }
+      ],
+      "sequence": [
+        {
+          "requestedY": 0,
+          "actualY": 0,
+          "file": "iphone14-play-scroll-0.png"
+        },
+        {
+          "requestedY": 400,
+          "actualY": 0,
+          "file": "iphone14-play-scroll-400.png"
+        },
+        {
+          "requestedY": 800,
+          "actualY": 0,
+          "file": "iphone14-play-scroll-800.png"
+        },
+        {
+          "requestedY": 1200,
+          "actualY": 0,
+          "file": "iphone14-play-scroll-1200.png"
+        },
+        {
+          "requestedY": "end",
+          "actualY": 0,
+          "file": "iphone14-play-scroll-end.png"
+        }
+      ],
+      "contrast": {
+        "bodyP": {
+          "fg": "rgb(142, 150, 166)",
+          "bg": "rgba(20, 24, 31, 0.88)",
+          "ratio": 5.98,
+          "text": "WASM analysis can drain phone battery. D"
+        },
+        "muted": {
+          "fg": "rgb(142, 150, 166)",
+          "bg": "rgba(20, 24, 31, 0.88)",
+          "ratio": 5.98,
+          "text": "WASM analysis can drain phone battery. D"
+        },
+        "heroTitle": null,
+        "bottomNavLabel": {
+          "fg": "rgb(142, 150, 166)",
+          "bg": "rgba(20, 24, 31, 0.88)",
+          "ratio": 5.98,
+          "text": "Lessons"
+        },
+        "cardSub": null
+      }
+    }
+  ]
+}

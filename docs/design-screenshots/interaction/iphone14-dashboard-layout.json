@@ -1,0 +1,30 @@
+[
+  {
+    "tag": "header",
+    "class": "appbar",
+    "id": null,
+    "position": "sticky",
+    "zIndex": "20",
+    "top": "0px",
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 41
+    }
+  },
+  {
+    "tag": "nav",
+    "class": "bottom-nav",
+    "id": null,
+    "position": "fixed",
+    "zIndex": "20",
+    "top": "780px",
+    "rect": {
+      "x": 0,
+      "y": 780,
+      "w": 390,
+      "h": 64
+    }
+  }
+]

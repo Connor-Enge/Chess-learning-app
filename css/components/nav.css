@@ -12,7 +12,13 @@
   align-items: center;
   gap: var(--space-2);
   padding: 0 var(--space-3);
+  /* Belt + suspenders: explicit height AND min-height AND flex-shrink:0
+     so the bar is guaranteed to be --appbar-h tall even when its body
+     is a flex column. Earlier the bar collapsed to icon-row height (41)
+     in some browsers because of flex-shrink. */
   height: calc(var(--appbar-h) + var(--safe-top));
+  min-height: calc(var(--appbar-h) + var(--safe-top));
+  flex-shrink: 0;
   padding-top: var(--safe-top);
   background: var(--surface-blur);
   backdrop-filter: saturate(180%) blur(20px);

@@ -1,0 +1,254 @@
+[
+  {
+    "tag": "header",
+    "class": "appbar",
+    "id": null,
+    "position": "sticky",
+    "zIndex": "20",
+    "top": "0px",
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 41
+    }
+  },
+  {
+    "tag": "span",
+    "class": "coord rank",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "auto",
+    "top": "2px",
+    "rect": {
+      "x": 33,
+      "y": 302,
+      "w": 5,
+      "h": 9
+    }
+  },
+  {
+    "tag": "span",
+    "class": "coord rank",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "auto",
+    "top": "2px",
+    "rect": {
+      "x": 33,
+      "y": 348,
+      "w": 5,
+      "h": 9
+    }
+  },
+  {
+    "tag": "span",
+    "class": "coord rank",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "auto",
+    "top": "2px",
+    "rect": {
+      "x": 33,
+      "y": 394,
+      "w": 5,
+      "h": 9
+    }
+  },
+  {
+    "tag": "span",
+    "class": "coord rank",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "auto",
+    "top": "2px",
+    "rect": {
+      "x": 33,
+      "y": 439,
+      "w": 5,
+      "h": 9
+    }
+  },
+  {
+    "tag": "span",
+    "class": "coord rank",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "auto",
+    "top": "2px",
+    "rect": {
+      "x": 33,
+      "y": 485,
+      "w": 5,
+      "h": 9
+    }
+  },
+  {
+    "tag": "span",
+    "class": "coord rank",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "auto",
+    "top": "2px",
+    "rect": {
+      "x": 33,
+      "y": 531,
+      "w": 5,
+      "h": 9
+    }
+  },
+  {
+    "tag": "span",
+    "class": "coord rank",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "auto",
+    "top": "2px",
+    "rect": {
+      "x": 33,
+      "y": 577,
+      "w": 5,
+      "h": 9
+    }
+  },
+  {
+    "tag": "span",
+    "class": "coord file",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "auto",
+    "top": "34.8281px",
+    "rect": {
+      "x": 66,
+      "y": 656,
+      "w": 5,
+      "h": 9
+    }
+  },
+  {
+    "tag": "span",
+    "class": "coord rank",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "auto",
+    "top": "2px",
+    "rect": {
+      "x": 33,
+      "y": 623,
+      "w": 5,
+      "h": 9
+    }
+  },
+  {
+    "tag": "span",
+    "class": "coord file",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "auto",
+    "top": "34.8281px",
+    "rect": {
+      "x": 111,
+      "y": 656,
+      "w": 6,
+      "h": 9
+    }
+  },
+  {
+    "tag": "span",
+    "class": "coord file",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "auto",
+    "top": "34.8281px",
+    "rect": {
+      "x": 158,
+      "y": 656,
+      "w": 4,
+      "h": 9
+    }
+  },
+  {
+    "tag": "span",
+    "class": "coord file",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "auto",
+    "top": "34.8281px",
+    "rect": {
+      "x": 203,
+      "y": 656,
+      "w": 6,
+      "h": 9
+    }
+  },
+  {
+    "tag": "span",
+    "class": "coord file",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "auto",
+    "top": "34.8281px",
+    "rect": {
+      "x": 249,
+      "y": 656,
+      "w": 5,
+      "h": 9
+    }
+  },
+  {
+    "tag": "span",
+    "class": "coord file",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "auto",
+    "top": "34.8281px",
+    "rect": {
+      "x": 296,
+      "y": 656,
+      "w": 3,
+      "h": 9
+    }
+  },
+  {
+    "tag": "span",
+    "class": "coord file",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "auto",
+    "top": "34.8281px",
+    "rect": {
+      "x": 340,
+      "y": 656,
+      "w": 6,
+      "h": 9
+    }
+  },
+  {
+    "tag": "span",
+    "class": "coord file",
+    "id": null,
+    "position": "absolute",
+    "zIndex": "auto",
+    "top": "34.8281px",
+    "rect": {
+      "x": 386,
+      "y": 656,
+      "w": 5,
+      "h": 9
+    }
+  },
+  {
+    "tag": "nav",
+    "class": "bottom-nav",
+    "id": null,
+    "position": "fixed",
+    "zIndex": "20",
+    "top": "793px",
+    "rect": {
+      "x": 0,
+      "y": 793,
+      "w": 396,
+      "h": 64
+    }
+  }
+]
