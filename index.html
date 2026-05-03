@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#181a1f" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>Chess Academy</title>
+<link rel="stylesheet" href="css/main.css" />
+<link rel="stylesheet" href="css/board.css" />
+</head>
+<body>
+
+<!-- Compact top app bar — title + back + theme toggle -->
+<header class="appbar">
+  <button class="appbar-back" id="appbarBack" aria-label="Back" hidden>‹</button>
+  <h1 class="appbar-title" id="appbarTitle">Chess Academy</h1>
+  <button class="appbar-action" id="appbarSearch" aria-label="Search">⌕</button>
+  <button class="appbar-action" id="themeToggle" aria-label="Toggle theme">◐</button>
+</header>
+
+<!-- Search overlay (hidden by default) -->
+<div class="search-overlay" id="searchOverlay" hidden>
+  <input type="search" id="globalSearch" placeholder="Search lessons, openings, games…" inputmode="search" autocomplete="off" />
+  <button id="searchClose" aria-label="Close search">✕</button>
+  <div id="searchResults" class="search-results-list"></div>
+</div>
+
+<main id="view"></main>
+
+<!-- Bottom tab bar (mobile-first; thumb-reach navigation) -->
+<nav class="bottom-nav" role="navigation" aria-label="Main">
+  <button class="tab" data-route="lessons" aria-label="Lessons">
+    <span class="tab-icon">📚</span><span class="tab-label">Lessons</span>
+  </button>
+  <button class="tab" data-route="openings" aria-label="Openings">
+    <span class="tab-icon">♙</span><span class="tab-label">Openings</span>
+  </button>
+  <button class="tab" data-route="tactics" aria-label="Tactics">
+    <span class="tab-icon">⚡</span><span class="tab-label">Tactics</span>
+  </button>
+  <button class="tab" data-route="endgames" aria-label="Endgames">
+    <span class="tab-icon">♚</span><span class="tab-label">Endgames</span>
+  </button>
+  <button class="tab" data-route="more" aria-label="More" id="moreTab">
+    <span class="tab-icon">⋯</span><span class="tab-label">More</span>
+  </button>
+</nav>
+
+<!-- "More" sheet — secondary navigation -->
+<div class="sheet" id="moreSheet" hidden>
+  <div class="sheet-backdrop" data-close-sheet></div>
+  <div class="sheet-content">
+    <div class="sheet-handle"></div>
+    <button class="sheet-link" data-route="dashboard">🏠 Dashboard</button>
+    <button class="sheet-link" data-route="positional">🧠 Positional lessons</button>
+    <button class="sheet-link" data-route="exchanges">⚖️ Exchanges &amp; Piece Values</button>
+    <button class="sheet-link" data-route="games">🏆 Master Games</button>
+    <button class="sheet-link" data-route="play">🧩 Play / Analyze</button>
+    <button class="sheet-link sheet-link-muted" data-close-sheet>Close</button>
+  </div>
+</div>
+
+<!-- Templates -->
+<template id="tpl-dashboard">
+  <section class="dashboard">
+    <p class="subtitle">Pick up where you left off, or start a new track.</p>
+
+    <div class="cards">
+      <div class="card track-card" data-route="lessons">
+        <h3>📚 Lessons</h3>
+        <p class="card-meta"><span class="lesson-progress">0/0</span> complete</p>
+        <p>Strategic concepts, structures, and planning.</p>
+      </div>
+      <div class="card track-card" data-route="openings">
+        <h3>♙ Openings</h3>
+        <p class="card-meta"><span class="opening-progress">0</span> explored</p>
+        <p>Build out your white &amp; black repertoires.</p>
+      </div>
+      <div class="card track-card" data-route="tactics">
+        <h3>⚡ Tactics</h3>
+        <p class="card-meta"><span class="puzzle-progress">0/0</span> · <span class="puzzle-accuracy">—</span></p>
+        <p>Pattern recognition through positions.</p>
+      </div>
+      <div class="card track-card" data-route="endgames">
+        <h3>♚ Endgames</h3>
+        <p class="card-meta"><span class="endgame-progress">0/0</span> drilled</p>
+        <p>Theoretical positions every player must know.</p>
+      </div>
+      <div class="card track-card" data-route="games">
+        <h3>🏆 Master Games</h3>
+        <p class="card-meta"><span class="game-progress">0/0</span> studied</p>
+        <p>Annotated classics from Morphy to Carlsen.</p>
+      </div>
+      <div class="card track-card" data-route="play">
+        <h3>🧠 Play / Analyze</h3>
+        <p class="card-meta">Free board · Stockfish</p>
+        <p>Set up positions, run engine analysis.</p>
+      </div>
+    </div>
+
+    <div class="dashboard-section">
+      <h2>Recent activity</h2>
+      <div id="recentActivity" class="recent-list">
+        <p class="muted">No activity yet — start a lesson to see progress here.</p>
+      </div>
+    </div>
+  </section>
+</template>
+
+<template id="tpl-lessons">
+  <section class="lessons-view">
+    <div class="lesson-toolbar">
+      <select id="lessonTrackFilter" aria-label="Filter by track">
+        <option value="all">All tracks</option>
+        <option value="opening">Openings</option>
+        <option value="tactics">Tactics</option>
+        <option value="positional">Positional Play</option>
+        <option value="endgame">Endgame</option>
+        <option value="exchanges">Exchanges &amp; Piece Values</option>
+        <option value="calculation">Calculation</option>
+      </select>
+      <button id="lessonListToggle" class="list-toggle" aria-label="Show lesson list">☰ Lessons</button>
+    </div>
+    <aside class="lesson-list" id="lessonListPanel">
+      <ol id="lessonIndex"></ol>
+    </aside>
+    <div id="lessonContent" class="lesson-content">
+      <p class="muted">Pick a lesson to begin.</p>
+    </div>
+  </section>
+</template>
+
+<template id="tpl-openings">
+  <section class="openings-view">
+    <div class="lesson-toolbar">
+      <button id="openingTreeToggle" class="list-toggle" aria-label="Browse openings">☰ Browse openings</button>
+    </div>
+    <aside class="opening-tree" id="openingTree"></aside>
+    <div id="openingContent" class="opening-content">
+      <p class="muted">Select an opening to begin.</p>
+    </div>
+  </section>
+</template>
+
+<template id="tpl-tactics">
+  <section class="tactics-view">
+    <div class="tactics-board-wrap">
+      <div id="tacticsBoard" class="board"></div>
+      <div class="tactics-status">
+        <p id="tacticsPrompt" class="prompt">Loading puzzle…</p>
+        <p id="tacticsFeedback" class="feedback"></p>
+      </div>
+      <div class="tactics-controls">
+        <button id="tacticsHint">Hint</button>
+        <button id="tacticsSolution">Show solution</button>
+        <button id="tacticsNext">Next puzzle →</button>
+      </div>
+    </div>
+    <div class="tactics-side">
+      <details>
+        <summary>Filter by theme</summary>
+        <div id="tacticsThemes" class="theme-chips"></div>
+      </details>
+      <div class="tactics-stats">
+        <div class="stat"><span class="stat-num" id="tacticsSolved">0</span><span class="stat-lbl">solved</span></div>
+        <div class="stat"><span class="stat-num" id="tacticsAttempted">0</span><span class="stat-lbl">attempted</span></div>
+        <div class="stat"><span class="stat-num" id="tacticsAccuracy">—</span><span class="stat-lbl">accuracy</span></div>
+      </div>
+      <p id="tacticsExplanation" class="muted">Solve or reveal the puzzle to see the explanation.</p>
+    </div>
+  </section>
+</template>
+
+<template id="tpl-endgames">
+  <section class="endgames-view">
+    <div class="lesson-toolbar">
+      <button id="endgameListToggle" class="list-toggle" aria-label="Show drill list">☰ Drills</button>
+    </div>
+    <aside class="endgame-list" id="endgameListPanel">
+      <ol id="endgameIndex"></ol>
+    </aside>
+    <div class="endgame-main">
+      <div class="endgame-board-wrap">
+        <div id="endgameBoard" class="board"></div>
+        <p id="endgameTitle" class="endgame-title">Pick a drill</p>
+        <p id="endgamePrompt" class="prompt"></p>
+        <div class="btn-row">
+          <button id="endgameReset">Reset</button>
+          <button id="endgameFlip">Flip</button>
+          <button id="endgameHint">Hint</button>
+        </div>
+      </div>
+      <div class="endgame-explainer" id="endgameExplainer"></div>
+    </div>
+  </section>
+</template>
+
+<template id="tpl-games">
+  <section class="games-view">
+    <div class="lesson-toolbar">
+      <button id="gameListToggle" class="list-toggle" aria-label="Show games list">☰ Games</button>
+    </div>
+    <aside class="games-list" id="gameListPanel">
+      <ol id="gameIndex"></ol>
+    </aside>
+    <div class="games-main">
+      <div class="games-board-wrap">
+        <div id="gameBoard" class="board"></div>
+        <div class="game-controls">
+          <button id="gamePrev" aria-label="Previous move">‹</button>
+          <button id="gameAutoplay" aria-label="Toggle autoplay">▶</button>
+          <button id="gameNext" aria-label="Next move">›</button>
+          <button id="gameFlip" aria-label="Flip board">⇅</button>
+        </div>
+        <div id="gameMoves" class="game-moves"></div>
+      </div>
+      <div class="games-side">
+        <h3 id="gameTitle">Pick a game</h3>
+        <p id="gameMeta" class="muted"></p>
+        <div id="gameAnnotation" class="annotation"></div>
+        <h4>Lessons</h4>
+        <ul id="gameLessons" class="lessons-takeaways"></ul>
+      </div>
+    </div>
+  </section>
+</template>
+
+<template id="tpl-play">
+  <section class="play-view">
+    <div class="play-board-wrap">
+      <div id="playBoard" class="board"></div>
+      <div class="play-controls">
+        <button id="playReset">New</button>
+        <button id="playFlip">Flip</button>
+        <button id="playUndo">↶ Undo</button>
+      </div>
+      <div id="playMoves" class="play-moves"></div>
+    </div>
+    <!-- Engine sheet — collapsible bottom sheet on mobile, side panel on tablet+ -->
+    <div class="engine-sheet" id="engineSheet">
+      <div class="engine-sheet-handle" id="engineSheetHandle">
+        <span>Engine</span>
+        <span id="engineEvalQuick">+0.00</span>
+      </div>
+      <div class="engine-sheet-body">
+        <label class="toggle-row"><input type="checkbox" id="engineToggle" /> Enable Stockfish</label>
+        <p class="muted small">WASM analysis can drain phone battery. Disable on weak devices.</p>
+        <label>Depth <input type="number" id="engineDepth" value="12" min="6" max="22" inputmode="numeric" /></label>
+        <div id="engineEval" class="engine-eval">+0.00</div>
+        <div id="engineLine" class="engine-line">—</div>
+        <div id="engineDepthDisplay" class="engine-depth muted">depth: —</div>
+
+        <h4>Position</h4>
+        <label class="block">FEN
+          <input type="text" id="fenInput" autocomplete="off" inputmode="text" />
+        </label>
+        <div class="btn-row">
+          <button id="loadFenBtn">Load FEN</button>
+          <button id="copyFenBtn">Copy FEN</button>
+        </div>
+
+        <h4>PGN</h4>
+        <textarea id="pgnInput" rows="5" placeholder="Paste PGN here"></textarea>
+        <div class="btn-row">
+          <button id="loadPgnBtn">Load PGN</button>
+          <button id="exportPgnBtn">Export PGN</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<!-- App scripts (chess.js is imported as ESM in chess-utils.js) -->
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

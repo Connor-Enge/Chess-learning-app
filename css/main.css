@@ -1,0 +1,843 @@
+/* ============================================================
+   Chess Academy — mobile-first stylesheet.
+   Default styles target ≤480 px (phone). Tablet+ widening at 768 px.
+   Uses dvh/svh for mobile-aware viewport heights, env() for safe-area insets,
+   16 px minimum body text to avoid iOS focus-zoom, 44 px+ tap targets.
+   ============================================================ */
+
+:root {
+  /* Color tokens */
+  --bg: #181a1f;
+  --bg-elev: #21242b;
+  --bg-elev-2: #2a2e37;
+  --bg-elev-3: #353a45;
+  --border: #353a45;
+  --text: #e6e8ec;
+  --text-dim: #98a0b0;
+  --muted: #6c7282;
+  --accent: #5d9cf5;
+  --accent-2: #7bbf6b;
+  --warn: #e0b341;
+  --bad: #e06363;
+  --good: #6fcf73;
+  --board-light: #ebd9b3;
+  --board-dark: #a07851;
+  --board-light-active: #f7f7a7;
+  --board-dark-active: #c8cb6a;
+  --highlight-from: rgba(255,255,128,0.45);
+  --highlight-to: rgba(255,255,128,0.45);
+  --highlight-check: rgba(255,80,80,0.55);
+
+  /* Layout tokens */
+  --appbar-h: 52px;
+  --bottom-nav-h: 60px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --tap: 44px;       /* minimum tap target */
+  --radius: 8px;
+}
+
+[data-theme="light"] {
+  --bg: #f7f7f5;
+  --bg-elev: #ffffff;
+  --bg-elev-2: #eef0f2;
+  --bg-elev-3: #d6d8dd;
+  --border: #d6d8dd;
+  --text: #1d2024;
+  --text-dim: #4d5260;
+  --muted: #8a8f99;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overscroll-behavior-y: none;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;             /* iOS will not zoom inputs at 16px */
+  line-height: 1.55;
+  /* dvh accounts for the iOS dynamic viewport (address bar shrink) */
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+a { color: var(--accent); text-decoration: none; min-height: var(--tap); display: inline-block; line-height: 1.5; }
+a:hover { text-decoration: underline; }
+
+button {
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font: inherit;
+  font-size: 15px;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  min-height: var(--tap);
+  min-width: var(--tap);
+}
+button:active { background: var(--bg-elev-3); }
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+
+input, select, textarea {
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 16px;             /* prevent iOS zoom-on-focus */
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  font-family: inherit;
+  min-height: var(--tap);
+  width: 100%;
+}
+textarea {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 14px;
+  resize: vertical;
+}
+
+/* ============================================================
+   Top app bar — compact, sticky
+   ============================================================ */
+.appbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  height: calc(var(--appbar-h) + var(--safe-top));
+  padding-top: var(--safe-top);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--border);
+}
+.appbar-title {
+  flex: 1;
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.appbar-back, .appbar-action {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  width: var(--tap);
+  height: var(--tap);
+  font-size: 22px;
+  padding: 0;
+  border-radius: 50%;
+}
+.appbar-back:active, .appbar-action:active { background: var(--bg-elev-2); }
+
+/* ============================================================
+   Search overlay
+   ============================================================ */
+.search-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--bg);
+  padding: 12px;
+  padding-top: calc(var(--safe-top) + 8px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.search-overlay #globalSearch { font-size: 16px; }
+.search-overlay #searchClose {
+  position: absolute;
+  top: calc(var(--safe-top) + 8px);
+  right: 8px;
+}
+.search-results-list {
+  flex: 1;
+  overflow-y: auto;
+}
+.search-results-list .result {
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+.search-results-list .result:active { background: var(--bg-elev-2); }
+.search-results-list .result strong { display: block; font-size: 16px; }
+.search-results-list .result .result-meta {
+  color: var(--text-dim);
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+/* ============================================================
+   Main content area
+   ============================================================ */
+main {
+  flex: 1;
+  padding: 12px;
+  /* Make space for the bottom nav so content isn't covered */
+  padding-bottom: calc(var(--bottom-nav-h) + var(--safe-bottom) + 12px);
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+h1 { font-size: 22px; margin: 0 0 8px; }
+h2 { font-size: 18px; margin: 18px 0 8px; }
+h3 { font-size: 16px; margin: 14px 0 6px; }
+h4 { font-size: 15px; margin: 12px 0 4px; }
+.subtitle { color: var(--text-dim); margin: 0 0 12px; font-size: 15px; }
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+.block { display: block; margin: 8px 0; }
+
+/* ============================================================
+   Bottom tab bar — primary navigation (mobile)
+   ============================================================ */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  display: flex;
+  background: var(--bg-elev);
+  border-top: 1px solid var(--border);
+  height: calc(var(--bottom-nav-h) + var(--safe-bottom));
+  padding-bottom: var(--safe-bottom);
+}
+.bottom-nav .tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  padding: 8px 4px;
+  border-radius: 0;
+  min-width: 0;
+  font-size: 11px;
+}
+.bottom-nav .tab .tab-icon { font-size: 20px; line-height: 1; }
+.bottom-nav .tab .tab-label { font-size: 11px; letter-spacing: 0.2px; }
+.bottom-nav .tab.active { color: var(--accent); }
+.bottom-nav .tab:active { background: var(--bg-elev-2); }
+
+/* ============================================================
+   "More" sheet — secondary nav
+   ============================================================ */
+.sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: flex-end;
+}
+.sheet-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  animation: fade-in 0.15s ease-out;
+}
+.sheet-content {
+  position: relative;
+  width: 100%;
+  background: var(--bg-elev);
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  padding: 8px 12px calc(var(--safe-bottom) + 12px);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: slide-up 0.18s ease-out;
+}
+.sheet-handle {
+  width: 36px;
+  height: 4px;
+  background: var(--bg-elev-3);
+  border-radius: 2px;
+  margin: 6px auto 10px;
+}
+.sheet-link {
+  background: transparent;
+  border: none;
+  text-align: left;
+  padding: 14px 12px;
+  font-size: 16px;
+  color: var(--text);
+  border-radius: 8px;
+  width: 100%;
+}
+.sheet-link:active { background: var(--bg-elev-2); }
+.sheet-link-muted { color: var(--text-dim); margin-top: 6px; text-align: center; }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-up { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+/* ============================================================
+   Dashboard
+   ============================================================ */
+.cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.card {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+.track-card { cursor: pointer; }
+.track-card:active { background: var(--bg-elev-2); }
+.card h3 { margin-top: 0; }
+.card-meta { color: var(--text-dim); font-size: 13px; margin: 4px 0 8px; }
+.dashboard-section { margin-top: 22px; }
+.recent-list {
+  background: var(--bg-elev);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 12px;
+  font-size: 14px;
+}
+.recent-item { padding: 6px 0; border-bottom: 1px solid var(--border); }
+.recent-item:last-child { border-bottom: none; }
+
+/* ============================================================
+   Toolbars (track filter + list toggle)
+   ============================================================ */
+.lesson-toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.lesson-toolbar select { flex: 1; min-width: 0; }
+.list-toggle {
+  background: var(--bg-elev-2);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   Lessons / Openings / Endgames / Games — list panels
+   ============================================================ */
+.lesson-list, .opening-tree, .endgame-list, .games-list {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px;
+  margin-bottom: 12px;
+  max-height: 60dvh;
+  overflow-y: auto;
+}
+#lessonIndex, #endgameIndex, #gameIndex {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#lessonIndex li, #endgameIndex li, #gameIndex li {
+  padding: 12px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--tap);
+}
+#lessonIndex li:active, #endgameIndex li:active, #gameIndex li:active { background: var(--bg-elev-2); }
+#lessonIndex li.active, #endgameIndex li.active, #gameIndex li.active {
+  background: var(--bg-elev-2);
+  border-left: 3px solid var(--accent);
+  padding-left: 7px;
+}
+#lessonIndex li.done::before { content: "✓ "; color: var(--good); }
+#lessonIndex .lesson-track-tag {
+  font-size: 10px;
+  text-transform: uppercase;
+  background: var(--bg-elev-2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--text-dim);
+  margin-left: auto;
+}
+
+.lesson-content, .opening-content, .endgame-main, .games-main {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+.lesson-content h1 { font-size: 22px; }
+.lesson-content p { line-height: 1.65; }
+.lesson-content blockquote {
+  margin: 0;
+  padding: 10px 14px;
+  border-left: 3px solid var(--accent);
+  background: var(--bg-elev-2);
+  border-radius: 0 6px 6px 0;
+  color: var(--text-dim);
+}
+.lesson-content code {
+  background: var(--bg-elev-2);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-family: ui-monospace, monospace;
+  font-size: 14px;
+}
+
+/* Lesson board block — single column on mobile */
+.lesson-board-block {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 14px 0;
+  padding: 10px;
+  background: var(--bg-elev-2);
+  border-radius: var(--radius);
+}
+.lesson-board-block .board-side { min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.lesson-board-block .controls {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.lesson-board-block .controls button { padding: 8px 12px; font-size: 14px; }
+.lesson-board-block .move-list {
+  font-size: 13px;
+  background: var(--bg-elev);
+  padding: 8px;
+  border-radius: 6px;
+  max-height: 220px;
+  overflow-y: auto;
+  font-family: ui-monospace, monospace;
+}
+.lesson-board-block .move-list .ply { cursor: pointer; padding: 2px 5px; border-radius: 3px; min-height: 28px; display: inline-block; }
+.lesson-board-block .move-list .ply:active { background: var(--bg-elev-2); }
+.lesson-board-block .move-list .ply.current { background: var(--accent); color: white; }
+.lesson-board-block .annotation {
+  background: var(--bg-elev);
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--text-dim);
+  min-height: 30px;
+}
+
+.lesson-quiz {
+  margin: 16px 0;
+  padding: 14px;
+  background: var(--bg-elev-2);
+  border-radius: var(--radius);
+  border-left: 3px solid var(--warn);
+}
+.lesson-quiz .quiz-q { font-weight: 600; font-size: 16px; }
+.lesson-quiz .quiz-options { display: flex; flex-direction: column; gap: 8px; margin: 10px 0; }
+.lesson-quiz .quiz-option {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 15px;
+  min-height: var(--tap);
+}
+.lesson-quiz .quiz-option:active { background: var(--bg-elev-2); }
+.lesson-quiz .quiz-option.correct { background: rgba(111,207,115,0.18); border-color: var(--good); }
+.lesson-quiz .quiz-option.wrong { background: rgba(224,99,99,0.18); border-color: var(--bad); }
+.lesson-quiz .quiz-feedback { margin-top: 8px; font-size: 14px; color: var(--text-dim); }
+
+.lesson-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 22px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.lesson-actions button { flex: 1; min-width: 140px; }
+
+/* ============================================================
+   Opening explorer
+   ============================================================ */
+.opening-tree details { margin: 4px 0; }
+.opening-tree summary {
+  cursor: pointer;
+  padding: 12px 8px;
+  border-radius: 6px;
+  font-size: 15px;
+  min-height: var(--tap);
+  list-style: none;
+}
+.opening-tree summary::-webkit-details-marker { display: none; }
+.opening-tree summary::before { content: "▸ "; display: inline-block; transition: transform 0.15s; }
+.opening-tree details[open] > summary::before { content: "▾ "; }
+.opening-tree summary:active { background: var(--bg-elev-2); }
+.opening-tree .opening-leaf {
+  padding: 12px 12px 12px 22px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 14px;
+  min-height: var(--tap);
+  display: flex;
+  align-items: center;
+}
+.opening-tree .opening-leaf:active { background: var(--bg-elev-2); }
+.opening-tree .opening-leaf.active { background: var(--bg-elev-2); border-left: 3px solid var(--accent); padding-left: 19px; }
+
+.opening-content .opening-board-wrap {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+.opening-meta { display: flex; gap: 6px; flex-wrap: wrap; font-size: 12px; color: var(--text-dim); margin: 4px 0 12px; }
+.opening-meta span { padding: 3px 8px; background: var(--bg-elev-2); border-radius: 4px; }
+.opening-content h1 { margin-top: 0; }
+.opening-content .moves {
+  font-family: ui-monospace, monospace;
+  background: var(--bg-elev-2);
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  word-wrap: break-word;
+}
+.opening-content .plans {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin: 14px 0;
+}
+.opening-content .plans .plan-card {
+  background: var(--bg-elev-2);
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.opening-content .plans h4 { margin-top: 0; }
+.opening-variations { margin-top: 18px; }
+.opening-variations details {
+  margin: 8px 0;
+  background: var(--bg-elev-2);
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+.opening-variations summary { font-weight: 600; padding: 8px 0; min-height: var(--tap); }
+
+/* ============================================================
+   Tactics trainer
+   ============================================================ */
+.tactics-view {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.tactics-board-wrap {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.tactics-side {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+.tactics-side details summary {
+  font-weight: 600;
+  padding: 8px 0;
+  cursor: pointer;
+  min-height: var(--tap);
+}
+.tactics-status { text-align: center; min-height: 50px; width: 100%; }
+.tactics-status .prompt { margin: 0; font-weight: 600; font-size: 15px; }
+.tactics-status .feedback { margin: 6px 0 0; font-size: 14px; min-height: 20px; }
+.tactics-status .feedback.correct { color: var(--good); }
+.tactics-status .feedback.wrong { color: var(--bad); }
+.tactics-controls {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.tactics-controls button { flex: 1; min-width: 100px; }
+.tactics-stats {
+  display: flex;
+  justify-content: space-around;
+  gap: 8px;
+  margin: 12px 0;
+}
+.tactics-stats .stat { text-align: center; }
+.tactics-stats .stat-num { display: block; font-size: 22px; font-weight: 700; color: var(--accent); }
+.tactics-stats .stat-lbl { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+.theme-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.theme-chips .chip {
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 13px;
+  cursor: pointer;
+  min-height: 34px;
+}
+.theme-chips .chip.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+/* ============================================================
+   Endgames
+   ============================================================ */
+.endgame-main {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.endgame-board-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+.endgame-title { font-weight: 600; font-size: 17px; margin: 0; text-align: center; }
+.endgame-board-wrap .prompt { color: var(--text-dim); font-size: 14px; margin: 0; text-align: center; }
+.btn-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.btn-row button { flex: 1; min-width: 90px; }
+.endgame-explainer {
+  background: var(--bg-elev-2);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   Games
+   ============================================================ */
+.games-main { display: flex; flex-direction: column; gap: 14px; }
+.games-board-wrap { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.game-controls {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+.game-controls button { flex: 0 0 auto; min-width: 56px; padding: 10px; }
+.game-moves {
+  background: var(--bg-elev-2);
+  padding: 10px;
+  border-radius: 6px;
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+  max-height: 220px;
+  overflow-y: auto;
+  width: 100%;
+}
+.game-moves .ply {
+  padding: 3px 5px;
+  border-radius: 3px;
+  cursor: pointer;
+  display: inline-block;
+  min-height: 24px;
+}
+.game-moves .ply:active { background: var(--bg-elev); }
+.game-moves .ply.current { background: var(--accent); color: white; }
+.game-moves .ply.has-comment { color: var(--warn); }
+.games-side { display: flex; flex-direction: column; gap: 10px; }
+.annotation {
+  background: var(--bg-elev-2);
+  padding: 12px 14px;
+  border-radius: 6px;
+  min-height: 40px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.lessons-takeaways { padding-left: 20px; font-size: 14px; }
+.lessons-takeaways li { margin: 4px 0; }
+
+/* ============================================================
+   Play / Analyze + engine bottom sheet
+   ============================================================ */
+.play-view {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.play-board-wrap {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.play-controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+.play-controls button { flex: 1; min-width: 90px; }
+.play-moves {
+  background: var(--bg-elev-2);
+  padding: 10px;
+  border-radius: 6px;
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+  min-height: 80px;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+/* Engine sheet — collapsible bottom sheet on mobile */
+.engine-sheet {
+  position: fixed;
+  left: 0; right: 0;
+  bottom: calc(var(--bottom-nav-h) + var(--safe-bottom));
+  z-index: 25;
+  background: var(--bg-elev);
+  border-top: 1px solid var(--border);
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  max-height: 70dvh;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(calc(100% - 48px));   /* collapsed by default — show only handle */
+  transition: transform 0.22s ease;
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.3);
+}
+.engine-sheet.open { transform: translateY(0); }
+.engine-sheet-handle {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+.engine-sheet-handle::before {
+  content: "";
+  position: absolute;
+  top: 6px; left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 4px;
+  background: var(--bg-elev-3);
+  border-radius: 2px;
+}
+.engine-sheet-body {
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+}
+.toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+.toggle-row input { width: auto; min-height: 0; }
+.engine-eval {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--accent);
+  font-family: ui-monospace, monospace;
+  margin: 8px 0 4px;
+}
+.engine-line {
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+  word-break: break-all;
+  line-height: 1.5;
+}
+.engine-depth { font-size: 12px; }
+
+/* ============================================================
+   Tablet+ widening (≥768 px)
+   ============================================================ */
+@media (min-width: 768px) {
+  main { padding: 20px; max-width: 1200px; }
+  body { font-size: 15.5px; }
+
+  /* Two-column lesson layout */
+  .lessons-view, .openings-view, .endgames-view, .games-view {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 18px;
+  }
+  .lesson-toolbar { grid-column: 1 / -1; }
+  .lesson-list, .opening-tree, .endgame-list, .games-list {
+    position: sticky;
+    top: calc(var(--appbar-h) + 12px);
+    align-self: start;
+    margin-bottom: 0;
+    max-height: calc(100dvh - var(--appbar-h) - 24px);
+  }
+  .list-toggle { display: none; }
+  /* Toolbar select stays usable but doesn't grow huge */
+  .lesson-toolbar select { max-width: 280px; }
+
+  .opening-content .opening-board-wrap { grid-template-columns: minmax(0, 380px) 1fr; }
+  .opening-content .plans { grid-template-columns: 1fr 1fr; }
+
+  .lesson-board-block { grid-template-columns: minmax(0, 360px) 1fr; }
+
+  .endgame-board-wrap, .games-board-wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 400px) 1fr;
+    align-items: start;
+  }
+
+  .tactics-view { display: grid; grid-template-columns: 1fr 320px; }
+
+  .play-view { display: grid; grid-template-columns: 1fr 360px; }
+  .engine-sheet {
+    position: static;
+    transform: none !important;
+    max-height: none;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: none;
+    background: var(--bg-elev);
+  }
+  .engine-sheet-handle { display: none; }
+
+  .cards { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+}
+
+/* ============================================================
+   Reduce-motion respect
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01s !important; transition-duration: 0.01s !important; }
+}
