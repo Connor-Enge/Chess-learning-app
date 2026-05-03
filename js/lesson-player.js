@@ -143,15 +143,16 @@ export class LessonPlayer {
     boardPanel.appendChild(moveTip);
     this.moveTip = moveTip;
 
-    // Transport bar
+    // Transport bar — Phosphor icons (added by the design-system session;
+    // safe-fallback to Unicode glyphs if Phosphor doesn't load).
     const transport = document.createElement('div');
-    transport.className = 'lp-transport';
+    transport.className = 'lp-transport transport';
     transport.innerHTML = `
-      <button class="lp-restart" aria-label="Restart">⏮</button>
-      <button class="lp-back" aria-label="Step back">◀</button>
-      <button class="lp-play" aria-label="Play">▶</button>
-      <button class="lp-fwd" aria-label="Step forward">▶▶</button>
-      <button class="lp-flip" aria-label="Flip board">⇅</button>
+      <button class="lp-restart transport__btn" aria-label="Restart"><i class="ph ph-skip-back icon" aria-hidden="true"></i><span class="visually-hidden">⏮</span></button>
+      <button class="lp-back transport__btn" aria-label="Step back"><i class="ph ph-caret-left icon" aria-hidden="true"></i><span class="visually-hidden">◀</span></button>
+      <button class="lp-play transport__btn transport__btn--primary btn btn--primary" aria-label="Play"><i class="ph ph-play icon" aria-hidden="true"></i><span class="visually-hidden">▶</span></button>
+      <button class="lp-fwd transport__btn" aria-label="Step forward"><i class="ph ph-caret-right icon" aria-hidden="true"></i><span class="visually-hidden">▶▶</span></button>
+      <button class="lp-flip transport__btn" aria-label="Flip board"><i class="ph ph-arrows-down-up icon" aria-hidden="true"></i><span class="visually-hidden">⇅</span></button>
     `;
     boardPanel.appendChild(transport);
     this.transport = transport;
@@ -403,9 +404,9 @@ export class LessonPlayer {
           </div>
           <div class="lp-card-body">${p.prompt ? mdToHtml(p.prompt) : '<p>Solve on the board.</p>'}</div>
           <div class="lp-card-actions">
-            <button class="lp-btn lp-pz-load">▶ Load this puzzle</button>
-            <button class="lp-btn lp-pz-hint" hidden>💡 Hint</button>
-            <button class="lp-btn lp-pz-reveal" hidden>👁 Reveal</button>
+            <button class="lp-btn lp-pz-load btn btn--primary"><i class="ph ph-play icon" aria-hidden="true"></i> Load this puzzle</button>
+            <button class="lp-btn lp-pz-hint btn btn--secondary" hidden><i class="ph ph-lightbulb icon" aria-hidden="true"></i> Hint</button>
+            <button class="lp-btn lp-pz-reveal btn btn--secondary" hidden><i class="ph ph-eye icon" aria-hidden="true"></i> Reveal</button>
           </div>
           <div class="lp-card-explain" hidden></div>
         `;
@@ -665,18 +666,30 @@ export class LessonPlayer {
   }
 
   // ── Transport controls ────────────────────────────────────────────────────
+  _setPlayIcon(kind) {
+    const btn = this.transport.querySelector('.lp-play');
+    if (!btn) return;
+    // Swap the Phosphor icon class. Fallback span stays so the button has
+    // *something* visible if Phosphor hasn't loaded yet.
+    const icon = btn.querySelector('i.ph');
+    if (icon) {
+      icon.classList.remove('ph-play', 'ph-pause');
+      icon.classList.add(kind === 'pause' ? 'ph-pause' : 'ph-play');
+    }
+    const fallback = btn.querySelector('.visually-hidden');
+    if (fallback) fallback.textContent = kind === 'pause' ? '⏸' : '▶';
+    btn.setAttribute('aria-label', kind === 'pause' ? 'Pause' : 'Play');
+  }
   play() {
     if (this.activeChallenge) return;          // can't auto-play during a challenge
     this.playing = true;
-    this.transport.querySelector('.lp-play').textContent = '⏸';
-    this.transport.querySelector('.lp-play').setAttribute('aria-label', 'Pause');
+    this._setPlayIcon('pause');
     this._scheduleNextRender(0);
   }
   pause() {
     this.playing = false;
     clearTimeout(this.autoTimer);
-    this.transport.querySelector('.lp-play').textContent = '▶';
-    this.transport.querySelector('.lp-play').setAttribute('aria-label', 'Play');
+    this._setPlayIcon('play');
   }
   toggle() { this.playing ? this.pause() : this.play(); }
 
@@ -797,10 +810,10 @@ export class LessonPlayer {
         <div class="lp-criterion ${cpsMet ? 'met' : ''}"><span class="dot"></span> Your-move checkpoints solved: ${this.your_move_solved} / ${cpsNeeded}</div>
         <div class="lp-criterion ${pzsMet ? 'met' : ''}"><span class="dot"></span> Puzzles solved: ${this.puzzle_solved} / ${pzsNeeded} (of ${this.puzzle_total})</div>
       </div>
-      <button class="lp-mark-btn" ${ready ? '' : 'disabled'}>
+      <button class="lp-mark-btn lesson-mark-complete btn btn--primary" ${ready ? '' : 'disabled'}>
         ${isDone ? '✓ Already complete — mark again' : (ready ? 'Mark complete ✓' : 'Solve the requirements above to unlock')}
       </button>
-      ${this.lesson.next ? `<button class="lp-next-btn">Next lesson →</button>` : ''}
+      ${this.lesson.next ? `<button class="lp-next-btn btn btn--secondary">Next lesson →</button>` : ''}
     `;
     const markBtn = this.completionEl.querySelector('.lp-mark-btn');
     if (markBtn) markBtn.addEventListener('click', () => {
