@@ -360,19 +360,19 @@ export const LESSONS_TACTICS_DEEP_B = [
       },
       {
         type: "interactive",
-        fen: "4k3/8/8/3N4/8/8/8/r3K3 w - - 0 1",
-        prompt: "White to move. The black rook is on a1, far from the d5 knight — find a useful knight move.",
-        solution: "Nc3",
+        fen: "r3k3/8/8/8/8/2N5/8/4K3 w - - 0 1",
+        prompt: "White to move. From c3, find the move that puts the knight on the launching square for the family fork.",
+        solution: "Nd5",
         explanation:
-          "Nc3 from d5 attacks the rook on a1? Actually from c3 the knight attacks a2, a4, b1, b5, d1, d5, e2, e4 — NOT a1. The honest answer: when targets are too far apart, no single knight move works. Instead, Nb4 attacks the rook indirectly (from b4 the knight reaches a2, a6, c2, c6, d3, d5 — still not a1). The lesson: knights have limited range; if king and target are too far, look for a different motif (rook to the a-file, queen attack, etc.). Best practical move: Nc3 keeps the knight central."
+          "Nd5 reroutes the knight to d5, the launching square. From d5 next move white plays Nc7+ — attacking the king on e8 (check) AND the rook on a8 (the family fork). The lesson: many knight forks need one preparatory move. Learn both the launching square (d5) and the forking square (c7)."
       },
       {
         type: "interactive",
         fen: "4k3/4q3/8/3N4/8/8/8/4K3 w - - 0 1",
-        prompt: "White to move. Find the knight fork of king and queen.",
+        prompt: "White to move. Win the queen with a knight capture.",
         solution: "Nxe7",
         explanation:
-          "Wait — Nxe7 takes the queen but isn't a check (from e7 the knight attacks c6, c8, d5, f5, g6, g8 — not e8). So Nxe7 captures the queen, but the king on e8 then takes the knight (Kxe7). Net: white wins queen for knight (still good — a queen is worth 9, knight 3, so +6). Even better: Nf6+ from d5 attacks the king and... from f6 the knight attacks d5, d7, e4, e8, g4, g8, h5, h7 — so Nf6+ is a check (attacks e8) but doesn't attack the queen on e7. Actually wait: from f6 the knight DOES attack e8 (via the L: f6-d7-e8? No — f6 to e8 is one left and two up, which IS a knight move. So Nf6+ checks. But the queen on e7 is also adjacent to f6 — but knight on f6 doesn't attack e7 (e7 is one diagonal-down from f6, not a knight move). So Nf6+ is just check. The cleanest win: Nxe7 winning the queen for the knight (king must recapture)."
+          "Nxe7 captures the queen. The king must recapture (Kxe7), so net white wins queen for knight — a gain of about 6 points of material. Even when there's no immediate fork, a knight sitting on the launching square (d5) often finds a direct capture on the queen. The lesson: any centralized knight should scan the 8 squares it attacks for hanging enemy pieces."
       },
       {
         type: "interactive",

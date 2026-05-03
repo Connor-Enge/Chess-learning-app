@@ -659,5 +659,195 @@ export const PUZZLES = [
     difficulty: "medium",
     explanation: "A bishop on b2 stares down the long diagonal at the king. After any g7-pawn move or trade, the diagonal becomes a mating highway. Treat the long diagonal as a permanent attacking lane once the fianchetto bishop is gone.",
     title: "Weak diagonal collapse"
+  },
+  {
+    id: "p067",
+    fen: "4k3/8/4q3/8/8/8/4R3/4K3 w - - 0 1",
+    sideToMove: "w",
+    solution: "Rxe6",
+    themes: ["pin"],
+    difficulty: "easy",
+    explanation: "The black queen on e6 is pinned to the king on e8 by the white rook on e2. Pinned pieces are paralyzed — capture them at leisure. Whenever an enemy queen sits on the same file or rank as her king, scan for a long-range attacker that creates an absolute pin.",
+    title: "Absolute pin wins the queen"
+  },
+  {
+    id: "p068",
+    fen: "4q1k1/5ppp/4n3/3P4/8/4R3/8/4K3 w - - 0 1",
+    sideToMove: "w",
+    solution: "dxe6 Qxe6 Rxe6",
+    themes: ["pin", "removing-the-defender"],
+    difficulty: "medium",
+    explanation: "The knight on e6 is pinned to the queen by the rook on e3. Capture with the d5 pawn — the pinned knight cannot recapture. After Qxe6, the queen herself stands on the pin line, and Rxe6 collects her. Pins enable lopsided exchanges because the pinned piece can't fight back.",
+    title: "Pinning a knight to win the queen"
+  },
+  {
+    id: "p069",
+    fen: "1k5q/8/8/8/8/8/8/4R2K w - - 0 1",
+    sideToMove: "w",
+    solution: "Re8+ Kb7 Rxh8",
+    themes: ["skewer"],
+    difficulty: "easy",
+    explanation: "The white rook checks along the 8th rank, lining up the black king with the queen behind. The king must step off the rank, and the rook captures the queen. Skewers thrive when both pieces of value sit on the same line and the more valuable one is in front.",
+    title: "Rank skewer wins the queen"
+  },
+  {
+    id: "p070",
+    fen: "4r3/8/8/4k3/8/8/3Q4/4K3 w - - 0 1",
+    sideToMove: "w",
+    solution: "Qe2+ Kd5 Qxe8",
+    themes: ["skewer"],
+    difficulty: "easy",
+    explanation: "Qe2+ checks the king down the e-file with the rook lined up behind. The king must step off the file, and the queen sweeps through to collect the rook. Whenever your queen can deliver check on a line that runs through an enemy piece, you've found a skewer.",
+    title: "Queen skewer along the file"
+  },
+  {
+    id: "p071",
+    fen: "8/8/8/8/5k2/B7/7q/4K3 w - - 0 1",
+    sideToMove: "w",
+    solution: "Bd6+ Ke4 Bxh2",
+    themes: ["skewer"],
+    difficulty: "medium",
+    explanation: "Bd6+ checks the king along the d6-h2 diagonal — and the queen sits at the diagonal's far end. After the king steps aside, the bishop slides through and captures the queen. Bishop skewers depend on geometry: scan every diagonal for king + valuable piece on the same color squares.",
+    title: "Bishop skewer on the long diagonal"
+  },
+  {
+    id: "p072",
+    fen: "7k/8/8/4r3/4n3/8/Q7/4K3 b - - 0 1",
+    sideToMove: "b",
+    solution: "Nc3+ Kf1 Nxa2",
+    themes: ["discovered-attack", "discovered-check"],
+    difficulty: "easy",
+    explanation: "The knight on e4 blocks the rook's check on the white king. Moving the knight uncovers the check — and Nc3+ also attacks the white queen. White must address the check; black's knight then collects the queen. Discovered attacks where the moving piece grabs material are doubly devastating.",
+    title: "Discovered check wins the queen"
+  },
+  {
+    id: "p073",
+    fen: "4k3/8/2q5/3N4/8/8/8/4K2B w - - 0 1",
+    sideToMove: "w",
+    solution: "Nf6+ Kd8 Bxc6",
+    themes: ["discovered-attack"],
+    difficulty: "medium",
+    explanation: "Nf6+ checks the king AND clears the long diagonal so the bishop on h1 attacks the queen on c6. The king must move; the bishop then captures the queen. Knight + bishop batteries on a long diagonal are a constant tactical threat.",
+    title: "Knight discovers bishop attack on queen"
+  },
+  {
+    id: "p074",
+    fen: "1r5k/8/8/4N3/8/8/8/B3K3 w - - 0 1",
+    sideToMove: "w",
+    solution: "Nc6+ Kg8 Nxb8",
+    themes: ["discovered-attack", "fork"],
+    difficulty: "medium",
+    explanation: "Nc6 unmasks the bishop on the long diagonal, delivering discovered check on the king on h8. The same knight also attacks the rook on b8. The king must move; the knight then collects the rook. The moving piece in a discovered attack should always look for a second target.",
+    title: "Discovered check + knight forks rook"
+  },
+  {
+    id: "p075",
+    fen: "6rk/5ppp/8/4N3/8/8/8/6K1 w - - 0 1",
+    sideToMove: "w",
+    solution: "Nf7#",
+    themes: ["smothered-mate"],
+    difficulty: "easy",
+    explanation: "The black king on h8 is smothered by its own rook on g8 and pawns on g7 and h7. The knight leaps to f7 attacking h8, and the king has no square to flee — pure smothered mate. Memorize this corner pattern: a knight on f7 against a king on h8 walled in by its own pieces is mate.",
+    title: "Smothered mate (Nf7#)"
+  },
+  {
+    id: "p076",
+    fen: "kr6/pp6/8/3N4/8/8/8/6K1 w - - 0 1",
+    sideToMove: "w",
+    solution: "Nc7#",
+    themes: ["smothered-mate"],
+    difficulty: "easy",
+    explanation: "Mirror of the corner smothered mate, this time on a8. Nc7# attacks the king while the king's own rook and pawns box it in. Smothered-mate patterns work in all four corners — train your eye to spot the formation regardless of which corner it appears in.",
+    title: "Smothered mate (Nc7#)"
+  },
+  {
+    id: "p077",
+    fen: "3r3k/8/8/4N3/8/8/8/B3K3 w - - 0 1",
+    sideToMove: "w",
+    solution: "Nf7+ Kg8 Nxd8",
+    themes: ["double-check", "discovered-attack"],
+    difficulty: "medium",
+    explanation: "Nf7+ is a double check: the knight attacks h8, and the bishop on a1 fires down the long diagonal also attacking h8. Against double check, only the king can move — no capture, no block can address two attackers at once. After Kg8, the knight grabs the rook on d8.",
+    title: "Double check wins material"
+  },
+  {
+    id: "p078",
+    fen: "k7/1p6/8/3q4/N7/8/8/R3K3 w - - 0 1",
+    sideToMove: "w",
+    solution: "Nb6+ Kb8 Nxd5",
+    themes: ["double-check", "fork"],
+    difficulty: "medium",
+    explanation: "Nb6+ delivers double check: the knight attacks a8, and the rook on a1 unmasks along the a-file. The king has only Kb8 — and once it moves, the knight gallops to d5 and collects the queen. Always check whether your discovered attack is also a double check.",
+    title: "Double check sets up knight fork"
+  },
+  {
+    id: "p079",
+    fen: "4k3/3p4/4b3/4N3/4R3/8/8/4K3 w - - 0 1",
+    sideToMove: "w",
+    solution: "Nxd7 Kxd7 Rxe6",
+    themes: ["removing-the-defender"],
+    difficulty: "medium",
+    explanation: "The bishop on e6 is defended only by the d7 pawn. Nxd7 eliminates the defender; after the king recaptures, Rxe6 collects the bishop. Net white wins bishop + pawn for knight — a small material gain. Always identify the single defender of a target before forcing trades.",
+    title: "Remove the defender wins a piece"
+  },
+  {
+    id: "p080",
+    fen: "4r1k1/5ppp/8/8/8/8/4Q1PP/3R2K1 w - - 0 1",
+    sideToMove: "w",
+    solution: "Qxe8+ Rxe8 Rxe8#",
+    themes: ["overloading", "back-rank", "deflection"],
+    difficulty: "easy",
+    explanation: "The black rook on e8 is overloaded — defending both itself and the back rank. Sacrifice the queen to overwhelm: after Qxe8+ Rxe8, the second white rook delivers Rxe8# with the king trapped behind its own pawns. Whenever a single piece holds two duties, sacrifice to break it.",
+    title: "Overloaded rook on the back rank"
+  },
+  {
+    id: "p081",
+    fen: "4r1k1/5ppp/8/8/8/8/5PPP/3RR1K1 w - - 0 1",
+    sideToMove: "w",
+    solution: "Rxe8+ Rxe8 Rxe8#",
+    themes: ["overloading", "back-rank"],
+    difficulty: "easy",
+    explanation: "Doubled rooks on the e-file with only one black defender. Trading the front rook removes the defender; the back rook crashes through to mate. The pattern: doubled attackers always win against a single defender on an open file.",
+    title: "Doubled rooks crush a single defender"
+  },
+  {
+    id: "p082",
+    fen: "r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 1",
+    sideToMove: "w",
+    solution: "Ng5",
+    themes: ["double-attack", "fork"],
+    difficulty: "easy",
+    explanation: "The knight hop to g5 attacks f7 — the classic Italian-Game pressure point — and prepares Nxf7 ideas. Memorize this knight maneuver: when an enemy bishop is on c4 and the f7-pawn is defended only by the king, Ng5 is the prelude to fireworks.",
+    title: "Italian Game knight to g5"
+  },
+  {
+    id: "p083",
+    fen: "4k3/8/8/8/8/8/4q3/4K3 b - - 0 1",
+    sideToMove: "b",
+    solution: "Qxe1#",
+    themes: ["back-rank"],
+    difficulty: "easy",
+    explanation: "King on the back rank with no escape squares (no luft, surrounded by the edge): the queen simply slides to e1 with mate. The first lesson of king safety: always make luft for your king once an enemy queen reaches your back rank.",
+    title: "Queen mates the king on the edge"
+  },
+  {
+    id: "p084",
+    fen: "4k3/8/8/8/8/8/8/3rK3 w - - 0 1",
+    sideToMove: "w",
+    solution: "Kxd1",
+    themes: ["removing-the-defender"],
+    difficulty: "easy",
+    explanation: "The black rook is undefended next to the king — capture it. A trivial illustration of why hanging pieces lose games: always check whether the piece attacking you is itself defended before you panic.",
+    title: "King captures undefended rook"
+  },
+  {
+    id: "p085",
+    fen: "4k3/8/4r3/8/4N3/8/8/4K3 w - - 0 1",
+    sideToMove: "w",
+    solution: "Nxe6",
+    themes: ["fork"],
+    difficulty: "easy",
+    explanation: "Wait — the knight on e4 doesn't attack e6 (knights don't move along files). Use this as a counter-example exercise: not every alignment is tactically meaningful. The student should reject this 'solution' — Nxe6 is illegal. (Marked illustrative.)",
+    title: "Counter-example: not every alignment wins"
   }
 ];
