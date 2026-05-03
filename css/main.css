@@ -49,6 +49,10 @@
 }
 
 * { box-sizing: border-box; }
+/* The HTML `hidden` attribute sets `display: none` via the user-agent stylesheet,
+ * but any explicit `display:` rule in our own CSS overrides it. Force it back. */
+[hidden] { display: none !important; }
+
 html, body {
   margin: 0;
   padding: 0;

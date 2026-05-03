@@ -722,12 +722,12 @@ export const PUZZLES = [
   },
   {
     id: "p073",
-    fen: "4k3/8/2q5/3N4/8/8/8/4K2B w - - 0 1",
+    fen: "q3k3/8/8/3N4/8/8/8/4K2B w - - 0 1",
     sideToMove: "w",
-    solution: "Nf6+ Kd8 Bxc6",
+    solution: "Nf6+ Kd8 Bxa8",
     themes: ["discovered-attack"],
     difficulty: "medium",
-    explanation: "Nf6+ checks the king AND clears the long diagonal so the bishop on h1 attacks the queen on c6. The king must move; the bishop then captures the queen. Knight + bishop batteries on a long diagonal are a constant tactical threat.",
+    explanation: "Nf6+ checks the king AND clears the long diagonal so the bishop on h1 attacks the queen on a8. The black queen can't reach f6 to capture the knight, and the king must move. The bishop then collects the queen along the freshly opened diagonal. Knight + bishop batteries on the long diagonal are a constant tactical theme.",
     title: "Knight discovers bishop attack on queen"
   },
   {
@@ -792,52 +792,102 @@ export const PUZZLES = [
   },
   {
     id: "p080",
-    fen: "4r1k1/5ppp/8/8/8/8/4Q1PP/3R2K1 w - - 0 1",
-    sideToMove: "w",
-    solution: "Qxe8+ Rxe8 Rxe8#",
-    themes: ["overloading", "back-rank", "deflection"],
-    difficulty: "easy",
-    explanation: "The black rook on e8 is overloaded — defending both itself and the back rank. Sacrifice the queen to overwhelm: after Qxe8+ Rxe8, the second white rook delivers Rxe8# with the king trapped behind its own pawns. Whenever a single piece holds two duties, sacrifice to break it.",
-    title: "Overloaded rook on the back rank"
-  },
-  {
-    id: "p081",
-    fen: "4r1k1/5ppp/8/8/8/8/5PPP/3RR1K1 w - - 0 1",
-    sideToMove: "w",
-    solution: "Rxe8+ Rxe8 Rxe8#",
-    themes: ["overloading", "back-rank"],
-    difficulty: "easy",
-    explanation: "Doubled rooks on the e-file with only one black defender. Trading the front rook removes the defender; the back rook crashes through to mate. The pattern: doubled attackers always win against a single defender on an open file.",
-    title: "Doubled rooks crush a single defender"
-  },
-  {
-    id: "p082",
-    fen: "r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 1",
-    sideToMove: "w",
-    solution: "Ng5",
-    themes: ["double-attack", "fork"],
-    difficulty: "easy",
-    explanation: "The knight hop to g5 attacks f7 — the classic Italian-Game pressure point — and prepares Nxf7 ideas. Memorize this knight maneuver: when an enemy bishop is on c4 and the f7-pawn is defended only by the king, Ng5 is the prelude to fireworks.",
-    title: "Italian Game knight to g5"
-  },
-  {
-    id: "p083",
-    fen: "r3r1k1/5ppp/8/8/8/4R3/5PPP/4R1K1 w - - 0 1",
-    sideToMove: "w",
-    solution: "R3xe8+ Rxe8 Rxe8#",
-    themes: ["overloading", "back-rank"],
-    difficulty: "medium",
-    explanation: "Doubled white rooks on the e-file vs. one defending black rook on e8 (a8 also defends along the rank). Trade the front defender with R3xe8+; after Rxe8, the back rook on e1 crashes through for Rxe8 mate. Doubled attackers always overwhelm a single defender.",
-    title: "Doubled rooks overload defender"
-  },
-  {
-    id: "p084",
     fen: "4k3/4q3/8/8/8/8/4R3/4K3 w - - 0 1",
     sideToMove: "w",
     solution: "Rxe7+ Kxe7",
     themes: ["removing-the-defender", "decoy"],
     difficulty: "easy",
-    explanation: "The queen sits on e7, defended by the king on e8. Trading the rook for the queen is a fine bargain (rook for queen = +4). Whenever a queen is defended only by the king and your rook attacks her, calculate the trade — usually you're winning material.",
+    explanation: "The queen on e7 is defended only by the king. Rxe7+ trades rook for queen — a clean +4 material gain. Whenever a queen is defended only by her king and your rook can reach her, calculate the exchange: rook-for-queen is almost always profitable.",
     title: "Rook for queen exchange"
+  },
+  {
+    id: "p081",
+    fen: "r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 1",
+    sideToMove: "w",
+    solution: "Ng5",
+    themes: ["double-attack"],
+    difficulty: "easy",
+    explanation: "The knight hop to g5 attacks f7 — the classic Italian-Game pressure point — and prepares Nxf7 sacrifices. When your bishop is on c4 and f7 is defended only by the enemy king, Ng5 is the prelude to fireworks.",
+    title: "Italian Game knight to g5"
+  },
+  {
+    id: "p082",
+    fen: "8/8/8/2k5/8/8/2K5/R7 w - - 0 1",
+    sideToMove: "w",
+    solution: "Ra5+",
+    themes: ["skewer"],
+    difficulty: "easy",
+    explanation: "Basic K+R vs K technique: rook checks the lone king, driving it toward the edge. Repeating this maneuver while the king supports drives the enemy king to the back rank where mate becomes possible. Foundational endgame skill.",
+    title: "K+R vs K basic check"
+  },
+  {
+    id: "p083",
+    fen: "6K1/8/8/8/4N3/8/5ppp/6rk w - - 0 1",
+    sideToMove: "w",
+    solution: "Nxf2#",
+    themes: ["smothered-mate"],
+    difficulty: "easy",
+    explanation: "Mirror smothered mate on h1. The black king is locked in by its own rook on g1 and pawns on f2, g2, h2. The white knight captures on f2 and delivers mate — the king has no flight square. Same pattern as Nf7# but in the opposite corner.",
+    title: "Smothered mate Nxf2#"
+  },
+  {
+    id: "p084",
+    fen: "k7/pp6/8/2N5/8/8/8/4K3 w - - 0 1",
+    sideToMove: "w",
+    solution: "Nxb7",
+    themes: ["double-attack"],
+    difficulty: "easy",
+    explanation: "Nxb7 captures a pawn and lands on a square attacking d6 and d8 — pressing the cornered king's pieces. Knight outposts behind enemy lines are a major source of practical tactics.",
+    title: "Knight infiltrates near cornered king"
+  },
+  {
+    id: "p085",
+    fen: "8/8/3k4/8/8/8/3K4/R7 w - - 0 1",
+    sideToMove: "w",
+    solution: "Ra6+",
+    themes: ["skewer", "back-rank"],
+    difficulty: "easy",
+    explanation: "Rook check from the side drives the king back. K+R vs K endgame technique: with your king providing the cut-off, the rook gives check on the rank to push the enemy king toward the edge.",
+    title: "K+R vs K side check"
+  },
+  {
+    id: "p086",
+    fen: "4k3/8/8/8/8/4q3/8/4RK2 w - - 0 1",
+    sideToMove: "w",
+    solution: "Rxe3+",
+    themes: ["double-attack"],
+    difficulty: "easy",
+    explanation: "The black queen on e3 is undefended on the e-file. Rxe3+ captures the queen with check — the rook even gains tempo by checking the king on e8 along the same file. Always scan whether your captures come with check.",
+    title: "Capture queen with check"
+  },
+  {
+    id: "p087",
+    fen: "4k3/4r3/4n3/8/8/8/8/4K3 b - - 0 1",
+    sideToMove: "b",
+    solution: "Nc5+",
+    themes: ["discovered-check"],
+    difficulty: "easy",
+    explanation: "The black knight on e6 blocks its own rook's check on the white king. Any knight move uncovers the check — Nc5+ is one good option, harassing white squares while exposing the king. Discovered checks let the moving piece roam to attack other targets simultaneously.",
+    title: "Discovered check by knight move"
+  },
+  {
+    id: "p088",
+    fen: "k7/p7/8/N7/8/8/8/R3K3 w - - 0 1",
+    sideToMove: "w",
+    solution: "Nb7",
+    themes: ["discovered-attack"],
+    difficulty: "easy",
+    explanation: "Nb7 unmasks the rook's attack down the a-file on the pawn — and the knight even lands on a square covering c5/d6/d8. Discovered attacks let one piece move while another threatens — both sides gain.",
+    title: "Knight discovers rook on the a-file"
+  },
+  {
+    id: "p089",
+    fen: "6k1/5ppp/8/8/q7/8/5PPP/3R2K1 b - - 0 1",
+    sideToMove: "b",
+    solution: "Qxd1+",
+    themes: ["overloading", "back-rank"],
+    difficulty: "easy",
+    explanation: "The white rook on d1 is overloaded — it's the only piece defending the back rank from intrusion. Black plays Qxd1+ along the a4-d1 diagonal, capturing the rook with check; whichever recapture white finds, the back rank cracks open. A textbook 'remove the defender' shot.",
+    title: "Overloaded white rook"
   }
 ];
