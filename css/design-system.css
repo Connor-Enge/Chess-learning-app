@@ -371,9 +371,13 @@ html {
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
   overscroll-behavior-y: none;
 }
+/* DO NOT set height: 100% on body. Doing so caps the sticky containing
+   block at one viewport (844px on iPhone 14) and makes the sticky app
+   bar un-stick after ~788px of scroll. Use min-height instead so body
+   grows with content and sticky elements stay sticky end-to-end. */
+html { height: 100%; }
 body {
   font-family: var(--font-sans);
   background: var(--bg);
