@@ -3,112 +3,246 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="theme-color" content="#181a1f" />
+<meta name="theme-color" content="#0F1218" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#F4F5F8" media="(prefers-color-scheme: light)" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Chess Academy" />
+<meta name="format-detection" content="telephone=no" />
 <title>Chess Academy</title>
+<!-- Phosphor Icons (regular weight) — single icon set for the whole app -->
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/index.js" defer></script>
+
 <!-- Chessground (Lichess board) — base layout, brown wood theme, Cburnett pieces -->
 <link rel="stylesheet" href="css/vendor/chessground.base.css" />
 <link rel="stylesheet" href="css/vendor/chessground.brown.css" />
 <link rel="stylesheet" href="css/vendor/chessground.cburnett.css" />
+
 <link rel="stylesheet" href="css/main.css" />
 <link rel="stylesheet" href="css/board.css" />
 <link rel="stylesheet" href="css/lesson-player.css" />
 </head>
 <body>
 
-<!-- Compact top app bar — title + back + theme toggle -->
-<header class="appbar">
-  <button class="appbar-back" id="appbarBack" aria-label="Back" hidden>‹</button>
-  <h1 class="appbar-title" id="appbarTitle">Chess Academy</h1>
-  <button class="appbar-action" id="appbarSearch" aria-label="Search">⌕</button>
-  <button class="appbar-action" id="themeToggle" aria-label="Toggle theme">◐</button>
+<!-- ============================================================
+     App bar (top, sticky, blurred)
+     ============================================================ -->
+<header class="appbar" role="banner">
+  <button class="appbar-back appbar__back" id="appbarBack" aria-label="Back" hidden>
+    <i class="ph ph-caret-left icon" aria-hidden="true"></i>
+  </button>
+  <h1 class="appbar-title appbar__title" id="appbarTitle">Chess Academy</h1>
+  <button class="appbar-action appbar__action" id="appbarSearch" aria-label="Search">
+    <i class="ph ph-magnifying-glass icon" aria-hidden="true"></i>
+  </button>
+  <button class="appbar-action appbar__action" id="themeToggle" aria-label="Toggle theme">
+    <i class="ph ph-circle-half icon" aria-hidden="true"></i>
+  </button>
 </header>
 
-<!-- Search overlay (hidden by default) -->
-<div class="search-overlay" id="searchOverlay" hidden>
-  <input type="search" id="globalSearch" placeholder="Search lessons, openings, games…" inputmode="search" autocomplete="off" />
-  <button id="searchClose" aria-label="Close search">✕</button>
-  <div id="searchResults" class="search-results-list"></div>
+<!-- ============================================================
+     Search overlay
+     ============================================================ -->
+<div class="search-overlay" id="searchOverlay" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <input
+    type="search"
+    id="globalSearch"
+    placeholder="Search lessons, openings, games…"
+    inputmode="search"
+    autocomplete="off"
+    aria-label="Search content"
+  />
+  <button id="searchClose" aria-label="Close search">
+    <i class="ph ph-x icon" aria-hidden="true"></i>
+  </button>
+  <div id="searchResults" class="search-results-list" role="listbox" aria-label="Search results"></div>
 </div>
 
+<!-- Toast host (managed by js/toast.js, mounted lazily on first call) -->
+<div class="toast-host" id="toastHost" aria-live="polite" aria-atomic="true"></div>
+
+<!-- ============================================================
+     Main content
+     ============================================================ -->
 <main id="view"></main>
 
-<!-- Bottom tab bar (mobile-first; thumb-reach navigation) -->
-<nav class="bottom-nav" role="navigation" aria-label="Main">
-  <button class="tab" data-route="lessons" aria-label="Lessons">
-    <span class="tab-icon">📚</span><span class="tab-label">Lessons</span>
+<!-- ============================================================
+     Bottom navigation — primary tabs (mobile-first)
+     ============================================================ -->
+<nav class="bottom-nav" role="navigation" aria-label="Main navigation">
+  <button class="tab bottom-nav__tab" data-route="lessons" aria-label="Lessons">
+    <i class="ph ph-book-open-text icon tab-icon" aria-hidden="true"></i>
+    <span class="tab-label">Lessons</span>
   </button>
-  <button class="tab" data-route="openings" aria-label="Openings">
-    <span class="tab-icon">♙</span><span class="tab-label">Openings</span>
+  <button class="tab bottom-nav__tab" data-route="openings" aria-label="Openings">
+    <i class="ph ph-tree-structure icon tab-icon" aria-hidden="true"></i>
+    <span class="tab-label">Openings</span>
   </button>
-  <button class="tab" data-route="tactics" aria-label="Tactics">
-    <span class="tab-icon">⚡</span><span class="tab-label">Tactics</span>
+  <button class="tab bottom-nav__tab" data-route="tactics" aria-label="Tactics">
+    <i class="ph ph-lightning icon tab-icon" aria-hidden="true"></i>
+    <span class="tab-label">Tactics</span>
   </button>
-  <button class="tab" data-route="endgames" aria-label="Endgames">
-    <span class="tab-icon">♚</span><span class="tab-label">Endgames</span>
+  <button class="tab bottom-nav__tab" data-route="endgames" aria-label="Endgames">
+    <i class="ph ph-flag-checkered icon tab-icon" aria-hidden="true"></i>
+    <span class="tab-label">Endgames</span>
   </button>
-  <button class="tab" data-route="more" aria-label="More" id="moreTab">
-    <span class="tab-icon">⋯</span><span class="tab-label">More</span>
+  <button class="tab bottom-nav__tab" data-route="more" id="moreTab" aria-label="More">
+    <i class="ph ph-dots-three icon tab-icon" aria-hidden="true"></i>
+    <span class="tab-label">More</span>
   </button>
 </nav>
 
-<!-- "More" sheet — secondary navigation -->
-<div class="sheet" id="moreSheet" hidden>
-  <div class="sheet-backdrop" data-close-sheet></div>
-  <div class="sheet-content">
-    <div class="sheet-handle"></div>
-    <button class="sheet-link" data-route="dashboard">🏠 Dashboard</button>
-    <button class="sheet-link" data-route="positional">🧠 Positional lessons</button>
-    <button class="sheet-link" data-route="exchanges">⚖️ Exchanges &amp; Piece Values</button>
-    <button class="sheet-link" data-route="games">🏆 Master Games</button>
-    <button class="sheet-link" data-route="play">🧩 Play / Analyze</button>
-    <button class="sheet-link sheet-link-muted" data-close-sheet>Close</button>
+<!-- ============================================================
+     "More" sheet — secondary navigation
+     ============================================================ -->
+<div class="sheet" id="moreSheet" hidden role="dialog" aria-modal="true" aria-label="More navigation">
+  <div class="sheet-backdrop sheet__scrim" data-close-sheet></div>
+  <div class="sheet-content sheet__panel">
+    <div class="sheet-handle sheet__handle" aria-hidden="true"></div>
+
+    <button class="sheet-link" data-route="dashboard">
+      <i class="ph ph-house icon" aria-hidden="true"></i>
+      <span>Dashboard</span>
+      <i class="ph ph-caret-right icon sheet-link__chevron" aria-hidden="true"></i>
+    </button>
+    <button class="sheet-link" data-route="positional">
+      <i class="ph ph-strategy icon" aria-hidden="true"></i>
+      <span>Positional lessons</span>
+      <i class="ph ph-caret-right icon sheet-link__chevron" aria-hidden="true"></i>
+    </button>
+    <button class="sheet-link" data-route="exchanges">
+      <i class="ph ph-scales icon" aria-hidden="true"></i>
+      <span>Exchanges &amp; piece values</span>
+      <i class="ph ph-caret-right icon sheet-link__chevron" aria-hidden="true"></i>
+    </button>
+    <button class="sheet-link" data-route="games">
+      <i class="ph ph-trophy icon" aria-hidden="true"></i>
+      <span>Master games</span>
+      <i class="ph ph-caret-right icon sheet-link__chevron" aria-hidden="true"></i>
+    </button>
+    <button class="sheet-link" data-route="play">
+      <i class="ph ph-play-circle icon" aria-hidden="true"></i>
+      <span>Play / analyze</span>
+      <i class="ph ph-caret-right icon sheet-link__chevron" aria-hidden="true"></i>
+    </button>
+    <button class="sheet-link" data-route="settings">
+      <i class="ph ph-gear icon" aria-hidden="true"></i>
+      <span>Settings</span>
+      <i class="ph ph-caret-right icon sheet-link__chevron" aria-hidden="true"></i>
+    </button>
+
+    <button class="sheet-link sheet-link-muted sheet-link--muted" data-close-sheet>Close</button>
   </div>
 </div>
 
-<!-- Templates -->
+<!-- ============================================================
+     Templates — one per route
+     ============================================================ -->
+
 <template id="tpl-dashboard">
   <section class="dashboard">
-    <p class="subtitle">Pick up where you left off, or start a new track.</p>
-
-    <div class="cards">
-      <div class="card track-card" data-route="lessons">
-        <h3>📚 Lessons</h3>
-        <p class="card-meta"><span class="lesson-progress">0/0</span> complete</p>
-        <p>Strategic concepts, structures, and planning.</p>
-      </div>
-      <div class="card track-card" data-route="openings">
-        <h3>♙ Openings</h3>
-        <p class="card-meta"><span class="opening-progress">0</span> explored</p>
-        <p>Build out your white &amp; black repertoires.</p>
-      </div>
-      <div class="card track-card" data-route="tactics">
-        <h3>⚡ Tactics</h3>
-        <p class="card-meta"><span class="puzzle-progress">0/0</span> · <span class="puzzle-accuracy">—</span></p>
-        <p>Pattern recognition through positions.</p>
-      </div>
-      <div class="card track-card" data-route="endgames">
-        <h3>♚ Endgames</h3>
-        <p class="card-meta"><span class="endgame-progress">0/0</span> drilled</p>
-        <p>Theoretical positions every player must know.</p>
-      </div>
-      <div class="card track-card" data-route="games">
-        <h3>🏆 Master Games</h3>
-        <p class="card-meta"><span class="game-progress">0/0</span> studied</p>
-        <p>Annotated classics from Morphy to Carlsen.</p>
-      </div>
-      <div class="card track-card" data-route="play">
-        <h3>🧠 Play / Analyze</h3>
-        <p class="card-meta">Free board · Stockfish</p>
-        <p>Set up positions, run engine analysis.</p>
+    <div class="dashboard__hero card--hero">
+      <div class="dashboard__hero-main">
+        <span class="dashboard__hero-eyebrow">Continue learning</span>
+        <h2 class="dashboard__hero-title" id="heroTitle">Pick up where you left off</h2>
+        <p class="dashboard__hero-meta" id="heroMeta">Start a lesson to track progress here.</p>
+        <button class="btn btn--primary dashboard__hero-cta" id="heroCta">
+          <i class="ph ph-play icon" aria-hidden="true"></i>
+          <span>Start learning</span>
+        </button>
       </div>
     </div>
 
-    <div class="dashboard-section">
-      <h2>Recent activity</h2>
+    <div class="dash-grid cards">
+      <button class="track-card card" data-track="lessons" data-route="lessons">
+        <span class="track-card__icon">
+          <i class="ph ph-book-open-text icon" aria-hidden="true"></i>
+        </span>
+        <span class="track-card__main">
+          <span class="track-card__title">Lessons</span>
+          <span class="track-card__meta card-meta">
+            <span class="lesson-progress">0/0</span> complete
+          </span>
+        </span>
+        <i class="ph ph-caret-right icon track-card__chevron" aria-hidden="true"></i>
+      </button>
+
+      <button class="track-card card" data-track="openings" data-route="openings">
+        <span class="track-card__icon">
+          <i class="ph ph-tree-structure icon" aria-hidden="true"></i>
+        </span>
+        <span class="track-card__main">
+          <span class="track-card__title">Openings</span>
+          <span class="track-card__meta card-meta">
+            <span class="opening-progress">0</span> explored
+          </span>
+        </span>
+        <i class="ph ph-caret-right icon track-card__chevron" aria-hidden="true"></i>
+      </button>
+
+      <button class="track-card card" data-track="tactics" data-route="tactics">
+        <span class="track-card__icon">
+          <i class="ph ph-lightning icon" aria-hidden="true"></i>
+        </span>
+        <span class="track-card__main">
+          <span class="track-card__title">Tactics</span>
+          <span class="track-card__meta card-meta">
+            <span class="puzzle-progress">0/0</span> · <span class="puzzle-accuracy">—</span>
+          </span>
+        </span>
+        <i class="ph ph-caret-right icon track-card__chevron" aria-hidden="true"></i>
+      </button>
+
+      <button class="track-card card" data-track="endgames" data-route="endgames">
+        <span class="track-card__icon">
+          <i class="ph ph-flag-checkered icon" aria-hidden="true"></i>
+        </span>
+        <span class="track-card__main">
+          <span class="track-card__title">Endgames</span>
+          <span class="track-card__meta card-meta">
+            <span class="endgame-progress">0/0</span> drilled
+          </span>
+        </span>
+        <i class="ph ph-caret-right icon track-card__chevron" aria-hidden="true"></i>
+      </button>
+
+      <button class="track-card card" data-track="games" data-route="games">
+        <span class="track-card__icon">
+          <i class="ph ph-trophy icon" aria-hidden="true"></i>
+        </span>
+        <span class="track-card__main">
+          <span class="track-card__title">Master games</span>
+          <span class="track-card__meta card-meta">
+            <span class="game-progress">0/0</span> studied
+          </span>
+        </span>
+        <i class="ph ph-caret-right icon track-card__chevron" aria-hidden="true"></i>
+      </button>
+
+      <button class="track-card card" data-track="play" data-route="play">
+        <span class="track-card__icon">
+          <i class="ph ph-play-circle icon" aria-hidden="true"></i>
+        </span>
+        <span class="track-card__main">
+          <span class="track-card__title">Play / Analyze</span>
+          <span class="track-card__meta card-meta">Free board · Stockfish</span>
+        </span>
+        <i class="ph ph-caret-right icon track-card__chevron" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <div class="dashboard__section">
+      <div class="section-header">
+        <h2 class="section-header__title">Recent activity</h2>
+      </div>
       <div id="recentActivity" class="recent-list">
-        <p class="muted">No activity yet — start a lesson to see progress here.</p>
+        <div class="empty">
+          <span class="empty__art" aria-hidden="true">
+            <i class="ph ph-clock-counter-clockwise icon"></i>
+          </span>
+          <p class="empty__title">No activity yet</p>
+          <p class="empty__body">Start a lesson, drill, or puzzle and your progress will show up here.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -117,7 +251,7 @@
 <template id="tpl-lessons">
   <section class="lessons-view">
     <div class="lesson-toolbar">
-      <select id="lessonTrackFilter" aria-label="Filter by track">
+      <select id="lessonTrackFilter" class="select" aria-label="Filter by track">
         <option value="all">All tracks</option>
         <option value="opening">Openings</option>
         <option value="tactics">Tactics</option>
@@ -126,13 +260,20 @@
         <option value="exchanges">Exchanges &amp; Piece Values</option>
         <option value="calculation">Calculation</option>
       </select>
-      <button id="lessonListToggle" class="list-toggle" aria-label="Show lesson list">☰ Lessons</button>
+      <button id="lessonListToggle" class="list-toggle btn btn--secondary" aria-label="Show lesson list">
+        <i class="ph ph-list icon" aria-hidden="true"></i>
+        <span>Lessons</span>
+      </button>
     </div>
-    <aside class="lesson-list" id="lessonListPanel">
+    <aside class="lesson-list" id="lessonListPanel" aria-label="Lesson list">
       <ol id="lessonIndex"></ol>
     </aside>
     <div id="lessonContent" class="lesson-content">
-      <p class="muted">Pick a lesson to begin.</p>
+      <div class="empty">
+        <span class="empty__art" aria-hidden="true"><i class="ph ph-book-open-text icon"></i></span>
+        <p class="empty__title">Pick a lesson to begin</p>
+        <p class="empty__body">Choose a track on the left to see lessons. Each builds on the last.</p>
+      </div>
     </div>
   </section>
 </template>
@@ -140,11 +281,18 @@
 <template id="tpl-openings">
   <section class="openings-view">
     <div class="lesson-toolbar">
-      <button id="openingTreeToggle" class="list-toggle" aria-label="Browse openings">☰ Browse openings</button>
+      <button id="openingTreeToggle" class="list-toggle btn btn--secondary" aria-label="Browse openings">
+        <i class="ph ph-list icon" aria-hidden="true"></i>
+        <span>Browse openings</span>
+      </button>
     </div>
-    <aside class="opening-tree" id="openingTree"></aside>
+    <aside class="opening-tree" id="openingTree" aria-label="Opening tree"></aside>
     <div id="openingContent" class="opening-content">
-      <p class="muted">Select an opening to begin.</p>
+      <div class="empty">
+        <span class="empty__art" aria-hidden="true"><i class="ph ph-tree-structure icon"></i></span>
+        <p class="empty__title">Select an opening</p>
+        <p class="empty__body">Browse the tree on the left to see plans, key moves, and traps.</p>
+      </div>
     </div>
   </section>
 </template>
@@ -158,20 +306,38 @@
         <p id="tacticsFeedback" class="feedback"></p>
       </div>
       <div class="tactics-controls">
-        <button id="tacticsHint">Hint</button>
-        <button id="tacticsSolution">Show solution</button>
-        <button id="tacticsNext">Next puzzle →</button>
+        <button id="tacticsHint" class="btn btn--secondary">
+          <i class="ph ph-lightbulb icon" aria-hidden="true"></i>
+          <span>Hint</span>
+        </button>
+        <button id="tacticsSolution" class="btn btn--secondary">
+          <i class="ph ph-eye icon" aria-hidden="true"></i>
+          <span>Show solution</span>
+        </button>
+        <button id="tacticsNext" class="btn btn--primary">
+          <span>Next puzzle</span>
+          <i class="ph ph-arrow-right icon" aria-hidden="true"></i>
+        </button>
       </div>
     </div>
     <div class="tactics-side">
       <details>
         <summary>Filter by theme</summary>
-        <div id="tacticsThemes" class="theme-chips"></div>
+        <div id="tacticsThemes" class="theme-chips chip-group"></div>
       </details>
       <div class="tactics-stats">
-        <div class="stat"><span class="stat-num" id="tacticsSolved">0</span><span class="stat-lbl">solved</span></div>
-        <div class="stat"><span class="stat-num" id="tacticsAttempted">0</span><span class="stat-lbl">attempted</span></div>
-        <div class="stat"><span class="stat-num" id="tacticsAccuracy">—</span><span class="stat-lbl">accuracy</span></div>
+        <div class="stat">
+          <span class="stat-num" id="tacticsSolved">0</span>
+          <span class="stat-lbl">Solved</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" id="tacticsAttempted">0</span>
+          <span class="stat-lbl">Attempted</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" id="tacticsAccuracy">—</span>
+          <span class="stat-lbl">Accuracy</span>
+        </div>
       </div>
       <p id="tacticsExplanation" class="muted">Solve or reveal the puzzle to see the explanation.</p>
     </div>
@@ -181,9 +347,12 @@
 <template id="tpl-endgames">
   <section class="endgames-view">
     <div class="lesson-toolbar">
-      <button id="endgameListToggle" class="list-toggle" aria-label="Show drill list">☰ Drills</button>
+      <button id="endgameListToggle" class="list-toggle btn btn--secondary" aria-label="Show drill list">
+        <i class="ph ph-list icon" aria-hidden="true"></i>
+        <span>Drills</span>
+      </button>
     </div>
-    <aside class="endgame-list" id="endgameListPanel">
+    <aside class="endgame-list" id="endgameListPanel" aria-label="Endgame drills">
       <ol id="endgameIndex"></ol>
     </aside>
     <div class="endgame-main">
@@ -192,9 +361,18 @@
         <p id="endgameTitle" class="endgame-title">Pick a drill</p>
         <p id="endgamePrompt" class="prompt"></p>
         <div class="btn-row">
-          <button id="endgameReset">Reset</button>
-          <button id="endgameFlip">Flip</button>
-          <button id="endgameHint">Hint</button>
+          <button id="endgameReset" class="btn btn--secondary">
+            <i class="ph ph-arrow-counter-clockwise icon" aria-hidden="true"></i>
+            <span>Reset</span>
+          </button>
+          <button id="endgameFlip" class="btn btn--secondary">
+            <i class="ph ph-arrows-down-up icon" aria-hidden="true"></i>
+            <span>Flip</span>
+          </button>
+          <button id="endgameHint" class="btn btn--secondary">
+            <i class="ph ph-lightbulb icon" aria-hidden="true"></i>
+            <span>Hint</span>
+          </button>
         </div>
       </div>
       <div class="endgame-explainer" id="endgameExplainer"></div>
@@ -205,21 +383,32 @@
 <template id="tpl-games">
   <section class="games-view">
     <div class="lesson-toolbar">
-      <button id="gameListToggle" class="list-toggle" aria-label="Show games list">☰ Games</button>
+      <button id="gameListToggle" class="list-toggle btn btn--secondary" aria-label="Show games list">
+        <i class="ph ph-list icon" aria-hidden="true"></i>
+        <span>Games</span>
+      </button>
     </div>
-    <aside class="games-list" id="gameListPanel">
+    <aside class="games-list" id="gameListPanel" aria-label="Master games list">
       <ol id="gameIndex"></ol>
     </aside>
     <div class="games-main">
       <div class="games-board-wrap">
         <div id="gameBoard" class="board"></div>
-        <div class="game-controls">
-          <button id="gamePrev" aria-label="Previous move">‹</button>
-          <button id="gameAutoplay" aria-label="Toggle autoplay">▶</button>
-          <button id="gameNext" aria-label="Next move">›</button>
-          <button id="gameFlip" aria-label="Flip board">⇅</button>
+        <div class="game-controls" role="group" aria-label="Game playback">
+          <button id="gamePrev" aria-label="Previous move">
+            <i class="ph ph-caret-left icon" aria-hidden="true"></i>
+          </button>
+          <button id="gameAutoplay" aria-label="Toggle autoplay">
+            <i class="ph ph-play icon" aria-hidden="true"></i>
+          </button>
+          <button id="gameNext" aria-label="Next move">
+            <i class="ph ph-caret-right icon" aria-hidden="true"></i>
+          </button>
+          <button id="gameFlip" aria-label="Flip board">
+            <i class="ph ph-arrows-down-up icon" aria-hidden="true"></i>
+          </button>
         </div>
-        <div id="gameMoves" class="game-moves"></div>
+        <div id="gameMoves" class="game-moves move-list" aria-label="Move list"></div>
       </div>
       <div class="games-side">
         <h3 id="gameTitle">Pick a game</h3>
@@ -237,22 +426,40 @@
     <div class="play-board-wrap">
       <div id="playBoard" class="board"></div>
       <div class="play-controls">
-        <button id="playReset">New</button>
-        <button id="playFlip">Flip</button>
-        <button id="playUndo">↶ Undo</button>
+        <button id="playReset" class="btn btn--secondary">
+          <i class="ph ph-arrow-counter-clockwise icon" aria-hidden="true"></i>
+          <span>New</span>
+        </button>
+        <button id="playFlip" class="btn btn--secondary">
+          <i class="ph ph-arrows-down-up icon" aria-hidden="true"></i>
+          <span>Flip</span>
+        </button>
+        <button id="playUndo" class="btn btn--secondary">
+          <i class="ph ph-arrow-u-up-left icon" aria-hidden="true"></i>
+          <span>Undo</span>
+        </button>
       </div>
-      <div id="playMoves" class="play-moves"></div>
+      <div id="playMoves" class="play-moves" aria-label="Move list"></div>
     </div>
     <!-- Engine sheet — collapsible bottom sheet on mobile, side panel on tablet+ -->
-    <div class="engine-sheet" id="engineSheet">
+    <div class="engine-sheet" id="engineSheet" aria-label="Engine analysis">
       <div class="engine-sheet-handle" id="engineSheetHandle">
+        <i class="ph ph-cpu icon" aria-hidden="true" style="color: var(--primary)"></i>
         <span>Engine</span>
-        <span id="engineEvalQuick">+0.00</span>
+        <span id="engineEvalQuick" style="margin-left:auto; font-family: var(--font-mono); color: var(--primary); font-weight: 600;">+0.00</span>
+        <i class="ph ph-caret-up icon" aria-hidden="true"></i>
       </div>
       <div class="engine-sheet-body">
-        <label class="toggle-row"><input type="checkbox" id="engineToggle" /> Enable Stockfish</label>
+        <label class="toggle-row">
+          <input type="checkbox" id="engineToggle" />
+          <span>Enable Stockfish</span>
+        </label>
         <p class="muted small">WASM analysis can drain phone battery. Disable on weak devices.</p>
-        <label>Depth <input type="number" id="engineDepth" value="12" min="6" max="22" inputmode="numeric" /></label>
+
+        <label class="block">Depth
+          <input type="number" id="engineDepth" value="12" min="6" max="22" inputmode="numeric" />
+        </label>
+
         <div id="engineEval" class="engine-eval">+0.00</div>
         <div id="engineLine" class="engine-line">—</div>
         <div id="engineDepthDisplay" class="engine-depth muted">depth: —</div>
@@ -262,22 +469,103 @@
           <input type="text" id="fenInput" autocomplete="off" inputmode="text" />
         </label>
         <div class="btn-row">
-          <button id="loadFenBtn">Load FEN</button>
-          <button id="copyFenBtn">Copy FEN</button>
+          <button id="loadFenBtn" class="btn btn--secondary">
+            <i class="ph ph-arrow-down icon" aria-hidden="true"></i>
+            <span>Load FEN</span>
+          </button>
+          <button id="copyFenBtn" class="btn btn--secondary">
+            <i class="ph ph-copy icon" aria-hidden="true"></i>
+            <span>Copy</span>
+          </button>
         </div>
 
         <h4>PGN</h4>
         <textarea id="pgnInput" rows="5" placeholder="Paste PGN here"></textarea>
         <div class="btn-row">
-          <button id="loadPgnBtn">Load PGN</button>
-          <button id="exportPgnBtn">Export PGN</button>
+          <button id="loadPgnBtn" class="btn btn--secondary">
+            <i class="ph ph-arrow-down icon" aria-hidden="true"></i>
+            <span>Load PGN</span>
+          </button>
+          <button id="exportPgnBtn" class="btn btn--secondary">
+            <i class="ph ph-export icon" aria-hidden="true"></i>
+            <span>Export</span>
+          </button>
         </div>
       </div>
     </div>
   </section>
 </template>
 
-<!-- App scripts (chess.js is imported as ESM in chess-utils.js) -->
+<template id="tpl-settings">
+  <section class="settings stack-5">
+    <div class="section-header">
+      <h2 class="section-header__title">Appearance</h2>
+    </div>
+    <div class="list-section">
+      <label class="list-row toggle-row">
+        <span class="list-row__main">
+          <span class="toggle-row__title">Light theme</span>
+          <span class="toggle-row__hint">Defaults to dark; system preference is honored.</span>
+        </span>
+        <span class="switch">
+          <input type="checkbox" id="settingThemeToggle" />
+          <span class="switch__track"><span class="switch__thumb"></span></span>
+        </span>
+      </label>
+      <button class="list-row" id="settingBoardTheme">
+        <span class="list-row__main">
+          <span class="list-row__title">Board theme</span>
+          <span class="list-row__subtitle" id="settingBoardThemeValue">Classic walnut</span>
+        </span>
+        <i class="ph ph-caret-right icon list-row__chevron" aria-hidden="true"></i>
+      </button>
+      <button class="list-row" id="settingPieceSet">
+        <span class="list-row__main">
+          <span class="list-row__title">Piece set</span>
+          <span class="list-row__subtitle" id="settingPieceSetValue">Cburnett</span>
+        </span>
+        <i class="ph ph-caret-right icon list-row__chevron" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <div class="section-header">
+      <h2 class="section-header__title">Engine</h2>
+    </div>
+    <div class="list-section">
+      <label class="list-row">
+        <span class="list-row__main">
+          <span class="list-row__title">Default depth</span>
+          <span class="list-row__subtitle">Higher = stronger but slower</span>
+        </span>
+        <span class="stepper">
+          <button type="button" id="settingDepthDown" aria-label="Decrease depth">−</button>
+          <input id="settingDepth" type="number" value="12" min="6" max="22" inputmode="numeric" />
+          <button type="button" id="settingDepthUp" aria-label="Increase depth">+</button>
+        </span>
+      </label>
+    </div>
+
+    <div class="section-header">
+      <h2 class="section-header__title">Accessibility</h2>
+    </div>
+    <div class="list-section">
+      <label class="list-row toggle-row">
+        <span class="list-row__main">
+          <span class="toggle-row__title">Reduced motion</span>
+          <span class="toggle-row__hint">Honors your OS preference automatically.</span>
+        </span>
+        <span class="switch">
+          <input type="checkbox" id="settingReducedMotion" disabled />
+          <span class="switch__track"><span class="switch__thumb"></span></span>
+        </span>
+      </label>
+    </div>
+  </section>
+</template>
+
+<!-- ============================================================
+     App scripts
+     ============================================================ -->
 <script type="module" src="js/app.js"></script>
 </body>
 </html>

@@ -1,0 +1,165 @@
+/* ============================================================
+   Endgames / Master Games / Play — board-centric screens
+   These all use the .board-screen layout primitive (layout.css)
+   and share these inner styles.
+   ============================================================ */
+
+/* Board with title above + transport / controls below */
+.board-stage {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+.board-stage__header {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+.board-stage__title {
+  font-size: var(--text-headline);
+  font-weight: var(--weight-semibold);
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+}
+.board-stage__subtitle {
+  font-size: var(--text-footnote);
+  color: var(--text-muted);
+  margin: 0;
+}
+.board-stage__prompt {
+  font-size: var(--text-callout);
+  color: var(--text-secondary);
+  text-align: center;
+  margin: 0;
+  min-height: 22px;
+}
+.board-stage__controls {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+}
+
+/* Side panel content */
+.board-side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.board-side__annotation {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  min-height: 80px;
+  font-size: var(--text-callout);
+  color: var(--text-secondary);
+  line-height: var(--leading-normal);
+}
+.board-side__takeaways {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+.board-side__takeaways h4 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-headline);
+}
+.board-side__takeaways ul {
+  margin: 0;
+  padding-left: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--text-callout);
+  color: var(--text-secondary);
+  line-height: var(--leading-normal);
+}
+
+/* Master games — game card thumbnail */
+.game-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background var(--motion-fast) var(--ease-out),
+    transform var(--motion-fast) var(--ease-ios);
+}
+.game-card:hover { background: var(--surface-elevated); }
+.game-card:active { transform: scale(0.98); }
+.game-card__thumb {
+  width: 64px;
+  height: 64px;
+  flex: 0 0 auto;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--surface-sunken);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.game-card__thumb .icon { width: 28px; height: 28px; color: var(--text-muted); }
+.game-card__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.game-card__title {
+  font-size: var(--text-subhead);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.game-card__sub {
+  font-size: var(--text-footnote);
+  color: var(--text-muted);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.game-card__tags {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+/* Play / Analyze — engine sheet host */
+.play {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.engine-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.engine-block__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.engine-block__row .btn { flex: 1; min-width: 100px; }

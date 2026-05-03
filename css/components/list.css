@@ -1,0 +1,177 @@
+/* ============================================================
+   List — iOS-style grouped list (rounded section, hairlines)
+   .list           — outer wrapper
+   .list-section   — visually grouped block
+   .list-section__header — uppercase eyebrow above
+   .list-row       — single row
+   .list-row__leading | __main | __trailing | __chevron
+   ============================================================ */
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.list-section {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.list-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-4) var(--space-2) var(--space-4);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-uppercase);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.list-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  min-height: 56px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  width: 100%;
+  text-align: left;
+  color: var(--text-primary);
+  font-size: var(--text-body);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background var(--motion-fast) var(--ease-out);
+  position: relative;
+}
+.list-row + .list-row::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 60px;       /* indent under leading icon, iOS style */
+  right: 0;
+  height: 1px;
+  background: var(--divider);
+}
+.list-row:hover { background: var(--surface-elevated); }
+.list-row:active { background: var(--surface-elevated); }
+.list-row:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+  z-index: 1;
+}
+.list-row[aria-current="true"],
+.list-row.is-active {
+  background: var(--primary-soft);
+  color: var(--text-primary);
+}
+.list-row[aria-current="true"]::after,
+.list-row.is-active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0; bottom: 0;
+  width: 3px;
+  background: var(--primary);
+}
+
+.list-row__leading {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  background: transparent;
+}
+.list-row__leading--filled {
+  background: var(--surface-elevated);
+}
+
+.list-row__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.list-row__title {
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.list-row__subtitle {
+  font-size: var(--text-footnote);
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list-row__trailing {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-footnote);
+  color: var(--text-muted);
+}
+.list-row__chevron {
+  flex: 0 0 auto;
+  color: var(--text-disabled);
+  width: 16px;
+  height: 16px;
+}
+
+/* Status indicators — completion checkmark, lock, current */
+.list-row__status {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  background: var(--surface-elevated);
+  color: var(--text-muted);
+  font-size: 12px;
+}
+.list-row__status--done {
+  background: var(--success);
+  color: var(--success-on);
+}
+.list-row__status--locked {
+  background: transparent;
+  color: var(--text-disabled);
+}
+.list-row__status--current {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+/* Compact list — smaller rows for dense data (move list, FENs) */
+.list-row--compact {
+  min-height: 40px;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-subhead);
+}
+
+/* Plain (no card) — flat row inside another container */
+.list--plain .list-row {
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  margin: 0;
+}
+.list--plain .list-row + .list-row::before { display: none; }

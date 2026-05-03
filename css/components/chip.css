@@ -1,0 +1,133 @@
+/* ============================================================
+   Chip / Pill / Badge / Tag
+   ============================================================ */
+
+/* Filter chip — selectable */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 32px;
+  padding: 0 var(--space-3);
+  background: var(--surface);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-footnote);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out),
+    transform var(--motion-fast) var(--ease-ios);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.chip:hover { background: var(--surface-elevated); }
+.chip:active { transform: scale(0.95); }
+.chip:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+.chip[aria-pressed="true"],
+.chip.is-active {
+  background: var(--primary);
+  color: var(--on-primary);
+  border-color: var(--primary);
+}
+.chip .icon { width: 14px; height: 14px; }
+
+.chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.chip-group--scroll {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: var(--space-1) 0;
+  -webkit-overflow-scrolling: touch;
+}
+.chip-group--scroll::-webkit-scrollbar { display: none; }
+.chip-group--scroll .chip { flex: 0 0 auto; }
+
+/* Static badge — informational, not interactive */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 20px;
+  padding: 0 8px;
+  background: var(--surface-elevated);
+  color: var(--text-secondary);
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  white-space: nowrap;
+}
+.badge--primary  { background: var(--primary-soft);  color: var(--primary); }
+.badge--success  { background: var(--success-soft);  color: var(--success); }
+.badge--warning  { background: var(--warning-soft);  color: var(--warning); }
+.badge--error    { background: var(--error-soft);    color: var(--error); }
+.badge--accent   { background: var(--accent-soft);   color: var(--accent); }
+.badge--new      { background: var(--accent); color: var(--on-primary); }
+
+/* Dot badge — small absolute indicator */
+.dot-badge {
+  width: 8px;
+  height: 8px;
+  background: var(--primary);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--bg);
+}
+.dot-badge--accent  { background: var(--accent); }
+.dot-badge--success { background: var(--success); }
+.dot-badge--warning { background: var(--warning); }
+.dot-badge--error   { background: var(--error); }
+
+/* Tag — quiet metadata pill (year, ECO, opening name) */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+}
+.tag--filled {
+  background: var(--surface);
+  border-color: transparent;
+}
+
+/* Avatar — initials chip (personality picker, bot bios) */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--surface-elevated);
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-subhead);
+  font-weight: var(--weight-semibold);
+  flex: 0 0 auto;
+  overflow: hidden;
+  position: relative;
+}
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+.avatar--sm { width: 32px; height: 32px; font-size: var(--text-footnote); }
+.avatar--lg { width: 56px; height: 56px; font-size: var(--text-title-3); }
+.avatar--xl { width: 88px; height: 88px; font-size: var(--text-title-2); }
+.avatar--ring {
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--primary);
+}

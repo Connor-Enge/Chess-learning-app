@@ -1,0 +1,199 @@
+/* ============================================================
+   App shell + screen layout
+   Site-wide layout primitives. Per-screen styling lives in
+   css/screens/*.css.
+   ============================================================ */
+
+main, .screen {
+  flex: 1;
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-3) calc(var(--bottom-nav-h) + var(--safe-bottom) + var(--space-4));
+}
+
+@media (min-width: 768px) {
+  main, .screen {
+    max-width: var(--content-max-tablet);
+    padding-left: var(--space-5);
+    padding-right: var(--space-5);
+    padding-bottom: calc(var(--bottom-nav-h) + var(--safe-bottom) + var(--space-5));
+  }
+}
+
+/* Stack — vertical rhythm helper */
+.stack { display: flex; flex-direction: column; }
+.stack-1 { gap: var(--space-1); }
+.stack-2 { gap: var(--space-2); }
+.stack-3 { gap: var(--space-3); }
+.stack-4 { gap: var(--space-4); }
+.stack-5 { gap: var(--space-5); }
+.stack-6 { gap: var(--space-6); }
+.stack-7 { gap: var(--space-7); }
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.row--between { justify-content: space-between; }
+.row--end     { justify-content: flex-end; }
+.row--center  { justify-content: center; }
+.row--wrap    { flex-wrap: wrap; }
+
+.spacer { flex: 1; }
+
+/* Section header within a screen */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-1) var(--space-2);
+}
+.section-header__title {
+  font: var(--weight-semibold) var(--text-title-3)/var(--leading-snug) var(--font-display);
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
+}
+.section-header__action {
+  font-size: var(--text-subhead);
+  color: var(--primary);
+  background: transparent;
+  border: none;
+  padding: var(--space-2) var(--space-2);
+  cursor: pointer;
+  font-weight: var(--weight-medium);
+}
+
+/* Dashboard grid */
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+@media (min-width: 540px) {
+  .dash-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 1024px) {
+  .dash-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+/* Two-column screens (master games, openings, lessons) on tablet+ */
+.screen-split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+@media (min-width: 768px) {
+  .screen-split {
+    grid-template-columns: 320px 1fr;
+    gap: var(--space-5);
+  }
+}
+@media (min-width: 1024px) {
+  .screen-split { grid-template-columns: 360px 1fr; }
+}
+
+/* Board + side panel (tactics, endgames, master games, play) */
+.board-screen {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+@media (min-width: 1024px) {
+  .board-screen {
+    grid-template-columns: minmax(0, 1fr) 360px;
+  }
+}
+@media (min-width: 768px) and (orientation: landscape) {
+  .board-screen {
+    grid-template-columns: minmax(320px, 60%) 1fr;
+  }
+}
+
+/* Sticky board panel within lesson view */
+.board-panel {
+  position: sticky;
+  top: calc(var(--appbar-h) + var(--safe-top));
+  z-index: var(--z-sticky);
+  background: var(--bg);
+  padding: var(--space-3) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+@media (min-width: 1024px) {
+  .board-panel {
+    position: sticky;
+    top: calc(var(--appbar-h) + var(--space-3));
+    background: transparent;
+    padding: 0;
+  }
+}
+
+/* Page transitions — slide from right when going deeper */
+.screen[data-anim="enter-forward"] {
+  animation: screen-enter-forward var(--motion-slow) var(--ease-ios);
+}
+.screen[data-anim="enter-back"] {
+  animation: screen-enter-back var(--motion-slow) var(--ease-ios);
+}
+@keyframes screen-enter-forward {
+  from { transform: translateX(8%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes screen-enter-back {
+  from { transform: translateX(-8%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+/* Search overlay — full-screen iOS pattern */
+.search-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  animation: search-in var(--motion-base) var(--ease-out);
+}
+.search-overlay[hidden] { display: none !important; }
+
+.search-overlay__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  padding-top: calc(var(--safe-top) + var(--space-3));
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-blur-strong);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+.search-overlay__bar .search-field { flex: 1; }
+.search-overlay__cancel {
+  background: transparent;
+  border: none;
+  color: var(--primary);
+  padding: 0 var(--space-2);
+  font-size: var(--text-callout);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  height: 44px;
+}
+.search-overlay__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-2) var(--space-3) calc(var(--safe-bottom) + var(--space-4));
+}
+.search-overlay__results {
+  margin-top: var(--space-2);
+}
+
+@keyframes search-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

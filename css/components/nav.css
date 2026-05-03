@@ -1,0 +1,225 @@
+/* ============================================================
+   App bar (top) + Bottom navigation (primary)
+   Both use translucent backdrop-filter for iOS / Material feel.
+   ============================================================ */
+
+/* ----- App bar (top) ----- */
+.appbar {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-appbar);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-3);
+  height: calc(var(--appbar-h) + var(--safe-top));
+  padding-top: var(--safe-top);
+  background: var(--surface-blur);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid transparent;
+  transition:
+    background var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out);
+}
+.appbar.is-scrolled {
+  background: var(--surface-blur-strong);
+  border-bottom-color: var(--border);
+}
+
+.appbar__back,
+.appbar__action {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--motion-fast) var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+.appbar__back:hover,
+.appbar__action:hover { background: var(--surface); }
+.appbar__back:active,
+.appbar__action:active { background: var(--surface-elevated); }
+.appbar__back .icon,
+.appbar__action .icon { width: 22px; height: 22px; }
+
+.appbar__title {
+  flex: 1;
+  margin: 0;
+  font-size: var(--text-headline);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  letter-spacing: var(--tracking-normal);
+}
+
+/* Large-title block underneath app bar — collapses on scroll */
+.large-title {
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  font: var(--weight-bold) var(--text-title-1)/var(--leading-tight) var(--font-display);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+}
+.large-title__sub {
+  font: var(--weight-regular) var(--text-subhead)/var(--leading-snug) var(--font-sans);
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* ----- Bottom navigation ----- */
+.bottom-nav {
+  position: fixed;
+  left: 0; right: 0;
+  bottom: 0;
+  z-index: var(--z-bottom-nav);
+  display: flex;
+  height: calc(var(--bottom-nav-h) + var(--safe-bottom));
+  padding-bottom: var(--safe-bottom);
+  background: var(--surface-blur-strong);
+  backdrop-filter: saturate(180%) blur(24px);
+  -webkit-backdrop-filter: saturate(180%) blur(24px);
+  border-top: 1px solid var(--border);
+}
+.bottom-nav__tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: var(--space-2) var(--space-1);
+  cursor: pointer;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--motion-fast) var(--ease-out);
+}
+.bottom-nav__tab .icon {
+  width: 24px;
+  height: 24px;
+  transition:
+    transform var(--motion-base) var(--ease-ios),
+    color var(--motion-fast) var(--ease-out);
+}
+.bottom-nav__tab .tab-label {
+  font-size: 10px;
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+}
+.bottom-nav__tab[aria-current="page"],
+.bottom-nav__tab.is-active {
+  color: var(--primary);
+}
+.bottom-nav__tab[aria-current="page"] .icon,
+.bottom-nav__tab.is-active .icon {
+  transform: translateY(-1px) scale(1.05);
+}
+.bottom-nav__tab:active .icon { transform: scale(0.92); }
+.bottom-nav__tab:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -4px;
+  border-radius: var(--radius-md);
+}
+
+/* On very small phones, hide labels under 360 */
+@media (max-width: 360px) {
+  .bottom-nav__tab .tab-label { display: none; }
+  .bottom-nav__tab .icon { width: 26px; height: 26px; }
+}
+
+/* Tablet+: hide bottom nav, show side rail (optional future expansion) */
+@media (min-width: 1024px) {
+  /* Bottom nav still visible by default — keep mobile parity for v1 */
+}
+
+/* ----- Tabs (top, scrollable pills) ----- */
+.tabs {
+  display: flex;
+  gap: var(--space-2);
+  overflow-x: auto;
+  padding: var(--space-2) var(--space-3);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+.tabs::-webkit-scrollbar { display: none; }
+
+.tab-pill {
+  flex: 0 0 auto;
+  padding: var(--space-2) var(--space-4);
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  background: var(--surface);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-subhead);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out),
+    transform var(--motion-fast) var(--ease-ios);
+  scroll-snap-align: start;
+  -webkit-tap-highlight-color: transparent;
+}
+.tab-pill:hover { background: var(--surface-elevated); }
+.tab-pill:active { transform: scale(0.97); }
+.tab-pill[aria-pressed="true"],
+.tab-pill.is-active {
+  background: var(--primary);
+  color: var(--on-primary);
+  border-color: var(--primary);
+}
+
+/* Underline tabs — alternative for single-row navigation */
+.tabbar {
+  display: flex;
+  gap: var(--space-2);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabbar::-webkit-scrollbar { display: none; }
+.tabbar__tab {
+  flex: 0 0 auto;
+  padding: var(--space-3) var(--space-3);
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: var(--text-subhead);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  position: relative;
+  white-space: nowrap;
+  transition: color var(--motion-fast) var(--ease-out);
+}
+.tabbar__tab[aria-pressed="true"],
+.tabbar__tab.is-active {
+  color: var(--primary);
+}
+.tabbar__tab[aria-pressed="true"]::after,
+.tabbar__tab.is-active::after {
+  content: "";
+  position: absolute;
+  left: var(--space-2);
+  right: var(--space-2);
+  bottom: -1px;
+  height: 2px;
+  background: var(--primary);
+  border-radius: var(--radius-pill);
+}

@@ -1,0 +1,482 @@
+/* ============================================================
+   Chess Academy — Design System Foundation
+   --------------------------------------------------------------
+   Semantic tokens (color / type / spacing / radius / elevation /
+   motion) consumed by every component. Mobile-first, dark-mode-
+   first, WCAG AA verified.
+
+   Token naming: kebab-case, semantic over presentational.
+   --primary-hover beats --blue-500-hover. Components reference
+   semantic names so theme overrides at :root or [data-theme]
+   propagate without component edits.
+   ============================================================ */
+
+:root {
+  /* ----------------------------------------------------------
+     Palette — primitive ramps. NOT consumed directly by
+     components; map through the semantic layer below.
+     Values measured against #0F1115 + WCAG AA at body size.
+     ---------------------------------------------------------- */
+  --neutral-0:   #FFFFFF;
+  --neutral-50:  #F7F8FA;
+  --neutral-100: #EEF0F4;
+  --neutral-200: #DBDFE6;
+  --neutral-300: #BBC1CD;
+  --neutral-400: #8B92A1;
+  --neutral-500: #5E6573;
+  --neutral-600: #3F4654;
+  --neutral-700: #2A2F3A;
+  --neutral-800: #1B1F27;
+  --neutral-850: #14181F;
+  --neutral-900: #0F1218;
+  --neutral-950: #0A0C11;
+
+  --blue-300:  #8FB8FF;
+  --blue-400:  #6E9DF7;
+  --blue-500:  #4F86F0;
+  --blue-600:  #3A6FD9;
+  --blue-700:  #2A57B5;
+
+  --green-300: #8FE0A4;
+  --green-500: #4FCB73;
+  --green-600: #2EAB55;
+
+  --amber-300: #F4D27A;
+  --amber-500: #E8B53C;
+  --amber-600: #C99427;
+
+  --red-300:   #F49A9A;
+  --red-500:   #E25A5A;
+  --red-600:   #C13E3E;
+
+  --violet-300: #B79CF6;
+  --violet-500: #8E6BEC;
+  --violet-600: #6D4DCF;
+
+  /* ----------------------------------------------------------
+     Surfaces — layered backgrounds (dark default).
+     Each level steps up by ~3% lightness. Use --bg for the
+     page, --surface for cards, --surface-elevated for nested,
+     --surface-overlay for modals/sheets above content.
+     ---------------------------------------------------------- */
+  --bg:                 var(--neutral-900);
+  --bg-elevated:        var(--neutral-850);
+  --surface:            var(--neutral-800);
+  --surface-elevated:   var(--neutral-700);
+  --surface-overlay:    var(--neutral-700);
+  --surface-sunken:     var(--neutral-950);
+
+  /* Translucent surfaces used for blur layers (app bar / nav) */
+  --surface-blur:       rgba(20, 24, 31, 0.72);
+  --surface-blur-strong:rgba(20, 24, 31, 0.88);
+
+  /* ----------------------------------------------------------
+     Text — semantic
+     ---------------------------------------------------------- */
+  --text-primary:   #F2F4F8;   /* headlines, body */
+  --text-secondary: #C2C8D4;   /* secondary copy, list metadata */
+  --text-muted:     #8E96A6;   /* timestamps, captions */
+  --text-disabled:  #5A6172;   /* disabled controls */
+  --text-inverse:   #0F1218;   /* on light surfaces */
+  --text-on-primary:#FFFFFF;   /* on filled primary buttons */
+
+  /* ----------------------------------------------------------
+     Borders & dividers
+     ---------------------------------------------------------- */
+  --border:         rgba(255, 255, 255, 0.08);
+  --border-strong:  rgba(255, 255, 255, 0.16);
+  --divider:        rgba(255, 255, 255, 0.06);
+  --focus-ring:     rgba(110, 157, 247, 0.55);
+
+  /* ----------------------------------------------------------
+     Brand & action colors
+     ---------------------------------------------------------- */
+  --primary:        var(--blue-500);
+  --primary-hover:  var(--blue-400);
+  --primary-active: var(--blue-600);
+  --primary-soft:   rgba(79, 134, 240, 0.14);
+  --on-primary:     var(--text-on-primary);
+
+  --accent:         var(--violet-500);
+  --accent-hover:   var(--violet-300);
+  --accent-soft:    rgba(142, 107, 236, 0.14);
+
+  --success:        var(--green-500);
+  --success-soft:   rgba(79, 203, 115, 0.14);
+  --success-on:     #08210F;
+
+  --warning:        var(--amber-500);
+  --warning-soft:   rgba(232, 181, 60, 0.14);
+  --warning-on:     #2A1F00;
+
+  --error:          var(--red-500);
+  --error-soft:     rgba(226, 90, 90, 0.14);
+  --error-on:       #2B0808;
+
+  --info:           var(--blue-400);
+  --info-soft:      rgba(110, 157, 247, 0.14);
+
+  /* ----------------------------------------------------------
+     Type
+     ---------------------------------------------------------- */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Segoe UI Variable",
+    "SF Pro Text", "Inter", "Roboto", system-ui, sans-serif;
+  --font-mono:
+    ui-monospace, "SF Mono", "JetBrains Mono", "Menlo",
+    "Cascadia Mono", monospace;
+  --font-display:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display",
+    "Inter", system-ui, sans-serif;
+
+  /* Type scale — iOS-inspired step-based */
+  --text-caption:   11px;   /* 1px below body floor; reserve for chrome */
+  --text-footnote:  13px;   /* meta labels under list items */
+  --text-body:      17px;   /* the iOS body floor — no zoom on focus */
+  --text-callout:   16px;   /* secondary running copy (FAQ, helper) */
+  --text-headline:  17px;   /* same size as body, heavier weight */
+  --text-subhead:   15px;   /* card subtitles */
+  --text-title-3:   20px;   /* card titles */
+  --text-title-2:   24px;   /* section titles */
+  --text-title-1:   30px;   /* screen titles */
+  --text-display:   40px;   /* hero / large-title */
+
+  --leading-tight:   1.15;
+  --leading-snug:    1.3;
+  --leading-normal:  1.45;
+  --leading-relaxed: 1.6;
+
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* Letter-spacing — subtle, only at extremes */
+  --tracking-tight:  -0.02em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.02em;
+  --tracking-uppercase: 0.06em;
+
+  /* ----------------------------------------------------------
+     Spacing — 4-point grid
+     ---------------------------------------------------------- */
+  --space-0:  0;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-7:  32px;
+  --space-8:  40px;
+  --space-9:  56px;
+  --space-10: 72px;
+  --space-11: 96px;
+
+  /* ----------------------------------------------------------
+     Radius
+     ---------------------------------------------------------- */
+  --radius-xs:   4px;
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   14px;
+  --radius-xl:   20px;
+  --radius-2xl:  28px;
+  --radius-pill: 999px;
+  --radius-full: 50%;
+
+  /* ----------------------------------------------------------
+     Elevation — dark-mode-aware. Subtle, never desktop-style.
+     Combined ambient + key shadow; tuned for translucent layers.
+     ---------------------------------------------------------- */
+  --shadow-0: none;
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.20),
+              0 0 0 0.5px rgba(255, 255, 255, 0.04);
+  --shadow-2: 0 2px 6px rgba(0, 0, 0, 0.28),
+              0 1px 2px rgba(0, 0, 0, 0.22);
+  --shadow-3: 0 8px 22px rgba(0, 0, 0, 0.36),
+              0 2px 6px rgba(0, 0, 0, 0.22);
+  --shadow-4: 0 16px 40px rgba(0, 0, 0, 0.48),
+              0 4px 12px rgba(0, 0, 0, 0.28);
+  --shadow-5: 0 28px 64px rgba(0, 0, 0, 0.56),
+              0 8px 24px rgba(0, 0, 0, 0.32);
+
+  /* Inner shadow used for sunken containers (search pill, inputs) */
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.04),
+                  inset 0 0 0 0.5px rgba(0, 0, 0, 0.4);
+
+  /* ----------------------------------------------------------
+     Motion — durations + easings
+     ---------------------------------------------------------- */
+  --motion-instant:  0ms;
+  --motion-fast:     150ms;
+  --motion-base:     220ms;
+  --motion-slow:     320ms;
+  --motion-slower:   480ms;
+
+  /* iOS feel — overshoot-soft cubic-bezier */
+  --ease-ios:      cubic-bezier(0.32, 0.72, 0, 1);
+  /* Material standard — for content-area transitions */
+  --ease-material: cubic-bezier(0.2, 0, 0, 1);
+  --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:   cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ----------------------------------------------------------
+     Layout
+     ---------------------------------------------------------- */
+  --appbar-h:     56px;
+  --bottom-nav-h: 64px;
+  --content-max:  720px;
+  --content-max-tablet: 1180px;
+  --tap-min:      44px;
+
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left:   env(safe-area-inset-left, 0px);
+  --safe-right:  env(safe-area-inset-right, 0px);
+
+  /* ----------------------------------------------------------
+     Z-index ladder
+     ---------------------------------------------------------- */
+  --z-base:        0;
+  --z-sticky:      10;
+  --z-appbar:      20;
+  --z-bottom-nav:  20;
+  --z-sheet:       40;
+  --z-modal:       50;
+  --z-overlay:     60;
+  --z-toast:       80;
+  --z-tooltip:     90;
+
+  /* ----------------------------------------------------------
+     Board theme — default ("classic walnut")
+     Components reference --board-* tokens; alternate themes
+     override via [data-board-theme="…"].
+     ---------------------------------------------------------- */
+  --board-light:        #E9D7B6;
+  --board-dark:         #9C7A4F;
+  --board-light-active: #F2F19A;
+  --board-dark-active:  #C2C265;
+  --board-coord-light:  rgba(0, 0, 0, 0.55);
+  --board-coord-dark:   rgba(255, 255, 255, 0.85);
+  --board-frame:        rgba(255, 255, 255, 0.06);
+  --board-shadow:       0 8px 24px rgba(0, 0, 0, 0.35);
+
+  --highlight-from:  rgba(255, 219, 92, 0.55);
+  --highlight-to:    rgba(255, 219, 92, 0.55);
+  --highlight-check: rgba(226, 90, 90, 0.55);
+  --highlight-hint:  rgba(110, 157, 247, 0.6);
+  --move-dot:        rgba(0, 0, 0, 0.32);
+  --move-ring:       rgba(0, 0, 0, 0.32);
+}
+
+/* ============================================================
+   Light theme override
+   ============================================================ */
+[data-theme="light"] {
+  --bg:                 #F4F5F8;
+  --bg-elevated:        #FFFFFF;
+  --surface:            #FFFFFF;
+  --surface-elevated:   #FFFFFF;
+  --surface-overlay:    #FFFFFF;
+  --surface-sunken:     #ECEEF2;
+
+  --surface-blur:       rgba(255, 255, 255, 0.78);
+  --surface-blur-strong:rgba(255, 255, 255, 0.92);
+
+  --text-primary:   #0F1218;
+  --text-secondary: #383E4A;
+  --text-muted:     #5E6573;   /* AA-passing on white */
+  --text-disabled:  #9098A6;
+  --text-inverse:   #FFFFFF;
+
+  --border:        rgba(15, 18, 24, 0.10);
+  --border-strong: rgba(15, 18, 24, 0.18);
+  --divider:       rgba(15, 18, 24, 0.06);
+
+  --primary:        var(--blue-600);
+  --primary-hover:  var(--blue-500);
+  --primary-active: var(--blue-700);
+  --primary-soft:   rgba(58, 111, 217, 0.10);
+
+  --accent:         var(--violet-600);
+  --accent-soft:    rgba(109, 77, 207, 0.10);
+
+  --success:        var(--green-600);
+  --warning:        var(--amber-600);
+  --error:          var(--red-600);
+
+  --shadow-1: 0 1px 2px rgba(15, 18, 24, 0.05),
+              0 0 0 0.5px rgba(15, 18, 24, 0.04);
+  --shadow-2: 0 2px 8px rgba(15, 18, 24, 0.07),
+              0 1px 2px rgba(15, 18, 24, 0.04);
+  --shadow-3: 0 6px 18px rgba(15, 18, 24, 0.10),
+              0 2px 6px rgba(15, 18, 24, 0.05);
+  --shadow-4: 0 14px 32px rgba(15, 18, 24, 0.14);
+  --shadow-5: 0 24px 56px rgba(15, 18, 24, 0.18);
+
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.6),
+                  inset 0 0 0 0.5px rgba(15, 18, 24, 0.06);
+
+  --board-light: #F0DAB6;
+  --board-dark:  #B58764;
+}
+
+/* Auto follow system preference unless [data-theme] is set */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+  }
+}
+
+/* ============================================================
+   Board themes — switch via [data-board-theme]
+   ============================================================ */
+[data-board-theme="ocean"] {
+  --board-light: #DCE3EF;
+  --board-dark:  #5A7AA8;
+  --board-light-active: #F2D27A;
+  --board-dark-active:  #C28A3A;
+}
+[data-board-theme="tournament"] {
+  --board-light: #EEEED2;
+  --board-dark:  #769656;
+  --board-light-active: #F6F669;
+  --board-dark-active:  #BACA2B;
+}
+[data-board-theme="midnight"] {
+  --board-light: #5A6172;
+  --board-dark:  #2A2F3A;
+  --board-light-active: #8FB8FF;
+  --board-dark-active:  #4F86F0;
+  --board-coord-light: rgba(255,255,255,0.6);
+  --board-coord-dark:  rgba(255,255,255,0.85);
+}
+
+/* ============================================================
+   Reset + base
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overscroll-behavior-y: none;
+}
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text-primary);
+  font-size: var(--text-body);
+  line-height: var(--leading-normal);
+  font-feature-settings: "ss01", "cv11"; /* better numerals where available */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+::selection { background: var(--primary-soft); color: var(--text-primary); }
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Form base — inherit, never under 16px (prevents iOS zoom) */
+input, button, textarea, select {
+  font-family: inherit;
+  font-size: 16px;
+  color: inherit;
+}
+
+/* ============================================================
+   Type utilities
+   ============================================================ */
+.t-display    { font: var(--weight-bold) var(--text-display)/var(--leading-tight) var(--font-display); letter-spacing: var(--tracking-tight); }
+.t-title-1    { font: var(--weight-bold) var(--text-title-1)/var(--leading-tight) var(--font-display); letter-spacing: var(--tracking-tight); }
+.t-title-2    { font: var(--weight-semibold) var(--text-title-2)/var(--leading-snug) var(--font-display); }
+.t-title-3    { font: var(--weight-semibold) var(--text-title-3)/var(--leading-snug) var(--font-sans); }
+.t-headline   { font: var(--weight-semibold) var(--text-headline)/var(--leading-snug) var(--font-sans); }
+.t-body       { font: var(--weight-regular) var(--text-body)/var(--leading-normal) var(--font-sans); }
+.t-callout    { font: var(--weight-regular) var(--text-callout)/var(--leading-normal) var(--font-sans); }
+.t-subhead    { font: var(--weight-medium) var(--text-subhead)/var(--leading-snug) var(--font-sans); }
+.t-footnote   { font: var(--weight-regular) var(--text-footnote)/var(--leading-snug) var(--font-sans); }
+.t-caption    { font: var(--weight-medium) var(--text-caption)/var(--leading-snug) var(--font-sans); letter-spacing: var(--tracking-uppercase); text-transform: uppercase; }
+.t-mono       { font-family: var(--font-mono); }
+.t-secondary  { color: var(--text-secondary); }
+.t-muted      { color: var(--text-muted); }
+.t-tabular    { font-variant-numeric: tabular-nums; }
+
+/* Headings (when written as semantic h1..h4 inside content blocks) */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  margin: 0;
+}
+h1 { font-size: var(--text-title-1); font-weight: var(--weight-bold); }
+h2 { font-size: var(--text-title-2); }
+h3 { font-size: var(--text-title-3); }
+h4 { font-size: var(--text-headline); font-family: var(--font-sans); }
+
+/* ============================================================
+   Motion utilities
+   ============================================================ */
+.motion-press { transition: transform var(--motion-fast) var(--ease-ios); }
+.motion-press:active { transform: scale(0.97); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   Visually hidden (a11y)
+   ============================================================ */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================================
+   Scrollbar — slim, theme-aware
+   ============================================================ */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-pill);
+}
+*::-webkit-scrollbar-track { background: transparent; }

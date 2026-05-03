@@ -1,0 +1,213 @@
+/* ============================================================
+   Card — elevated / outlined / interactive
+   Header / Body / Footer slots. Cards are containers, not links;
+   wrap content in <a class="card-link"> when it's tappable.
+   ============================================================ */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  transition:
+    transform var(--motion-fast) var(--ease-ios),
+    box-shadow var(--motion-fast) var(--ease-out),
+    background var(--motion-fast) var(--ease-out);
+}
+
+.card--elevated {
+  background: var(--surface);
+  border-color: transparent;
+  box-shadow: var(--shadow-2);
+}
+.card--outlined {
+  background: var(--surface);
+  border-color: var(--border-strong);
+  box-shadow: none;
+}
+.card--ghost {
+  background: transparent;
+  border-color: var(--border);
+}
+
+/* Tappable variant — surface flash + scale */
+.card--interactive {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.card--interactive:hover {
+  background: var(--surface-elevated);
+  box-shadow: var(--shadow-3);
+}
+.card--interactive:active {
+  transform: scale(0.98);
+  background: var(--surface-elevated);
+}
+.card--interactive:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.card__header,
+.card__body,
+.card__footer {
+  padding: var(--space-4);
+}
+.card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding-bottom: var(--space-3);
+}
+.card__header + .card__body { padding-top: 0; }
+.card__body + .card__footer,
+.card__header + .card__footer { padding-top: 0; }
+
+.card__title {
+  font: var(--weight-semibold) var(--text-title-3)/var(--leading-snug) var(--font-display);
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: var(--tracking-tight);
+}
+.card__subtitle {
+  font: var(--weight-regular) var(--text-subhead)/var(--leading-snug) var(--font-sans);
+  color: var(--text-secondary);
+  margin: 4px 0 0;
+}
+.card__leading {
+  flex: 0 0 auto;
+}
+.card__main { flex: 1; min-width: 0; }
+.card__trailing { flex: 0 0 auto; align-self: center; }
+
+.card__media {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: var(--surface-sunken);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.card__media img,
+.card__media svg { width: 100%; height: 100%; object-fit: cover; }
+
+/* Hero card — full-bleed dashboard "Continue learning" */
+.card--hero {
+  background: linear-gradient(135deg,
+    var(--primary-soft) 0%,
+    var(--accent-soft) 100%);
+  border: 1px solid var(--border);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.card--hero .card__eyebrow {
+  font: var(--weight-semibold) var(--text-caption)/1 var(--font-sans);
+  letter-spacing: var(--tracking-uppercase);
+  text-transform: uppercase;
+  color: var(--primary);
+}
+.card--hero .card__title {
+  font-size: var(--text-title-2);
+}
+
+/* Track card — colored accent stripe */
+.track-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background var(--motion-fast) var(--ease-out),
+    transform var(--motion-fast) var(--ease-ios),
+    border-color var(--motion-fast) var(--ease-out);
+  min-height: 80px;
+}
+.track-card:hover { background: var(--surface-elevated); border-color: var(--border-strong); }
+.track-card:active { transform: scale(0.98); }
+.track-card:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+
+.track-card__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  background: var(--track-icon-bg, var(--primary-soft));
+  color: var(--track-icon-fg, var(--primary));
+}
+.track-card__icon .icon { width: 24px; height: 24px; }
+.track-card__main { flex: 1; min-width: 0; }
+.track-card__title {
+  font-size: var(--text-headline);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+.track-card__meta {
+  font-size: var(--text-footnote);
+  color: var(--text-muted);
+  margin: 2px 0 0;
+}
+.track-card__chevron {
+  color: var(--text-muted);
+  flex: 0 0 auto;
+}
+
+/* Per-track accent colors — applied via data-track */
+.track-card[data-track="lessons"]    { --track-icon-bg: rgba(79, 134, 240, 0.14); --track-icon-fg: var(--blue-400); }
+.track-card[data-track="openings"]   { --track-icon-bg: rgba(142, 107, 236, 0.14); --track-icon-fg: var(--violet-500); }
+.track-card[data-track="tactics"]    { --track-icon-bg: rgba(232, 181, 60, 0.14); --track-icon-fg: var(--amber-500); }
+.track-card[data-track="endgames"]   { --track-icon-bg: rgba(79, 203, 115, 0.14); --track-icon-fg: var(--green-500); }
+.track-card[data-track="games"]      { --track-icon-bg: rgba(226, 90, 90, 0.14); --track-icon-fg: var(--red-500); }
+.track-card[data-track="play"]       { --track-icon-bg: rgba(255, 255, 255, 0.06); --track-icon-fg: var(--text-secondary); }
+.track-card[data-track="positional"] { --track-icon-bg: rgba(110, 157, 247, 0.14); --track-icon-fg: var(--info); }
+.track-card[data-track="exchanges"]  { --track-icon-bg: rgba(232, 181, 60, 0.14); --track-icon-fg: var(--warning); }
+.track-card[data-track="calculation"]{ --track-icon-bg: rgba(142, 107, 236, 0.14); --track-icon-fg: var(--accent); }
+
+/* Callout — in-content tip block */
+.callout {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--info-soft);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--info);
+  margin: var(--space-4) 0;
+}
+.callout__icon {
+  flex: 0 0 auto;
+  color: var(--info);
+}
+.callout__icon .icon { width: 22px; height: 22px; }
+.callout__main { flex: 1; min-width: 0; }
+.callout__title {
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-callout);
+  color: var(--text-primary);
+  margin: 0 0 2px;
+}
+.callout__body {
+  font-size: var(--text-callout);
+  line-height: var(--leading-normal);
+  color: var(--text-secondary);
+  margin: 0;
+}
+.callout--success { background: var(--success-soft); border-left-color: var(--success); }
+.callout--success .callout__icon { color: var(--success); }
+.callout--warning { background: var(--warning-soft); border-left-color: var(--warning); }
+.callout--warning .callout__icon { color: var(--warning); }
+.callout--error   { background: var(--error-soft);   border-left-color: var(--error); }
+.callout--error   .callout__icon { color: var(--error); }
+.callout--accent  { background: var(--accent-soft);  border-left-color: var(--accent); }
+.callout--accent  .callout__icon { color: var(--accent); }

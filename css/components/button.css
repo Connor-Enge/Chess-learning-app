@@ -1,0 +1,175 @@
+/* ============================================================
+   Button — primary / secondary / tertiary / destructive / icon
+   Sizes: sm (32) / md (44 default) / lg (56)
+   ============================================================ */
+
+.btn {
+  --btn-bg: var(--surface-elevated);
+  --btn-fg: var(--text-primary);
+  --btn-border: transparent;
+  --btn-bg-hover: color-mix(in oklab, var(--surface-elevated) 80%, white 10%);
+  --btn-bg-active: color-mix(in oklab, var(--surface-elevated) 70%, black 10%);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-4);
+  height: 44px;
+  min-width: 44px;
+
+  font-family: var(--font-sans);
+  font-size: var(--text-callout);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-normal);
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border: 1px solid var(--btn-border);
+  border-radius: var(--radius-md);
+
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  transition:
+    background var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out),
+    transform var(--motion-fast) var(--ease-ios),
+    box-shadow var(--motion-fast) var(--ease-out);
+}
+.btn:hover { background: var(--btn-bg-hover); }
+.btn:active { background: var(--btn-bg-active); transform: scale(0.97); }
+.btn:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ----- Variants ----- */
+.btn--primary {
+  --btn-bg: var(--primary);
+  --btn-fg: var(--on-primary);
+  --btn-bg-hover: var(--primary-hover);
+  --btn-bg-active: var(--primary-active);
+  box-shadow: var(--shadow-1);
+}
+
+.btn--secondary {
+  --btn-bg: var(--surface);
+  --btn-border: var(--border-strong);
+  --btn-bg-hover: var(--surface-elevated);
+  --btn-bg-active: var(--surface-elevated);
+}
+
+.btn--tertiary {
+  --btn-bg: transparent;
+  --btn-fg: var(--primary);
+  --btn-border: transparent;
+  --btn-bg-hover: var(--primary-soft);
+  --btn-bg-active: var(--primary-soft);
+}
+
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--text-secondary);
+  --btn-bg-hover: var(--surface);
+  --btn-bg-active: var(--surface-elevated);
+}
+
+.btn--destructive {
+  --btn-bg: var(--error);
+  --btn-fg: var(--text-on-primary);
+  --btn-bg-hover: color-mix(in oklab, var(--error) 80%, white 10%);
+  --btn-bg-active: color-mix(in oklab, var(--error) 70%, black 10%);
+}
+
+/* ----- Sizes ----- */
+.btn--sm {
+  height: 32px;
+  min-width: 32px;
+  padding: 0 var(--space-3);
+  font-size: var(--text-footnote);
+  border-radius: var(--radius-sm);
+}
+.btn--lg {
+  height: 56px;
+  min-width: 56px;
+  padding: 0 var(--space-6);
+  font-size: var(--text-headline);
+  border-radius: var(--radius-lg);
+}
+
+.btn--block { width: 100%; }
+
+/* Icon-only — square */
+.btn--icon {
+  width: 44px;
+  padding: 0;
+  border-radius: var(--radius-md);
+}
+.btn--icon.btn--sm { width: 32px; }
+.btn--icon.btn--lg { width: 56px; border-radius: var(--radius-lg); }
+.btn--icon.btn--round { border-radius: var(--radius-pill); }
+
+/* Icon inside btn */
+.btn .icon { width: 20px; height: 20px; flex: 0 0 auto; display: inline-flex; }
+.btn--sm .icon { width: 16px; height: 16px; }
+.btn--lg .icon { width: 24px; height: 24px; }
+
+/* Loading state */
+.btn[data-loading="true"] {
+  color: transparent !important;
+  pointer-events: none;
+}
+.btn[data-loading="true"]::after {
+  content: "";
+  position: absolute;
+  width: 16px; height: 16px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: var(--radius-full);
+  animation: btn-spin 0.7s linear infinite;
+  color: var(--btn-fg);
+}
+@keyframes btn-spin { to { transform: rotate(360deg); } }
+
+/* Floating action — for "Next puzzle" style CTAs */
+.btn--fab {
+  width: 56px; height: 56px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-3);
+  padding: 0;
+}
+
+/* Button group — for transport bars */
+.btn-group {
+  display: inline-flex;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 2px;
+  gap: 2px;
+}
+.btn-group .btn {
+  height: 38px;
+  min-width: 38px;
+  padding: 0 var(--space-3);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+}
+.btn-group .btn[aria-pressed="true"],
+.btn-group .btn.is-active {
+  background: var(--surface-elevated);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-1);
+}

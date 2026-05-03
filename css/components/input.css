@@ -1,0 +1,222 @@
+/* ============================================================
+   Input — text / search / select / textarea
+   16px font-size minimum (no iOS focus zoom). Floating label
+   pattern for content-form fields, top-label for settings.
+   ============================================================ */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.field__label {
+  font-size: var(--text-subhead);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+  letter-spacing: var(--tracking-normal);
+}
+.field__hint {
+  font-size: var(--text-footnote);
+  color: var(--text-muted);
+  line-height: var(--leading-snug);
+}
+.field__error {
+  font-size: var(--text-footnote);
+  color: var(--error);
+  line-height: var(--leading-snug);
+}
+
+/* Generic input shell */
+.input,
+.select,
+.textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.4;
+  transition:
+    border-color var(--motion-fast) var(--ease-out),
+    box-shadow var(--motion-fast) var(--ease-out),
+    background var(--motion-fast) var(--ease-out);
+}
+.textarea {
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  resize: vertical;
+  min-height: 96px;
+}
+.input::placeholder, .textarea::placeholder {
+  color: var(--text-muted);
+}
+.input:hover, .select:hover, .textarea:hover { border-color: var(--text-muted); }
+.input:focus, .select:focus, .textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+.input:disabled, .select:disabled, .textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.field[data-error="true"] .input,
+.field[data-error="true"] .select,
+.field[data-error="true"] .textarea {
+  border-color: var(--error);
+}
+.field[data-error="true"] :focus {
+  box-shadow: 0 0 0 3px var(--error-soft);
+}
+
+/* Search field — pill with leading icon */
+.search-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--surface);
+  border-radius: var(--radius-pill);
+  padding: 0 var(--space-4);
+  height: 44px;
+  border: 1px solid transparent;
+  box-shadow: var(--shadow-inset);
+  transition:
+    border-color var(--motion-fast) var(--ease-out),
+    background var(--motion-fast) var(--ease-out);
+}
+.search-field:focus-within {
+  border-color: var(--primary);
+  background: var(--bg-elevated);
+}
+.search-field .icon {
+  width: 20px; height: 20px;
+  color: var(--text-muted);
+  flex: 0 0 auto;
+}
+.search-field input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  height: 100%;
+  font-size: 16px;
+  color: var(--text-primary);
+  padding: 0 var(--space-3);
+  outline: none;
+}
+.search-field input::-webkit-search-cancel-button { display: none; }
+.search-field__clear {
+  width: 24px; height: 24px;
+  background: var(--surface-elevated);
+  border: none;
+  border-radius: var(--radius-full);
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  flex: 0 0 auto;
+}
+.search-field input:placeholder-shown ~ .search-field__clear { display: none; }
+
+/* Native select dressed up with chevron */
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238E96A6' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-4) center;
+  background-size: 12px 8px;
+  padding-right: var(--space-7);
+}
+
+/* Toggle switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 51px;
+  height: 31px;
+  flex: 0 0 auto;
+}
+.switch input {
+  opacity: 0;
+  width: 0; height: 0;
+  position: absolute;
+}
+.switch__track {
+  position: absolute;
+  inset: 0;
+  background: var(--surface-elevated);
+  border-radius: var(--radius-pill);
+  transition: background var(--motion-base) var(--ease-out);
+  cursor: pointer;
+}
+.switch__thumb {
+  position: absolute;
+  top: 2px; left: 2px;
+  width: 27px; height: 27px;
+  background: var(--neutral-0);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-2);
+  transition: transform var(--motion-base) var(--ease-ios);
+}
+.switch input:checked + .switch__track { background: var(--success); }
+.switch input:checked + .switch__track .switch__thumb { transform: translateX(20px); }
+.switch input:focus-visible + .switch__track { box-shadow: 0 0 0 3px var(--focus-ring); }
+.switch input:disabled + .switch__track { opacity: 0.5; cursor: not-allowed; }
+
+/* Toggle row — label + switch on a row (settings) */
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: 56px;
+  padding: var(--space-3) 0;
+}
+.toggle-row__main { flex: 1; min-width: 0; }
+.toggle-row__title {
+  font-size: var(--text-body);
+  color: var(--text-primary);
+  font-weight: var(--weight-regular);
+}
+.toggle-row__hint {
+  display: block;
+  font-size: var(--text-footnote);
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Stepper input (numeric) */
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  background: var(--surface-elevated);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.stepper button {
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 18px;
+}
+.stepper button:active { background: var(--surface); }
+.stepper input {
+  width: 56px;
+  text-align: center;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+  outline: none;
+}
